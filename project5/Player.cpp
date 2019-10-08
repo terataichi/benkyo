@@ -1,0 +1,33 @@
+#include "ImageMng.h"
+#include "Player.h"
+
+
+Player::Player()
+{
+	init();
+}
+
+
+Player::~Player()
+{
+
+}
+
+void Player::init(void)
+{
+	AnimVector data;
+	data.reserve(2);
+	data.emplace_back(IMAGE_ID("·¬×")[0], 30);
+	data.emplace_back(IMAGE_ID("·¬×")[1], 60);
+	SetAnim("NORMAL", data);
+
+	data.emplace_back(IMAGE_ID("·¬×")[2], 90);
+	SetAnim("EX", data);
+
+	data.emplace_back(IMAGE_ID("·¬×”š”­")[0], 20);
+	data.emplace_back(IMAGE_ID("·¬×”š”­")[1], 25);
+	data.emplace_back(IMAGE_ID("·¬×”š”­")[2], 30);
+	data.emplace_back(IMAGE_ID("·¬×”š”­")[3], 35);
+	data.emplace_back(-1, 40);
+	SetAnim("DEHT",data);
+}

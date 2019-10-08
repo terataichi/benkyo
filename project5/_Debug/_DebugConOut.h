@@ -1,0 +1,43 @@
+#pragma once
+#ifdef _DEBUG
+
+#include <memory>
+
+#define AST() {\
+	CHAR ast_msg[256];\
+	wsprintf(ast_msg,"%s %dçsñ⁄\0",__FILE__,__LINE__);\
+	MessageBox(0,ast_msg,"±ª∞ƒï\é¶",MB_OK);\
+	}
+
+#define TRACE(fmt, ...) printf(fmt,__VA_ARGS__);
+
+// ±ª∞ƒ
+
+class _DebugConOut
+{
+public:
+	static _DebugConOut &GetInstance(void)
+	{
+		return *_sInstance;
+	}
+
+private:
+	struct _DebugConOutDeleter	// ∂Ω¿—√ﬁÿ∞¿∞
+	{
+		void operator()(_DebugConOut* _debugConOut)const
+		{
+			delete _debugConOut;
+		}
+	};
+
+	_DebugConOut();
+	~_DebugConOut();
+
+	FILE* _debugFp = nullptr;
+	static std::unique_ptr<_DebugConOut, _DebugConOutDeleter>_sInstance;
+};
+
+#else
+#define AST();
+#define TRACE(fmt,...)
+#endif // _DEBUG
