@@ -90,7 +90,7 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 
 bool SceneMng::SysInit(void)
 {
-	SetWindowText("1916025_terasaki");
+	SetWindowText("1916025_terasakia");
 
 	SetGraphMode(ScreenSize.x, ScreenSize.y, 16);	//½¸Ø°Ý»²½Þ
 
