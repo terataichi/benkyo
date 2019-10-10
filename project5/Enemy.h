@@ -17,7 +17,7 @@ enum class ENEMY_STATE
 	MAX
 };
 
-using EnemyState = std::tuple<ENEMY_STATE, ENEMY_STATE, ENEMY_STATE>;
+using EnemyState = std::tuple<ENEMY_TYPE, Vector2, Vector2>;
 
 class Enemy :
 	public Obj
@@ -28,5 +28,6 @@ public:
 	~Enemy();
 private:
 	void init();
+	ENEMY_TYPE _type;
 };
 

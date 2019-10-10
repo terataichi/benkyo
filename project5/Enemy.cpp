@@ -1,6 +1,6 @@
 #include "ImageMng.h"
 #include "Enemy.h"
-
+#include <Obj.h>
 
 
 Enemy::Enemy()
@@ -10,7 +10,10 @@ Enemy::Enemy()
 
 Enemy::Enemy(EnemyState & state)
 {
-	
+	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state);
+	_size = std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state);
+	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);
+
 	init();
 }
 
