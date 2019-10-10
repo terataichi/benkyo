@@ -19,13 +19,15 @@ public:
 	const std::string animKey(void) const;
 
 	bool SetAnim(const std::string key, AnimVector& data);		// ±ÆÒ°¼®İdata‚Ì“o˜^
-private:
 
+private:
 	std::map<std::string, AnimVector> _animMap;					// ±ÆÒ°¼®İŠi”[
 	std::string _animKey;										// ±ÆÒ°¼®İ—pƒL[
 	unsigned int _animFrame;									// ±ÆÒ°¼®İ—pÌÚ°Ñ
 	unsigned int _animCount;									// ±ÆÒ°¼®İ—p¶³İÄ
 
+protected:
 	Vector2 _pos;
+	Vector2 _size;
 };
 

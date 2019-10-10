@@ -1,9 +1,16 @@
 #include "ImageMng.h"
 #include "Player.h"
-
+#include <Obj.h>
 
 Player::Player()
 {
+	init();
+}
+
+Player::Player(Vector2 pos, Vector2 size)
+{
+	_pos = pos;
+	_size = size;
 	init();
 }
 
@@ -30,4 +37,6 @@ void Player::init(void)
 	data.emplace_back(IMAGE_ID("·¬×”š”­")[3], 35);
 	data.emplace_back(-1, 40);
 	SetAnim("DEHT",data);
+
+	animKey("NORMAL");
 }

@@ -8,6 +8,8 @@ class Player :
 {
 public:
 	Player();
+	Player(Vector2 pos, Vector2 size);
+
 	~Player();
 private:
 	void init(void);

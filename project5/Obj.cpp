@@ -23,20 +23,24 @@ void Obj::Draw(void)
 	{
 		return;
 	}
-
 	// ±ÆÑÌÚ°Ñ‚Ì’l‚ª”ÍˆÍ“à‚©‚Ç‚¤‚©
 	if (_animMap[_animKey].size() <= _animFrame || 0 > _animFrame)
 	{
 		return;
 	}
 
-	_animCount++;
-
-	// Ï¯Ìß‚Ì’†‚Ìİ’è¶³İÄ‚Æ±ÆÑ¶³İÄ‚ğ”ä‚×‚é
-	if (_animMap[_animKey][_animFrame].second <= _animCount)
+	
+	if (_animMap[_animKey][_animFrame].first >= 0)
 	{
-		_animFrame++;
+		// Ï¯Ìß‚Ì’†‚Ìİ’è‚µ‚½¶³İÄ‚Æ±ÆÑ¶³İÄ‚ğ”ä‚×‚é
+		if (_animMap[_animKey][_animFrame].second <= _animCount)
+		{
+			_animFrame++;
+		}
 
+		_animCount++;	// ¶³İÄ++
+
+		// ÅŒã‚Ü‚Å±ÆÒ°¼®İ‚µ‚½‚çØ¾¯Ä
 		if (_animMap[_animKey].size() <= _animFrame)
 		{
 			_animFrame = 0;

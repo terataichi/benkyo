@@ -16,11 +16,10 @@ GameScene::GameScene()
 	lpImageMng.GetID("·¬×”š”­", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 
-	obj.resize(2);
-	obj[0] = new Player();
-	obj[0]-> animKey("NORMAL");
-	obj[1] = new Enemy();
-	obj[1]-> animKey("EDEHT");
+	obj.resize(1);
+	obj[0] = new Player({ 190,100 }, { 0,0 });
+	//obj[1] = new Enemy();
+
 
 
 
