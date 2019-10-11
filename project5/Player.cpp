@@ -26,17 +26,17 @@ void Player::init(void)
 	data.reserve(2);
 	data.emplace_back(IMAGE_ID("·¬×")[0], 30);
 	data.emplace_back(IMAGE_ID("·¬×")[1], 60);
-	SetAnim("NORMAL", data);
+	SetAnim(STATE::NORMAL, data);
 
 	data.emplace_back(IMAGE_ID("·¬×")[2], 90);
-	SetAnim("EX", data);
+	SetAnim(STATE::EX, data);
 
 	data.emplace_back(IMAGE_ID("·¬×”š”­")[0], 20);
 	data.emplace_back(IMAGE_ID("·¬×”š”­")[1], 25);
 	data.emplace_back(IMAGE_ID("·¬×”š”­")[2], 30);
 	data.emplace_back(IMAGE_ID("·¬×”š”­")[3], 35);
 	data.emplace_back(-1, 40);
-	SetAnim("DEHT",data);
+	SetAnim(STATE::DETH,data);
 
-	animKey("NORMAL");
+	state(STATE::NORMAL);
 }

@@ -19,21 +19,21 @@ void Obj::Update(void)
 void Obj::Draw(void)
 {
 	// ｱﾆﾑﾏｯﾌﾟの中にｷｰがちゃんと入ってるかﾁｪｯｸする
-	if (_animMap.find(_animKey) == _animMap.end())
+	if (_animMap.find(_state) == _animMap.end())
 	{
 		return;
 	}
 	// ｱﾆﾑﾌﾚｰﾑの値が範囲内かどうか
-	if (_animMap[_animKey].size() <= _animFrame || 0 > _animFrame)
+	if (_animMap[_state].size() <= _animFrame || 0 > _animFrame)
 	{
 		return;
 	}
 
 	
-	if (_animMap[_animKey][_animFrame].first >= 0)
+	if (_animMap[_state][_animFrame].first >= 0)
 	{
 		// ﾏｯﾌﾟの中の設定したｶｳﾝﾄとｱﾆﾑｶｳﾝﾄを比べる
-		if (_animMap[_animKey][_animFrame].second <= _animCount)
+		if (_animMap[_state][_animFrame].second <= _animCount)
 		{
 			_animFrame++;
 		}
@@ -41,7 +41,7 @@ void Obj::Draw(void)
 		_animCount++;	// ｶｳﾝﾄ++
 
 		// 最後までｱﾆﾒｰｼｮﾝしたらﾘｾｯﾄ
-		if (_animMap[_animKey].size() <= _animFrame)
+		if (_animMap[_state].size() <= _animFrame)
 		{
 			_animFrame = 0;
 			_animCount = 0;
@@ -49,7 +49,7 @@ void Obj::Draw(void)
 	}
 
 	// 描画
-	lpSceneMng.AddDrawQue({ _animMap[_animKey][_animFrame].first,_pos.x,_pos.y });
+	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x,_pos.y });
 }
 
 void Obj::Draw(int id)
@@ -61,31 +61,31 @@ Obj::~Obj()
 {
 }
 
-bool Obj::animKey(const std::string key)
+bool Obj::state(const STATE state)
 {
 	// 無駄なｷｰｶﾞｱﾙｶﾁｪｯｸｽﾙ
-	if (_animMap.find(key) == _animMap.end())
+	if (_animMap.find(state) == _animMap.end())
 	{
 		return false;
 	}
 
 	// 切り替えるときにﾘｾｯﾄする
-	if (_animKey != key)
+	if (_state != state)
 	{
 		_animFrame = 0;
 		_animCount = 0;
 	}
 
-	_animKey = key;
+	_state = state;
 	return true;
 }
 
-const std::string Obj::animKey(void) const
+const STATE Obj::state(void) const
 {
-	return _animKey;
+	return _state;
 }
 
-bool Obj::SetAnim(const std::string key, AnimVector& data)
+bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
 	//// 受け取ったﾃﾞｰﾀを格納
 	//if (_animMap.find(key) == _animMap.end())
@@ -96,5 +96,40 @@ bool Obj::SetAnim(const std::string key, AnimVector& data)
 	//return false;
 
 	// C++ 17以降だったら一行でかける
-	return (_animMap.try_emplace(key, std::move(data))).second;
+	return (_animMap.try_emplace(state, std::move(data))).second;
+}
+
+// 生存確認
+bool Obj::SetAlive(bool alive)
+{
+	_alive = alive;
+	if (!_alive)
+	{
+		state(STATE::DETH);
+	}
+
+	return true;
+}
+
+// ｱﾆﾒｰｼｮﾝ終了ﾁｪｯｸ
+bool Obj::isAnimEnd(void)
+{
+	// ｱﾆﾑﾏｯﾌﾟの中にｷｰがちゃんと入ってるかﾁｪｯｸする
+	if (_animMap.find(_state) == _animMap.end())
+	{
+		return true;
+	}
+
+	// ｱﾆﾑﾌﾚｰﾑの値が範囲内かどうか
+	if (_animMap[_state].size() <= _animFrame || 0 > _animFrame)
+	{
+		return true;
+	}
+
+	// 爆発が終わっていたら死んでもらいたい
+	if (_animMap[_state][_animFrame].first == -1)
+	{
+		return true;
+	}
+	return false;
 }
