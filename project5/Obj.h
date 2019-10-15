@@ -21,7 +21,7 @@ class Obj
 {
 public:
 	Obj();
-	void Update(void);
+	virtual void Update(void) = 0;
 	void Draw(void);
 	void Draw(int id);
 	virtual ~Obj();
@@ -42,6 +42,7 @@ private:
 	unsigned int _animCount;									// ±ÆÒ°¼®İ—p¶³İÄ
 
 protected:
+	bool DestroyPrpc(void);
 	bool _alive;												// ¶‚«‚Ä‚¢‚é‚©
 	bool _dead;													// €‚ñ‚Å‚¢‚é‚©
 	Vector2 _pos;												// À•W

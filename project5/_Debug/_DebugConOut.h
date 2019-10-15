@@ -22,6 +22,7 @@ public:
 	}
 
 private:
+	/* 関数オブジェクト */
 	struct _DebugConOutDeleter	// ｶｽﾀﾑﾃﾞﾘｰﾀｰ
 	{
 		void operator()(_DebugConOut* _debugConOut)const

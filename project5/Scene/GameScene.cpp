@@ -19,9 +19,23 @@ GameScene::GameScene()
 	_objList.emplace_back(
 		new Player({ 100,100 }, { 0,0 })
 	);
+
 	_objList.emplace_back(
 		new Player({ 200,100 }, { 0,0 })
 	);
+
+	EnemyState data; 
+
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{			//type			pos								size
+			data = { ENEMY_TYPE::A, {200 + (x * 30), 100 + (y * 32)}, {0, 0} };
+
+			_objList.emplace_back(new Enemy(data));
+		}
+	}
+	
 
 	/*obj[0] = new Obj("image/char.png", { 0, 0 }, 10, 10, 30, 32);
 	obj[1] = new Obj("image/char.png", { 100, 100 }, 10, 10, 30, 32);*/
@@ -32,23 +46,34 @@ GameScene::~GameScene()
 {
 }
 
+// 更新
 unique_Base GameScene::Update(unique_Base own)
 {
 	
 	for (auto data : _objList)
 	{
+		// 更新
+		(*data).Update();
+	}
+
+	for (auto data : _objList)
+	{
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
+			// 死亡ﾌﾗｸﾞ
 			(*data).SetAlive(false);
 		}
 		(*data).Draw();
 	}
 	
-	//std::remove_if(
-	//	_objList.begin(),	// ﾁｪｯｸ範囲の開始
-	//	_objList.end(),		// ﾁｪｯｸ範囲の終了地点
-	//	[](sharedObj&obj) {return (*obj).isDead(); }
-	//	);
+	/*[](){} らむだしき*/
+	/* 空になった要素を消す	まとめて書いたやつ*/
+	_objList.erase(std::remove_if(															// 中身を消すやつ 要素は残るからerase
+								_objList.begin(),											// ﾁｪｯｸ範囲の開始
+								_objList.end(),												// ﾁｪｯｸ範囲の終了地点
+								[](sharedObj&obj) {return (*obj).isDead(); }				// ﾗﾑﾀﾞ式
+								),
+						_objList.end());
 
 	return std::move(own);
 }

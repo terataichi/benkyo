@@ -14,9 +14,12 @@ void SceneMng::Draw(void)
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	for (auto dataQue : _drawList)
 	{
-		DrawGraph(
+		// ’†S•`‰æ‚È‚Ì‚Å”š”­‚Ì“s‡‚ª‚¢‚¢
+		DrawRotaGraph(
 			std::get<static_cast<int>(DRAW_QUE::X)>(dataQue),
 			std::get<static_cast<int>(DRAW_QUE::Y)>(dataQue),
+			1.0,
+			0,
 			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dataQue),
 			true
 		);

@@ -11,11 +11,25 @@ Enemy::Enemy()
 
 Enemy::Enemy(EnemyState & state)
 {
+	_type = std::move(std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state));
 	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state);
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
-	_type = std::move(std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state));
 
 	init();
+}
+
+void Enemy::Update(void)
+{
+	if (DestroyPrpc())
+	{
+		return;
+	}
+
+	if (rand() % 300 == 1)
+	{
+		SetAlive(false);
+	}
+
 }
 
 Enemy::~Enemy()

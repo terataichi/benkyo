@@ -7,13 +7,10 @@
 
 Obj::Obj()
 {
+	_alive = true;
+	_dead = false;
 	_animFrame = 0;
 	_animCount = 0;
-}
-
-void Obj::Update(void)
-{
-
 }
 
 void Obj::Draw(void)
@@ -132,4 +129,22 @@ bool Obj::isAnimEnd(void)
 		return true;
 	}
 	return false;
+}
+
+// ”jŠü‚µ‚Ä‚¢‚¢‚©‚Ç‚¤‚©
+bool Obj::DestroyPrpc(void)
+{
+	// ¶‚«‚Ä‚½‚çÀŞÒ
+	if (_alive)
+	{
+		return false;
+	}
+
+	// ±ÆÒ°¼®İ‚ªI—¹‚µ‚Ä‚½‚ç”jŠü
+	if (isAnimEnd())
+	{
+		_dead = true;
+	}
+
+	return true;
 }

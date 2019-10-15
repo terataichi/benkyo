@@ -1,3 +1,4 @@
+#include <DxLib.h>
 #include "ImageMng.h"
 #include "Player.h"
 #include <Obj.h>
@@ -12,6 +13,31 @@ Player::Player(Vector2 pos, Vector2 size)
 	_pos = pos;
 	_size = size;
 	init();
+}
+
+void Player::Update(void)
+{
+	if (DestroyPrpc())
+	{
+		return;
+	}
+
+	// ÇÁÇﬁÇæÇµÇ´ó˚èK
+	auto move = [](const int keyID, int& pNum, const int speed)
+	{
+		if (CheckHitKey(keyID))
+		{
+			pNum += speed;
+		}
+	};
+
+	move(KEY_INPUT_DOWN, _pos.y, +2);
+	move(KEY_INPUT_UP, _pos.y, -2);
+	move(KEY_INPUT_LEFT, _pos.x, -2);
+	move(KEY_INPUT_RIGHT, _pos.x, +2);
+
+	
+
 }
 
 
