@@ -1,6 +1,7 @@
 #pragma once
 #ifdef _DEBUG
 
+#include <Windows.h>
 #include <memory>
 
 #define AST() {\

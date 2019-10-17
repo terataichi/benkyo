@@ -23,7 +23,8 @@ public:
 	InputState();
 	virtual ~InputState();
 	const KeyMap& State(void)const;					// •Ô‚·‚¾‚¯
-	const KeyPair& State(INPUT_ID id)const;			// ID‚Ì’†g‚ğæ“¾
+	const KeyPair& State(INPUT_ID id)const;			// ID‚Ì’†g‚Ìold‚Ænow‚ğæ“¾
+	bool state(INPUT_ID id ,int data);
 
 private:
 	KeyMap _state;

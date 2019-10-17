@@ -1,3 +1,4 @@
+#include <_DebugConOut.h>
 #include "InputState.h"
 
 
@@ -19,7 +20,31 @@ const KeyMap& InputState::State(void) const
 
 const KeyPair& InputState::State(INPUT_ID id) const
 {
-	KeyPair data;
-	// IDの中身のoldとnowの情報を返す
-	return data;
+
+	static KeyPair defData = { 0,0 };
+
+	try										// try…とりあえずやってね
+	{
+		return _state.at(id);				// IDの中身のoldとnowの情報を返す
+	}
+	catch(...)								// エラーが出たら捕まえる
+	{
+		AST();
+
+		return defData;			// staticで最初から領域を取っておくことで安全に返す
+								// private で謎の変数を作って置くもよし。両方完全に安全なわけではない
+
+		/*return KeyPair{ 0,0 };*/ // これだと参照しようとしたときにﾛｰｶﾙ変数だから消えてしまっているのでよろしくない
+	}
+
+}
+
+bool InputState::state(INPUT_ID id, int data)
+{
+	if (_state.find(id) != _state.end())
+	{
+		_state[id].first = data;
+		return true;
+	}
+	return false;
 }
