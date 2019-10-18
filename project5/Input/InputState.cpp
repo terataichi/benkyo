@@ -5,7 +5,10 @@
 
 InputState::InputState()
 {
-
+	for (auto id : INPUT_ID())
+	{
+		_state.try_emplace(INPUT_ID::LEFT, KeyPair{ 0,1 });
+	}
 }
 
 InputState::~InputState()
@@ -46,5 +49,11 @@ bool InputState::state(INPUT_ID id, int data)
 		_state[id].first = data;
 		return true;
 	}
+
 	return false;
+}
+
+void InputState::SetOld(void)
+{
+
 }

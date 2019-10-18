@@ -1,19 +1,6 @@
 #pragma once
 #include <map>
-
-enum class INPUT_ID
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	BTN_1,
-	BTN_2,
-	BTN_3,
-	BTN_4,
-	MAX
-};
-
+#include "INPUT_ID.h"
 using KeyPair = std::pair<int, int>;
 using KeyMap = std::map<INPUT_ID, KeyPair>;
 
@@ -24,9 +11,11 @@ public:
 	virtual ~InputState();
 	const KeyMap& State(void)const;					// •Ô‚·‚¾‚¯
 	const KeyPair& State(INPUT_ID id)const;			// ID‚Ì’†g‚Ìold‚Ænow‚ğæ“¾
-	bool state(INPUT_ID id ,int data);
+	bool state(INPUT_ID id ,int data);				// set
+	void SetOld(void);
 
 private:
+
 	KeyMap _state;
 };
 
