@@ -30,10 +30,9 @@ const KeyPair& InputState::State(INPUT_ID id) const
 	{
 		return _state.at(id);				// IDの中身のoldとnowの情報を返す
 	}
-	catch(...)								// エラーが出たら捕まえる
+	catch(...)								// エラーが出たら捕まえる(...)はなんか捕まえてくれる
 	{
 		AST();
-
 		return defData;			// staticで最初から領域を取っておくことで安全に返す
 								// private で謎の変数を作って置くもよし。両方完全に安全なわけではない
 
@@ -55,5 +54,16 @@ bool InputState::state(INPUT_ID id, int data)
 
 void InputState::SetOld(void)
 {
-
+	for (auto id : INPUT_ID())
+	{
+		try
+		{
+			_state[id].second = _state[id].first;		// newの情報をoldに入れる
+		}
+		catch (...)										// ｴﾗｰが出たら
+		{
+			AST();
+			_state.emplace(id, KeyPair{ 0,1 });
+		}
+	}
 }
