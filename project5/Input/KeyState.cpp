@@ -19,24 +19,31 @@ KeyState::KeyState()
 	_keyCon = _keyConDef;											// 内容をｺﾋﾟｰする
 
 	func = &KeyState::RefKeyData;									// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
-
 }
 
 
 KeyState::~KeyState()
 {
+
 }
 
 void KeyState::Update(void)
 {
-	SetOld();								// new を old　に書く
-	GetHitKeyStateAll(_buf);				// 全てのｷｰ情報を取得
-	(this->*func)();						// this 自分自身
+	SetOld();														// new を old　に書く
+	GetHitKeyStateAll(_buf);										// 全てのｷｰ情報を取得
+	(this->*func)();												// this 自分自身
 }
 
 void KeyState::RefKeyData(void)
 {
+	for (auto id : _keyCon)
+	{
 
+		if (_buf[id] == 1)
+		{
+			state(static_cast<INPUT_ID>(id), 1);
+		}
+	}
 }
 
 void KeyState::SetKeyConfing(void)

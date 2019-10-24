@@ -15,7 +15,6 @@ public:
 	bool state(INPUT_ID id ,int data);				// set
 	void SetOld(void);
 
-
 private:
 
 	KeyMap _state;

@@ -33,8 +33,8 @@ const KeyPair& InputState::State(INPUT_ID id) const
 	catch(...)								// エラーが出たら捕まえる(...)はなんか捕まえてくれる
 	{
 		AST();
-		return defData;			// staticで最初から領域を取っておくことで安全に返す
-								// private で謎の変数を作って置くもよし。両方完全に安全なわけではない
+		return defData;						// staticで最初から領域を取っておくことで安全に返す
+											// private で謎の変数を作って置くもよし。両方完全に安全なわけではない
 
 		/*return KeyPair{ 0,0 };*/ // これだと参照しようとしたときにﾛｰｶﾙ変数だから消えてしまっているのでよろしくない
 	}

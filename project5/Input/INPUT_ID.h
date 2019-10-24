@@ -1,6 +1,6 @@
 #pragma once
 
-enum class INPUT_ID :int
+enum class INPUT_ID
 {
 	LEFT,
 	RIGHT,
