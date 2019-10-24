@@ -1,5 +1,7 @@
 #include <DxLib.h>
+#include <_DebugConOut.h>
 #include "KeyState.h"
+#include "InputState.h"
 
 
 
@@ -36,17 +38,23 @@ void KeyState::Update(void)
 
 void KeyState::RefKeyData(void)
 {
-	for (auto id : _keyCon)
+	for (auto id : INPUT_ID())
 	{
-
-		if (_buf[id] == 1)
-		{
-			state(static_cast<INPUT_ID>(id), 1);
-		}
+		state(id, static_cast<int>(_buf[_keyCon[static_cast<int>(id)]]));
+	}
+	
+	if (_buf[KEY_INPUT_F1])
+	{
+		func = &KeyState::SetKeyConfing;
+		TRACE("SetKeyConfing\n");
 	}
 }
 
 void KeyState::SetKeyConfing(void)
 {
-
+	if (_buf[KEY_INPUT_F1])
+	{
+		func = &KeyState::RefKeyData;									// –¼‘O‹óŠÔ‚ğ‘‚¢‚Ä‚ ‚°‚Ä‚Ç‚Ìclass‚Ì±ÄŞÚ½‚©‚½‚Ç‚ç‚¹‚Ä‚ ‚°‚é
+		TRACE("RefKeyData\n");
+	}
 }

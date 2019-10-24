@@ -10,7 +10,7 @@
 GameScene::GameScene()
 {
 	TRACE("πﬁ∞—º∞›ÇÃê∂ê¨\n");
-	TRACE("ç°ÇÃº∞›ÇÕ");
+
 	lpImageMng.GetID("∑¨◊", "image/char.png", { 30,32 }, { 10, 10 });
 	lpImageMng.GetID("íe", "image/shot.png", { 8,3 }, { 1,2 });
 	lpImageMng.GetID("ìGîöî≠", "image/en_blast.png", { 64,64 }, { 5,1 });
@@ -20,9 +20,9 @@ GameScene::GameScene()
 		new Player({ 100,100 }, { 0,0 })
 	);
 
-	_objList.emplace_back(
-		new Player({ 200,100 }, { 0,0 })
-	);
+	//_objList.emplace_back(
+	//	new Player({ 200,100 }, { 0,0 })
+	//);
 
 	EnemyState data; 
 

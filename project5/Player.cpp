@@ -23,7 +23,7 @@ void Player::Update(void)
 		return;
 	}
 
-	(*_input).Update();			// ｷｰ情報の更新
+	(*_input).Update();												// ｷｰ情報の更新
 
 	// らむだしき練習
 	auto move = [](const int keyID, int& pNum, const int speed)
