@@ -19,6 +19,7 @@ KeyState::KeyState()
 
 	_keyCon = _keyConDef;											// 内容をｺﾋﾟｰする
 	modeKeyOld = 1;													// 
+	key = 0;
 
 	func = &KeyState::RefKeyData;									// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
 }
@@ -52,15 +53,41 @@ void KeyState::RefKeyData(void)
 
 void KeyState::SetKeyConfing(void)
 {
+
+	for (int id = 0; id < 256; id++)
+	{
+		bool flag = false;
+
+		if (_buf[id])
+		{
+			for (int i = 0; i < key; i++)
+			{
+				if (_keyCon[i] == id )
+				{
+					flag = true;
+				}
+			}
+
+			if (!flag)
+			{
+				_keyCon[key] = id;
+				TRACE("%d\n", key);
+				key++;
+			}
+		}
+
+		if (key == static_cast<int>(end(INPUT_ID())))
+		{
+			key = 0;
+			TRACE("reset\n");
+			func = &KeyState::RefKeyData;							// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
+			TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
+		}
+	}
+
 	if (_buf[KEY_INPUT_F1] && !modeKeyOld)							// ｺﾝﾌｨｸﾞ切り替え
 	{
 		func = &KeyState::RefKeyData;								// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
 		TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
 	}
-
-	for ()
-	{
-		_keyCon 
-	}
-
 }
