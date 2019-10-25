@@ -14,6 +14,6 @@ public:
 
 private:
 	void init(void);
-	std::unique_ptr<InputState> _input;				// key‚ÌŠÇ—
+	std::shared_ptr<InputState> _input;				// key‚ÌŠÇ—
 };
 

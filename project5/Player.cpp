@@ -26,18 +26,21 @@ void Player::Update(void)
 	(*_input).Update();												// ·°î•ñ‚ÌXV
 
 	// ‚ç‚Ş‚¾‚µ‚«—ûK
-	auto move = [](const int keyID, int& pNum, const int speed)
+	auto move = [](std::weak_ptr<InputState> keyData,const INPUT_ID id, int& pNum, const int speed)
 	{
-		if (CheckHitKey(keyID))
+		if (!keyData.expired())
 		{
-			pNum += speed;
+			if ((*keyData.lock()).State(id).first)
+			{
+				pNum += speed;
+			}
 		}
 	};
 
-	move(KEY_INPUT_DOWN, _pos.y, +2);
-	move(KEY_INPUT_UP, _pos.y, -2);
-	move(KEY_INPUT_LEFT, _pos.x, -2);
-	move(KEY_INPUT_RIGHT, _pos.x, +2);
+	move(_input, INPUT_ID::DOWN, _pos.y, +2);
+	move(_input, INPUT_ID::UP, _pos.y, -2);
+	move(_input, INPUT_ID::LEFT, _pos.x, -2);
+	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
 
 	
 
@@ -69,7 +72,7 @@ void Player::init(void)
 	SetAnim(STATE::DETH,data);
 
 
-	_input = std::make_unique<KeyState>();
+	_input = std::make_shared<KeyState>();
 	// Ò¿¯Ä‚ğg‚¤‚â‚è•û
 	//_input.reset(new KeyState());
 

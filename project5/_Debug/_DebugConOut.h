@@ -10,7 +10,7 @@
 	MessageBox(0,ast_msg,"±»°Ä•\Ž¦",MB_OK);\
 	}
 
-#define TRACE(fmt, ...) printf(fmt,__VA_ARGS__);
+#define TRACE(fmt, ...) printf(fmt,__VA_ARGS__);	// ÃÞÊÞ¯¸Þ—p
 
 // ±»°Ä
 

@@ -17,6 +17,7 @@ private:
 	char _buf[256];							// ‘S‚Ä‚Ì·°‚Ìî•ñæ“¾—p
 	std::vector<int> _keyCon;				// ¡‚Ì·°ºİ
 	std::vector<int> _keyConDef;			// ÃŞÌ«ÙÄ
+	int modeKeyOld;
 
 };
 
