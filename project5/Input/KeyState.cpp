@@ -6,6 +6,8 @@
 
 KeyState::KeyState()
 {
+	FILE data;
+
 	_keyConDef.reserve(static_cast<size_t>(end(INPUT_ID())));		// ｷｰの保存領域の予約をする
 	
 	_keyConDef.emplace_back(KEY_INPUT_LEFT);
@@ -17,9 +19,18 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);
 	_keyConDef.emplace_back(KEY_INPUT_S);
 
-	_keyCon = _keyConDef;											// 内容をｺﾋﾟｰする
+	if (fopen_s(&data,"data","r"))
+	{
+		TRACE("読み込んだｷｰを設定します。");
+		_keyCon = 
+	}
+	else
+	{
+		TRACE("ﾃﾞﾌｫﾙﾄｷｰを設定します。");
+		_keyCon = _keyConDef;										// ﾌｧｲﾙに何もなかったら
+	}
+
 	modeKeyOld = 1;													// 
-	key = 0;
 
 	func = &KeyState::RefKeyData;									// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
 }
@@ -46,6 +57,7 @@ void KeyState::RefKeyData(void)
 	
 	if (_buf[KEY_INPUT_F1] && !modeKeyOld)							// ｺﾝﾌｨｸﾞ切り替え
 	{
+		_confID = begin(INPUT_ID());
 		func = &KeyState::SetKeyConfing;
 		TRACE("ｷｰｺﾝﾌｨｸﾞ起動\n");
 	}
@@ -54,40 +66,48 @@ void KeyState::RefKeyData(void)
 void KeyState::SetKeyConfing(void)
 {
 
-	for (int id = 0; id < 256; id++)
+	if (_buf[KEY_INPUT_F1] && !modeKeyOld)						// ｺﾝﾌｨｸﾞ切り替え
 	{
-		bool flag = false;
-
-		if (_buf[id])
-		{
-			for (int i = 0; i < key; i++)
-			{
-				if (_keyCon[i] == id )
-				{
-					flag = true;
-				}
-			}
-
-			if (!flag)
-			{
-				_keyCon[key] = id;
-				TRACE("%d\n", key);
-				key++;
-			}
-		}
-
-		if (key == static_cast<int>(end(INPUT_ID())))
-		{
-			key = 0;
-			TRACE("reset\n");
-			func = &KeyState::RefKeyData;							// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
-			TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
-		}
+		func = &KeyState::RefKeyData;							// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
+		TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
+		return;
 	}
 
-	if (_buf[KEY_INPUT_F1] && !modeKeyOld)							// ｺﾝﾌｨｸﾞ切り替え
+	auto checkKey = [&](int id)
 	{
-		func = &KeyState::RefKeyData;								// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
-		TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
+		for (auto ckId = begin(INPUT_ID()); ckId < _confID; ++ckId)
+		{
+			if (_keyCon[static_cast<int>(ckId)] == id)			// ID ﾁｪｯｸ
+			{
+				return false;
+			}
+		}
+		return true;
+	};
+
+	for (int id = 0; id < sizeof(_buf); id++)
+	{
+		if (!checkKey(id))										// 引数として
+		{
+			continue;											// もう一回forやってね
+		}
+
+		if (_buf[id] && !_buf[KEY_INPUT_F1])
+		{
+			_keyCon[static_cast<int>(_confID)] = id;
+			++_confID;											// 前演算じゃないと何を++するかわかってくれない
+
+			if (_confID >= end(_confID))						// 設定が全部完了したら終了する
+			{
+				TRACE("ｷｰｺﾝﾌｨｸﾞ終了");
+				func = &KeyState::RefKeyData;					// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
+				break;
+			}
+
+			TRACE("%d/%d番目のｷｰ設定\n",
+				static_cast<int>(_confID),
+				end(INPUT_ID())
+			);
+		}
 	}
 }
