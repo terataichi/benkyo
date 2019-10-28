@@ -6,7 +6,6 @@
 
 KeyState::KeyState()
 {
-	FILE data;
 
 	_keyConDef.reserve(static_cast<size_t>(end(INPUT_ID())));		// ｷｰの保存領域の予約をする
 	
@@ -19,15 +18,18 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);
 	_keyConDef.emplace_back(KEY_INPUT_S);
 
-	if (fopen_s(&data,"data","r"))
+	if (fopen_s(&fp, "data/key.dat", "r") == 0)
 	{
-		TRACE("読み込んだｷｰを設定します。");
-		_keyCon = 
+		_keyCon.resize(8);
+		TRACE("読み込んだｷｰを設定します。\n");
+		fread(&_keyCon[0], sizeof(int), _keyCon.size(), fp);	// ﾌｧｲﾙの読み込み
+		fclose(fp);												// 閉じます
 	}
 	else
-	{
-		TRACE("ﾃﾞﾌｫﾙﾄｷｰを設定します。");
-		_keyCon = _keyConDef;										// ﾌｧｲﾙに何もなかったら
+	{	
+		TRACE("ﾃﾞﾌｫﾙﾄｷｰを設定します。\n");
+		// ﾌｧｲﾙに何もなかったらﾃﾞﾌｫﾙﾄｾｯﾃｲ
+		_keyCon = _keyConDef;
 	}
 
 	modeKeyOld = 1;													// 
@@ -73,6 +75,7 @@ void KeyState::SetKeyConfing(void)
 		return;
 	}
 
+	// ﾗﾑﾀﾞ式で同じｷｰが設定されているか
 	auto checkKey = [&](int id)
 	{
 		for (auto ckId = begin(INPUT_ID()); ckId < _confID; ++ckId)
@@ -99,9 +102,20 @@ void KeyState::SetKeyConfing(void)
 
 			if (_confID >= end(_confID))						// 設定が全部完了したら終了する
 			{
-				TRACE("ｷｰｺﾝﾌｨｸﾞ終了");
-				func = &KeyState::RefKeyData;					// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
-				break;
+				if (fopen_s(&fp, "data/key.dat", "w") == 0)
+				{
+					// ﾌｧｲﾙへの書き込み
+					fwrite(&_keyCon[0], sizeof(int), _keyCon.size(), fp);
+					fclose(fp);									// 閉じます
+
+					TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
+					func = &KeyState::RefKeyData;				// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる
+					break;
+				}
+				else
+				{
+					AST();
+				}
 			}
 
 			TRACE("%d/%d番目のｷｰ設定\n",

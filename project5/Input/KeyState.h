@@ -19,5 +19,6 @@ private:
 	std::vector<int> _keyConDef;			// ÃÞÌ«ÙÄ
 	int modeKeyOld;
 	INPUT_ID _confID;
+	FILE *fp = NULL;						// Ì§²ÙÎß²ÝÀ°
 };
 
