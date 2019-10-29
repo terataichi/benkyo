@@ -18,12 +18,15 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);
 	_keyConDef.emplace_back(KEY_INPUT_S);
 
-	if (fopen_s(&fp, "data/key.dat", "r") == 0)
+	FILE *fp = NULL;														// ﾌｧｲﾙﾎﾟｲﾝﾀｰ
+
+	fopen_s(&fp, "data/key.dat", "rb");										// 開きます
+	if (fp != nullptr)
 	{
-		_keyCon.resize(8);
+		_keyCon.resize(static_cast<int>(end(INPUT_ID())));
 		TRACE("読み込んだｷｰを設定します。\n");
-		fread(&_keyCon[0], sizeof(int), _keyCon.size(), fp);	// ﾌｧｲﾙの読み込み
-		fclose(fp);												// 閉じます
+		fread(_keyCon.data(), sizeof(_keyCon[0]) * _keyCon.size(), 1, fp);	// 読み込みます
+		fclose(fp);															// 閉じます
 	}
 	else
 	{	
@@ -102,11 +105,15 @@ void KeyState::SetKeyConfing(void)
 
 			if (_confID >= end(_confID))						// 設定が全部完了したら終了する
 			{
-				if (fopen_s(&fp, "data/key.dat", "w") == 0)
+				// ﾌｧｲﾙへの書き込み
+				FILE *fp = NULL;								// ﾌｧｲﾙﾎﾟｲﾝﾀｰ
+
+				fopen_s(&fp, "data/key.dat", "wb");				// ﾌｧｲﾙopen
+
+				if (fp != nullptr)
 				{
-					// ﾌｧｲﾙへの書き込み
-					fwrite(&_keyCon[0], sizeof(int), _keyCon.size(), fp);
-					fclose(fp);									// 閉じます
+					fwrite(_keyCon.data(), sizeof(_keyCon[0]) * _keyCon.size(), 1, fp);	// 書き込みます
+					fclose(fp);															// 閉じます
 
 					TRACE("ｷｰｺﾝﾌｨｸﾞ終了\n");
 					func = &KeyState::RefKeyData;				// 名前空間を書いてあげてどのclassのｱﾄﾞﾚｽかたどらせてあげる

@@ -1,25 +1,29 @@
 #include "Vector2.h"
 #include <iostream>
 
-Vector2::Vector2()
+template<class T>
+Vector2Template<T>::Vector2Template()
 {
 	x = 0;
 	y = 0;
 }
 
-Vector2::Vector2(int x, int y)
+template<class T>
+Vector2Template<T>::Vector2Template(T x, T y)
 {
-	Vector2::x = x;
-	Vector2::y = y;
+	this-> x = x;
+	this-> y = y;
 }
 
-Vector2::~Vector2()
+template<class T>
+Vector2Template<T>::~Vector2Template()
 {
 
 }
 
 // ‘ã“ü
-Vector2 & Vector2::operator=(const Vector2 & vec)
+template<class T>
+Vector2Template<T> & Vector2Template::operator=(const Vector2Template<T> & vec)
 {
 	x = vec.x;
 	y = vec.y;
@@ -27,38 +31,45 @@ Vector2 & Vector2::operator=(const Vector2 & vec)
 }
 
 // ”äŠr‰‰ŽZŽq
-bool Vector2::operator==(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator==(const Vector2Template<T> & vec) const
 {
 	return ((vec.x == x) && (vec.y == y));
 }
 
-bool Vector2::operator!=(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator!=(const Vector2Template<T> & vec) const
 {
 	return !((vec.x == x) && (vec.y == y));
 }
 
-bool Vector2::operator>(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator>(const Vector2Template<T> & vec) const
 {
 	return ((vec.x > x)&&(vec.y > y));
 }
 
-bool Vector2::operator>=(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator>=(const Vector2Template<T> & vec) const
 {
 	return ((vec.x >= x) && (vec.y >= y));;
 }
 
-bool Vector2::operator<(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator<(const Vector2Template<T> & vec) const
 {
 	return ((vec.x < x) && (vec.y < y));;
 }
 
-bool Vector2::operator<=(const Vector2 & vec) const
+template<class T>
+bool Vector2Template::operator<=(const Vector2Template<T> & vec) const
 {
 	return ((vec.x <= x) && (vec.y <= y));;
 }
 
 // “Y‚¦Žš‰‰ŽZ
-int & Vector2::operator[](int i)
+template<class T>
+int & Vector2Template::operator[](T i)
 {
 	if (i == 0)
 	{

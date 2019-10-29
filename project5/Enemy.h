@@ -1,5 +1,6 @@
 #pragma once
 #include "Obj.h"
+#include "EnemyMove.h"
 
 enum class ENEMY_TYPE
 {
@@ -28,6 +29,7 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
+	EnemyMove moveCtl{ _pos };
 	void init();
 	ENEMY_TYPE _type;
 };
