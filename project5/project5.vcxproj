@@ -134,13 +134,13 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
-    <ClCompile Include="common\Vector2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="_Debug\_DebugConOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common\detelas\Vector2.h" />
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />

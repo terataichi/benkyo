@@ -1,5 +1,3 @@
-#include "Vector2.h"
-#include <iostream>
 
 template<class T>
 Vector2Template<T>::Vector2Template()
@@ -23,7 +21,7 @@ Vector2Template<T>::~Vector2Template()
 
 // ë„ì¸
 template<class T>
-Vector2Template<T> & Vector2Template::operator=(const Vector2Template<T> & vec)
+Vector2Template<T> & Vector2Template<T>::operator=(const Vector2Template<T> & vec)
 {
 	x = vec.x;
 	y = vec.y;
@@ -32,44 +30,44 @@ Vector2Template<T> & Vector2Template::operator=(const Vector2Template<T> & vec)
 
 // î‰ärââéZéq
 template<class T>
-bool Vector2Template::operator==(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator==(const Vector2Template<T> & vec) const
 {
 	return ((vec.x == x) && (vec.y == y));
 }
 
 template<class T>
-bool Vector2Template::operator!=(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator!=(const Vector2Template<T> & vec) const
 {
 	return !((vec.x == x) && (vec.y == y));
 }
 
 template<class T>
-bool Vector2Template::operator>(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator>(const Vector2Template<T> & vec) const
 {
 	return ((vec.x > x)&&(vec.y > y));
 }
 
 template<class T>
-bool Vector2Template::operator>=(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator>=(const Vector2Template<T> & vec) const
 {
 	return ((vec.x >= x) && (vec.y >= y));;
 }
 
 template<class T>
-bool Vector2Template::operator<(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator<(const Vector2Template<T> & vec) const
 {
 	return ((vec.x < x) && (vec.y < y));;
 }
 
 template<class T>
-bool Vector2Template::operator<=(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator<=(const Vector2Template<T> & vec) const
 {
 	return ((vec.x <= x) && (vec.y <= y));;
 }
 
 // ìYÇ¶éöââéZ
 template<class T>
-int & Vector2Template::operator[](T i)
+T & Vector2Template<T>::operator[](T i)
 {
 	if (i == 0)
 	{
@@ -86,131 +84,148 @@ int & Vector2Template::operator[](T i)
 }
 
 // ---íPçÄââéZéq
-Vector2 & Vector2::operator+=(const Vector2 & vec)
+template<class T>
+Vector2Template<T> & Vector2Template<T>::operator+=(const Vector2Template<T> & vec)
 {
 	x += vec.x;
 	y += vec.y;
 	return *this;
 }
 
-Vector2 & Vector2::operator-=(const Vector2 & vec)
+template<class T>
+Vector2Template<T> & Vector2Template<T>::operator-=(const Vector2Template<T> & vec)
 {
 	x -= vec.x;
 	y -= vec.y;
 	return *this;
 }
 
-Vector2 & Vector2::operator*=(int k)
+template<class T>
+Vector2Template<T> & Vector2Template<T>::operator*=(T k)
 {
 	x *= k;
 	y *= k;
 	return *this;
 }
 
-Vector2 & Vector2::operator/=(int k)
+template<class T>
+Vector2Template<T> & Vector2Template<T>::operator/=(T k)
 {
 	x /= k;
 	y /= k;
 	return *this;
 }
 
-Vector2 Vector2::operator+() const
+template<class T>
+Vector2Template<T> Vector2Template<T>::operator+() const
 {
 	return *this;
 }
 
-Vector2 Vector2::operator-() const
+template<class T>
+Vector2Template<T> Vector2Template<T>::operator-() const
 {
-	return Vector2(-this->x, -this->y);
+	return Vector2Template<T>(-this->x, -this->y);
 }
 
 // ---Õﬁ∏ƒŸÇÃââéZ
 
-Vector2 operator+(const Vector2& u, const int& k)
+template<class T>
+Vector2Template<T> operator+(const Vector2Template<T>& u, const T& k)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x + k;
 	vec.y = u.y + k;
 
 	return vec;
 }
-Vector2 operator-(const Vector2 & u, const int & k)
+template<class T>
+Vector2Template<T> operator-(const Vector2Template<T> & u, const T & k)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x - k;
 	vec.y = u.y - k;
 
 	return vec;
 }
-Vector2 operator%(const Vector2 & u, const int & k)
+template<class T>
+Vector2Template<T> operator%(const Vector2Template<T> & u, const T & k)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x % k;
 	vec.y = u.y % k;
 
 	return vec;
 }
-Vector2 operator*(const Vector2 & u, const int & k)
+template<class T>
+Vector2Template<T> operator*(const Vector2Template<T> & u, const T & k)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x * k;
 	vec.y = u.y * k;
 
 	return vec;
 }
-Vector2 operator/(const Vector2 & u, const int & k)
+template<class T>
+Vector2Template<T> operator/(const Vector2Template<T> & u, const T & k)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x / k;
 	vec.y = u.y / k;
 
 	return vec;
 }
 
-Vector2 operator+(const Vector2 & u, const Vector2 & v)
+template<class T>
+Vector2Template<T> operator+(const Vector2Template<T> & u, const Vector2Template<T> & v)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x + v.x;
 	vec.y = u.y + v.y;
 
 	return vec;
 }
-Vector2 operator-(const Vector2 & u, const Vector2 & v)
+template<class T>
+Vector2Template<T> operator-(const Vector2Template<T> & u, const Vector2Template<T> & v)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x - v.x;
 	vec.y = u.y - v.y;
 
 	return vec;
 }
-Vector2 operator*(const Vector2 & u, const Vector2 & v)
+template<class T>
+Vector2Template<T> operator*(const Vector2Template<T> & u, const Vector2Template<T> & v)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x * v.x;
 	vec.y = u.y * v.y;
 
 	return vec;
 }
-Vector2 operator/(const Vector2 & u, const Vector2 & v)
+template<class T>
+Vector2Template<T> operator/(const Vector2Template<T> & u, const Vector2Template<T> & v)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x / v.x;
 	vec.y = u.y / v.y;
 
 	return vec;
 }
-Vector2 operator%(const Vector2 & u, const Vector2 & v)
+template<class T>
+Vector2Template<T> operator%(const Vector2Template<T> & u, const Vector2Template<T> & v)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = u.x % v.x;
 	vec.y = u.y % v.y;
 
 	return vec;
 }
 
-Vector2 operator*(const int & k, const Vector2 & u)
+template<class T>
+Vector2Template<T> operator*(const T & k, const Vector2Template<T> & u)
 {
-	Vector2 vec;
+	Vector2Template<T> vec;
 	vec.x = k * u.x;
 	vec.y = k * u.y;
 
