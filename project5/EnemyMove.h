@@ -4,10 +4,10 @@
 class EnemyMove
 {
 public:
-	EnemyMove(Vector2& pos);
+	EnemyMove(Vector2dbl& pos);
 	~EnemyMove();
 	void Update(void);
 private:
-	Vector2& _pos;
+	Vector2dbl& _pos;
 };
 

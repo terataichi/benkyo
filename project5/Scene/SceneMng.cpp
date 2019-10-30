@@ -68,7 +68,7 @@ void SceneMng::Run(void)
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		_drawList.clear();	// —v‘f‚ð‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
-
+		
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ð‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²ÝÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ðŒ©•ª‚¯‚é‚ª‚Þ‚¸‚­‚È‚é
 		Draw();
 	}

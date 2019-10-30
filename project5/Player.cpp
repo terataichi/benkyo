@@ -9,7 +9,7 @@ Player::Player()
 	init();
 }
 
-Player::Player(Vector2 pos, Vector2 size)
+Player::Player(Vector2dbl pos, Vector2 size)
 {
 	_pos = pos;
 	_size = size;
@@ -26,7 +26,7 @@ void Player::Update(void)
 	(*_input).Update();												// ·°î•ñ‚ÌXV
 
 	// ‚ç‚Ş‚¾‚µ‚«—ûK
-	auto move = [](std::weak_ptr<InputState> keyData,const INPUT_ID id, int& pNum, const int speed)
+	auto move = [](std::weak_ptr<InputState> keyData,const INPUT_ID id, double& pNum, const int speed)
 	{
 		if (!keyData.expired())
 		{

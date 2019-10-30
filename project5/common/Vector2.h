@@ -73,5 +73,7 @@ template<class T>
 Vector2Template<T> operator *(const T& k, const Vector2Template<T>& u);
 
 using Vector2 = Vector2Template<int>;
+using Vector2dbl = Vector2Template<double>;
+using Vector2flt = Vector2Template<float>;
 
 #include "./detelas/Vector2.h"

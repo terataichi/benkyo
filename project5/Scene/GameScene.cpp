@@ -26,11 +26,11 @@ GameScene::GameScene()
 
 	EnemyState data; 
 
-	for (int y = 0; y < 5; y++)
+	for (double y = 0; y < 10; y++)
 	{
-		for (int x = 0; x < 5; x++)
+		for (double x = 0; x < 10; x++)
 		{			//type			pos								size
-			data = { ENEMY_TYPE::A, {200 + (x * 30), 100 + (y * 32)}, {0, 0} };
+			data = { static_cast<ENEMY_TYPE>((int)x % 3), {200 + (x * 30), 100 + (y * 32)}, {0, 0} };
 
 			_objList.emplace_back(new Enemy(data));
 		}
