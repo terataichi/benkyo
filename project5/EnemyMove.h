@@ -10,7 +10,7 @@ enum class MOVE_TYPE
 	PITIN,
 	LR,
 };
-
+										// “®‚«		–Ú“I’n
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2dbl>>;
 
 class EnemyMove

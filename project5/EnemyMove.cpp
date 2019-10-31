@@ -1,5 +1,5 @@
 #include "EnemyMove.h"
-#include <DxLib.h>
+#include "_Debug/_DebugConOut.h"
 
 EnemyMove::EnemyMove(Vector2dbl& pos) :_pos(pos)
 {
@@ -45,9 +45,32 @@ void EnemyMove::SetMovePrg(void)
 	{
 		return;
 	}
-	_startPos = _pos;
 
+	_startPos = _pos;					// 今の位置がｽﾀｰﾄ地点
+	_endPos = _aim[_aimCnt].second;		// 最終地点
 
+	// 
+	switch (_aim[_aimCnt].first)
+	{
+	case MOVE_TYPE::WAIT:
+		_move = &EnemyMove::Wait;
+		break;
+	case MOVE_TYPE::SIGMOID:
+		_move = &EnemyMove::MoveSigmoid;
+		break;
+	case MOVE_TYPE::SPIRAL:
+		_move = &EnemyMove::MoveSpiral;
+		break;
+	case MOVE_TYPE::PITIN:
+		_move = &EnemyMove::PitIn;
+		break;
+	case MOVE_TYPE::LR:
+		_move = &EnemyMove::MoveLR;
+		break;
+	default:
+		AST();
+		break;
+	}
 
 }
 
