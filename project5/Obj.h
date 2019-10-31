@@ -46,6 +46,7 @@ protected:
 	bool _alive;												// ¶‚«‚Ä‚¢‚é‚©
 	bool _dead;													// €‚ñ‚Å‚¢‚é‚©
 	Vector2dbl _pos;											// À•W
-	Vector2 _size;												// ‰æ‘œ»²½Ş
+	Vector2dbl _size;											// ‰æ‘œ»²½Ş
+	double _rad;												// Šp“x
 };
 

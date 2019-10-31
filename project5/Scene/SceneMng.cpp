@@ -19,7 +19,7 @@ void SceneMng::Draw(void)
 			std::get<static_cast<int>(DRAW_QUE::X)>(dataQue),
 			std::get<static_cast<int>(DRAW_QUE::Y)>(dataQue),
 			1.0,
-			0,
+			std::get<static_cast<int>(DRAW_QUE::RAD)>(dataQue),
 			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dataQue),
 			true
 		);

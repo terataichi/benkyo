@@ -9,7 +9,7 @@ Player::Player()
 	init();
 }
 
-Player::Player(Vector2dbl pos, Vector2 size)
+Player::Player(Vector2dbl pos, Vector2dbl size)
 {
 	_pos = pos;
 	_size = size;

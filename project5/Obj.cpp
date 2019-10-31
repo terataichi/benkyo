@@ -7,10 +7,12 @@
 
 Obj::Obj()
 {
+	// èâä˙âª
 	_alive = true;
 	_dead = false;
 	_animFrame = 0;
 	_animCount = 0;
+	_rad = 0;
 }
 
 void Obj::Draw(void)
@@ -46,12 +48,12 @@ void Obj::Draw(void)
 	}
 
 	// ï`âÊ
-	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x,_pos.y });
+	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x,_pos.y ,_rad});
 }
 
 void Obj::Draw(int id)
 {
-	lpSceneMng.AddDrawQue({ id,_pos.x,_pos.y });
+	lpSceneMng.AddDrawQue({ id,_pos.x,_pos.y ,_rad});
 }
 
 Obj::~Obj()
