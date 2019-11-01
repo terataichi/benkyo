@@ -15,10 +15,12 @@ enum class ENEMY_STATE
 	TYPE,
 	VECTOR,
 	SIZE,
+	AIM,	// 目標地点の情報
 	MAX
 };
 
-using EnemyState = std::tuple<ENEMY_TYPE, Vector2dbl, Vector2dbl>;
+							 // 種類		座標		ｻｲｽﾞ		目標地点の情報
+using EnemyState = std::tuple<ENEMY_TYPE, Vector2dbl, Vector2dbl,MoveState&>;
 
 class Enemy :
 	public Obj

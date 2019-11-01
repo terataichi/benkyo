@@ -10,7 +10,8 @@ enum class MOVE_TYPE
 	PITIN,
 	LR,
 };
-										// 動き		目的地
+
+										// 動き	 ,	目的地	を格納する
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2dbl>>;
 
 class EnemyMove
@@ -31,6 +32,8 @@ private:
 	void PitIn(void);										// 配置
 	void Wait(void);										// 待ち時間
 	void MoveLR(void);						
+
+	int count;
 
 	MoveState _aim;											// 目標に関する情報格納
 	int _aimCnt;											// 
