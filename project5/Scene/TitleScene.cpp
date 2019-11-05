@@ -13,7 +13,7 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Update(unique_Base own)
 {
-
+	// ¼°İØ‚è‘Ö‚¦
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
 		return std::make_unique<GameScene>();

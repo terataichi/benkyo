@@ -24,19 +24,20 @@ GameScene::GameScene()
 	//	new Player({ 200,100 }, { 0,0 })
 	//);
 
-	for (double y = 0; y < 10; y++)
+	for (int y = 0; y < 5; y++)
 	{
-		for (double x = 0; x < 10; x++)
+		for (int x = 0; x < 10; x++)
 		{		
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT ,Vector2dbl{ 180.0,0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT ,Vector2dbl{ 0.0,0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ 180.0,0.0 });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
 			//type		pos		size
 			EnemyState data = { static_cast<ENEMY_TYPE>((int)x % 3),
-			{200 + (x * 30), 100 + (y * 32)},
-			{0, 0},
-				tmpMoveState };
+								{static_cast<double>(800 * (x % 2)),  static_cast<double>((540/2)*((y / 2) % 3))},
+								{0, 0},
+								tmpMoveState };
 
 			_objList.emplace_back(new Enemy(data));
 		}

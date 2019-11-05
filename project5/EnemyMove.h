@@ -31,17 +31,16 @@ private:
 	void MoveSpiral(void);									// ｽﾊﾟｲﾗﾙ
 	void PitIn(void);										// 配置
 	void Wait(void);										// 待ち時間
-	void MoveLR(void);						
+	void MoveLR(void);										// 右と左
 
 	int count;
 
 	MoveState _aim;											// 目標に関する情報格納
-	int _aimCnt;											// 
+	int _aimCnt;											// 敵の管理用
 	
 	Vector2dbl _startPos;									// 各移動関数のｽﾀｰﾄ地点
 	Vector2dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
 
-	Vector2dbl& _pos;
-
+	Vector2dbl& _pos;										// 座標
 };
 

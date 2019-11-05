@@ -70,6 +70,9 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
+		// ‚Ç‚±‚ÉŠi”[‚·‚é‚Ì‚©Œˆ‚ß‚é
+		_aim[_aimCnt].second.x = 50 + ();
+		_aim[_aimCnt].second.y = (35 * 7) + ();
 		_move = &EnemyMove::PitIn;
 		break;
 	case MOVE_TYPE::LR:
@@ -85,7 +88,6 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-
 }
 
 void EnemyMove::MoveSpiral(void)
@@ -95,12 +97,20 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
+	// ˆÚ“®
 
+
+	// Ši”[‚µI‚í‚Á‚½‚çØ‚è‘Ö‚¦‚é
+	if (_pos == _endPos)
+	{
+		SetMovePrg();
+	}
 }
 
 void EnemyMove::Wait(void)
 {
 	count++;
+	// I’[’n“_‚É—ˆ‚½‚çØ‚è‘Ö‚¦‚é
 	if (count > _aim[_aimCnt].second.x)
 	{
 		SetMovePrg();
@@ -109,4 +119,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
+
 }
