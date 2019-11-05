@@ -104,7 +104,7 @@ void EnemyMove::PitIn(void)
 	_pos.x += pos.x;
 	_pos.y += pos.y;
 
-	_rad = std::atan2(_endPos.y - _pos.y, _endPos.x - _pos.x);	// Šp“x‚ğ‘ª‚é
+	_rad = std::atan2(-_pos.x + _endPos.x, -_endPos.y + _pos.y);	// Šp“x‚ğ‘ª‚é
 
 	// Ši”[‚µI‚í‚Á‚½‚çØ‚è‘Ö‚¦‚é
 	if (_pos == _endPos)
