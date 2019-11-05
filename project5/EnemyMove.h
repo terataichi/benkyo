@@ -17,7 +17,7 @@ using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2dbl>>;
 class EnemyMove
 {
 public:
-	EnemyMove(Vector2dbl& pos );
+	EnemyMove(Vector2dbl& pos , double& rad);
 	~EnemyMove();
 	void Update(void);										// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 新しい情報が欲しくなった時用フラグ
@@ -41,6 +41,7 @@ private:
 	Vector2dbl _startPos;									// 各移動関数のｽﾀｰﾄ地点
 	Vector2dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
 
-	Vector2dbl& _pos;										// 座標
+	Vector2dbl& _pos;										// 座標を参照で受け取る
+	double& _rad;											// 角度を参照で受け取って書き換えるための
 };
 

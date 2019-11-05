@@ -1,7 +1,7 @@
 #include "EnemyMove.h"
 #include "_Debug/_DebugConOut.h"
 
-EnemyMove::EnemyMove(Vector2dbl& pos) :_pos(pos)
+EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;						// 0だといきなりｱｸｾｽする
@@ -70,9 +70,6 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
-		// どこに格納するのか決める
-		_aim[_aimCnt].second.x = 50 + ();
-		_aim[_aimCnt].second.y = (35 * 7) + ();
 		_move = &EnemyMove::PitIn;
 		break;
 	case MOVE_TYPE::LR:
@@ -98,7 +95,16 @@ void EnemyMove::MoveSpiral(void)
 void EnemyMove::PitIn(void)
 {
 	// 移動
+	Vector2dbl pos;
+	
+	// エンド地点から今の座標を引いて
+	pos.x = (_endPos.x - _pos.x)/30;
+	pos.y = (_endPos.y - _pos.y)/30;
 
+	_pos.x += pos.x;
+	_pos.y += pos.y;
+
+	_rad = std::atan2(_endPos.y - _pos.y, _endPos.x - _pos.x);	// 角度を測る
 
 	// 格納し終わったら切り替える
 	if (_pos == _endPos)
@@ -109,12 +115,12 @@ void EnemyMove::PitIn(void)
 
 void EnemyMove::Wait(void)
 {
-	count++;
 	// 終端地点に来たら切り替える
 	if (count > _aim[_aimCnt].second.x)
 	{
 		SetMovePrg();
 	}
+	count++;
 }
 
 void EnemyMove::MoveLR(void)

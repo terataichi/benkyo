@@ -31,7 +31,7 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
-	EnemyMove moveCtl{ _pos };
+	EnemyMove moveCtl{ _pos , _rad};
 	void init();
 	ENEMY_TYPE _type;
 };
