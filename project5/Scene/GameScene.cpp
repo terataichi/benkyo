@@ -28,22 +28,37 @@ GameScene::GameScene()
 	{
 		for (int x = 0; x < 10; x++)
 		{		
-			MoveState tmpMoveState;
+			MoveState tmpMoveState;			// ˆ—					ÅI’n“_
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (35.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
+			double ofSet = 0;			// µÌ¾¯Ä‚ð‚¢‚¶‚é
+			switch ((x % 2))
+			{
+			case 0:
+				ofSet = (-15);
+				break;
+			case 1:
+				ofSet = 15;
+				break;
+			default:
+				AST();
+				ofSet = 0;
+				break;
+			}
+
 			//type		pos		size
-			EnemyState data = { static_cast<ENEMY_TYPE>((int)x % 3),
-								{static_cast<double>(800 * (x % 2)),  static_cast<double>((540/2)*((x / 2) % 3))},
+			EnemyState data = { ENEMY_TYPE::A,
+								{static_cast<double>(800 * (x % 2)) + ofSet,  static_cast<double>((540/2)*((x / 2) % 3))},
 								{0, 0},
 								tmpMoveState };
 
-				_objList.emplace_back(new Enemy(data));
+			_objList.emplace_back(new Enemy(data));
+
 		}
 	}
 	
-
 	/*obj[0] = new Obj("image/char.png", { 0, 0 }, 10, 10, 30, 32);
 	obj[1] = new Obj("image/char.png", { 100, 100 }, 10, 10, 30, 32);*/
 

@@ -1,3 +1,5 @@
+#include "..\Vector2.h"
+#include <cmath>
 
 template<class T>
 Vector2Template<T>::Vector2Template()
@@ -230,4 +232,10 @@ Vector2Template<T> operator*(const T & k, const Vector2Template<T> & u)
 	vec.y = k * u.y;
 
 	return vec;
+}
+
+template<class T>
+Vector2Template<T> abs(const Vector2Template<T>& u)
+{
+	return { std::abs(u.x), std::abs(u.y) };
 }

@@ -1,4 +1,5 @@
 #include "EnemyMove.h"
+#include <Vector2.h>
 #include "_Debug/_DebugConOut.h"
 
 EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
@@ -70,6 +71,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
+		_oneMoveVec = abs(((_startPos - _endPos) / 120.0));
 		_move = &EnemyMove::PitIn;
 		break;
 	case MOVE_TYPE::LR:
@@ -94,21 +96,27 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
-	// 移動
-	Vector2dbl pos;
 	
-	// エンド地点から今の座標を引いて
-	pos.x = (_endPos.x - _pos.x)/30;
-	pos.y = (_endPos.y - _pos.y)/30;
-
-	_pos.x += pos.x;
-	_pos.y += pos.y;
-
-	_rad = std::atan2(-_pos.x + _endPos.x, -_endPos.y + _pos.y);	// 角度を測る
-
-	// 格納し終わったら切り替える
-	if (_pos == _endPos)
+	// 角度を変えるよ
+	Vector2dbl _lenght;
+	
+	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))								// XかYだけをﾁｪｯｸすることによって計算量が減る
 	{
+		// 移動量が残っている場合
+		_pos.x += _oneMoveVec.x;
+		_pos.y += _oneMoveVec.y;
+
+		// 角度の処理
+		_lenght = _endPos - _pos;													// 原点に合わせる
+		_rad = std::atan2(_lenght.y, _lenght.x) + 3.141592 * (90.0 / 180.0);		// 角度を測る
+		//_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90.0);
+		//_rad = std::atan2(-_pos.x + _endPos.x, -_endPos.y + _pos.y);
+	}
+	else
+	{
+		// 格納し終わったら切り替える
+		_pos = _endPos;																// 一応ずれを修正する
+		_rad = 0;																	// 動き終わったら角度をもとの位置に戻す
 		SetMovePrg();
 	}
 }
