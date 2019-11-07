@@ -30,7 +30,7 @@ GameScene::GameScene()
 		{		
 			MoveState tmpMoveState;			// èàóù					ç≈èIínì_
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (35.0 * y) });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (40.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
 			double ofSet = 0;			// µÃæØƒÇÇ¢Ç∂ÇÈ

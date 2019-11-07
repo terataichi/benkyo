@@ -34,37 +34,37 @@ Vector2Template<T> & Vector2Template<T>::operator=(const Vector2Template<T> & ve
 template<class T>
 bool Vector2Template<T>::operator==(const Vector2Template<T> & vec) const
 {
-	return ((vec.x == x) && (vec.y == y));
+	return ((x == vec.x) && (y == vec.y));
 }
 
 template<class T>
 bool Vector2Template<T>::operator!=(const Vector2Template<T> & vec) const
 {
-	return !((vec.x == x) && (vec.y == y));
+	return !((x == vec.x) && (y == vec.y));
 }
 
 template<class T>
 bool Vector2Template<T>::operator>(const Vector2Template<T> & vec) const
 {
-	return ((vec.x > x)&&(vec.y > y));
+	return ((x > vec.x )&&(y > vec.y));
 }
 
 template<class T>
 bool Vector2Template<T>::operator>=(const Vector2Template<T> & vec) const
 {
-	return ((vec.x >= x) && (vec.y >= y));;
+	return ((x >= vec.x) && (y >= vec.y));
 }
 
 template<class T>
 bool Vector2Template<T>::operator<(const Vector2Template<T> & vec) const
 {
-	return ((vec.x < x) && (vec.y < y));;
+	return ((x > vec.x) && (y > vec.y));
 }
 
 template<class T>
 bool Vector2Template<T>::operator<=(const Vector2Template<T> & vec) const
 {
-	return ((vec.x <= x) && (vec.y <= y));;
+	return ((x >= vec.x) && (y >= vec.y));
 }
 
 // “Y‚¦Žš‰‰ŽZ
@@ -237,5 +237,5 @@ Vector2Template<T> operator*(const T & k, const Vector2Template<T> & u)
 template<class T>
 Vector2Template<T> abs(const Vector2Template<T>& u)
 {
-	return { std::abs(u.x), std::abs(u.y) };
+	return { abs(u.x), abs(u.y) };
 }
