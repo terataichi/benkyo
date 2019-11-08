@@ -10,6 +10,7 @@ const VecInt& ImageMng::GetID(const std::string& key)
 	return GetID(key, key);
 }
 
+// ˆê–‡‚¾‚¯
 const VecInt& ImageMng::GetID(const std::string& key, const std::string& fileName)
 {
 	// LoadGraph
@@ -22,6 +23,7 @@ const VecInt& ImageMng::GetID(const std::string& key, const std::string& fileNam
 	return imgMap[key];
 }
 
+// ”z—ñ‚É‚·‚é‚Æ‚«
 const VecInt& ImageMng::GetID(const std::string& key, const std::string& fileName, const Vector2& divSize, const Vector2& divCnt)
 {
 	// LoadDivGraph

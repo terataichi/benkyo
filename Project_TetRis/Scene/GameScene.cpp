@@ -1,36 +1,52 @@
+#include <algorithm>
 #include <DxLib.h>
 #include <_DebugConOut.h>
 #include "GameScene.h"
+#include <Scene\SceneMng.h>
 #include <ImageMng.h>
+#include <Block.h>
 
 
 GameScene::GameScene()
 {
 	TRACE("¹Ş°Ñ¼°İ‚Ì¶¬\n");
-	TRACE("¡‚Ì¼°İ‚Í");
-	lpImageMng.GetID("¹Ş°Ñ‰æ–Ê", "image/gameBG.png", { 640,464 }, { 1, 1 });
-	lpImageMng.GetID("tama", "image/char.png", { 8,3 }, { 1,2 });
-	lpImageMng.GetID("tekibakuha", "image/char.png", { 64,64 }, { 5,1 });
-	lpImageMng.GetID("plbakuha", "image/char.png", { 64,64 }, { 4,1 });
 
-	obj.resize(2);
-	/*obj[0] = new Obj("image/char.png", { 0, 0 }, 10, 10, 30, 32);
-	obj[1] = new Obj("image/char.png", { 100, 100 }, 10, 10, 30, 32);*/
+	lpImageMng.GetID("GAME", "image/gameBG.png");		// ¹Ş°Ñ‰æ‘œ
+	
+	BlockState data;
 
+	data = { BLOCK_TYPE::I ,
+			{0,0},
+			{0,415},
+			{15,15} };
+
+	_objList.emplace_back(new Block(data));
 }
 
 GameScene::~GameScene()
 {
 }
 
+// XV
 unique_Base GameScene::Update(unique_Base own)
 {
 	
-	for (auto data : obj)
+	//lpSceneMng.AddDrawQue({ lpImageMng.GetID("G”wŒi")[0], 0,0 ,{0,0},{640,400} });						// ”wŒi•`‰æ
+
+	for (auto data : _objList)
 	{
-		data->Draw();
+		// XV
+		(*data).Update();
+	}
+
+	for (auto data : _objList)
+	{
+		(*data).Draw();
 	}
 	
+	/*[](){} ‚ç‚Ş‚¾‚µ‚«*/
+	/* ‹ó‚É‚È‚Á‚½—v‘f‚ğÁ‚·	‚Ü‚Æ‚ß‚Ä‘‚¢‚½‚â‚Â*/
+
 	return std::move(own);
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #ifdef _DEBUG
 
+#include <Windows.h>
 #include <memory>
 
 #define AST() {\
@@ -9,7 +10,7 @@
 	MessageBox(0,ast_msg,"ｱｻｰﾄ表示",MB_OK);\
 	}
 
-#define TRACE(fmt, ...) printf(fmt,__VA_ARGS__);
+#define TRACE(fmt, ...) printf(fmt,__VA_ARGS__);	// ﾃﾞﾊﾞｯｸﾞ用
 
 // ｱｻｰﾄ
 
@@ -22,6 +23,7 @@ public:
 	}
 
 private:
+	/* 関数オブジェクト */
 	struct _DebugConOutDeleter	// ｶｽﾀﾑﾃﾞﾘｰﾀｰ
 	{
 		void operator()(_DebugConOut* _debugConOut)const

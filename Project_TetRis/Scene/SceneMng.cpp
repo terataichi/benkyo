@@ -14,40 +14,24 @@ void SceneMng::Draw(void)
 	// ｽﾀｯｸにたまっているQueを描画する
 	for (auto dataQue : _drawList)
 	{
-		DrawGraph(
+		// 中心描画なので爆発の都合がいい
+		DrawRectGraph(
 			std::get<static_cast<int>(DRAW_QUE::X)>(dataQue),
 			std::get<static_cast<int>(DRAW_QUE::Y)>(dataQue),
+			std::get<static_cast<int>(DRAW_QUE::Rect)>(dataQue).x,
+			std::get<static_cast<int>(DRAW_QUE::Rect)>(dataQue).y,
+			std::get<static_cast<int>(DRAW_QUE::SIZE)>(dataQue).x,
+			std::get<static_cast<int>(DRAW_QUE::SIZE)>(dataQue).y,
 			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dataQue),
-			true
+			true,
+			false
 		);
 	}
-	// ｲﾃﾚｰﾀｰでやる場合
-	// std::vector<_dra>
-	//for (auto dataQue = _drawList.begin(); dataQue != _drawList.end(); dataQue++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(*dataQue),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(*dataQue),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(*dataQue),
-	//		true);
-	//}
-	
-	// い　つ　も　の
-	// for (int no = 0; no < _drawList.size(); no++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(_drawList[no]),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(_drawList[no]),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(_drawList[no]),
-	//		true
-	//	);
-	//}
-
 
 	ScreenFlip();
 }
 
-SceneMng::SceneMng():ScreenSize{640,464}
+SceneMng::SceneMng():ScreenSize{640,400}
 {
 	
 }
@@ -60,12 +44,12 @@ SceneMng::~SceneMng()
 void SceneMng::Run(void)
 {
 	SysInit();
-	_activeScene = std::make_unique<GameScene>();
+	_activeScene = std::make_unique<TitleScene>();
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		_drawList.clear();	// 要素をすべて消してくれる
-
+		
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)をつけることによってｽﾏｰﾄﾎﾟｲﾝﾀの管理している中身	->で直接見てもいいがどうでき確保したやつを見分けるがむずくなる
 		Draw();
 	}

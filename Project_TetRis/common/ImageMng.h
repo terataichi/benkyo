@@ -7,6 +7,7 @@
 using VecInt = std::vector<int>;
 
 #define lpImageMng ImageMng::GetInstance()
+#define IMAGE_ID(KEY) (ImageMng::GetInstance().GetID(KEY))
 
 class ImageMng
 {
@@ -19,12 +20,11 @@ public:
 	// ‰æ‘œ‚ÌŽæ“¾
 	const VecInt& GetID(const std::string& key);
 	const VecInt& GetID(const std::string& key, const std::string& fileName);
-	const VecInt& GetID(const std::string& key, const std::string& fileName,
-					const Vector2& divSize , const Vector2& all);
+	const VecInt& GetID(const std::string& key, const std::string& fileName,const Vector2& divSize , const Vector2& all);
 
 
 private:
-	struct ImageMngDeleter	// ²Ò°¼ÞÏÈ°¼Þ¬°‚Ì¶½ÀÑÃÞØ°À°
+	struct ImageMngDeleter												// ²Ò°¼ÞÏÈ°¼Þ¬°‚Ì¶½ÀÑÃÞØ°À°
 	{
 		void operator()(ImageMng* imageMng)const
 		{
@@ -33,11 +33,11 @@ private:
 	};
 
 	ImageMng();
-	~ImageMng();	// ²Ò°¼ÞÏÈ°¼Þ¬°‚ÌÃÞÌ«ÙÄÃÞØ°À°
+	~ImageMng();														// ²Ò°¼ÞÏÈ°¼Þ¬°‚ÌÃÞÌ«ÙÄÃÞØ°À°
 
 	static std::unique_ptr<ImageMng, ImageMngDeleter>_sInstance;
 	
-	std::map<std::string, VecInt> imgMap;
+	std::map<std::string, VecInt> imgMap;								// 
 
 };
 

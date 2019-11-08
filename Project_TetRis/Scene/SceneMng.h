@@ -5,15 +5,18 @@
 #include <Vector2.h>
 #include "BaseScene.h"
 
-using DrawQueT = std::tuple<int, int, int>;
+//							id	 x	 y		rect	size
+using DrawQueT = std::tuple<int, int, int,Vector2, Vector2>;
 
 #define lpSceneMng SceneMng::GetInstance()
 
 enum class DRAW_QUE
 {
-	IMAGE,
-	X,
-	Y
+	IMAGE,					// 画像ID
+	X,						// X座標
+	Y,						// Y座標
+	Rect,					// 画像の左上指定
+	SIZE,					// 画像サイズ
 };
 
 class SceneMng
