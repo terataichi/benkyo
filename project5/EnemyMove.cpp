@@ -7,6 +7,7 @@ EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;						// 0‚¾‚Æ‚¢‚«‚È‚è±¸¾½‚·‚é
+	_moveGain = 5;					// ã‚©‚çn‚ß‚é‚½‚ß‚É-5‚ğ“ü‚ê‚½
 }
 
 EnemyMove::~EnemyMove()
@@ -88,12 +89,13 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-	double _moveGain = 0;		//
-	
-	_pos.x++;
+	_moveGain -= 0.1;
+
+	// XˆÚ“®
+	_pos.x += (_endPos.x - _startPos.x) / 180.0;
 
 	// ¼¸ŞÓ²ÄŞŠÖ”
-	_pos.y = ((1.0 / (1.0 + exp(-_pos.x / 60))) * _endPos.y);
+	_pos.y = 1.0 / (1.0 + exp(-_moveGain)) * (_endPos.y - _startPos.y);
 }
 
 void EnemyMove::MoveSpiral(void)

@@ -44,5 +44,7 @@ private:
 	Vector2dbl& _pos;										// 座標を参照で受け取る
 	double& _rad;											// 角度を参照で受け取って書き換えるための
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
+	double _moveGain;										// シグモイド関数の幅
+
 };
 
