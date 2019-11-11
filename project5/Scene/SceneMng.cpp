@@ -1,5 +1,6 @@
 #include <Dxlib.h>
 #include <iostream>
+#include <_Debug\_DebugDispOut.h>
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
@@ -104,5 +105,6 @@ bool SceneMng::SysInit(void)
 		return false;								//DX×²ÌŞ×Ø‰Šú‰»ˆ—
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					//‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
+	
 	return false;
 }

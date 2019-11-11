@@ -1,4 +1,5 @@
 #include "EnemyMove.h"
+#include <math.h>
 #include <Vector2.h>
 #include "_Debug/_DebugConOut.h"
 
@@ -49,7 +50,7 @@ bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 void EnemyMove::SetMovePrg(void)
 {
 	_aimCnt++;
-	if (_aimCnt >= _aim.size())
+	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
 		return;
 	}
@@ -87,6 +88,12 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
+	double _moveGain = 0;		//
+	
+	_pos.x++;
+
+	// º∏ﬁ”≤ƒﬁä÷êî
+	_pos.y = ((1.0 / (1.0 + exp(-_pos.x / 60))) * _endPos.y);
 }
 
 void EnemyMove::MoveSpiral(void)
