@@ -5,7 +5,7 @@
 #include <ImageMng.h>
 #include <Player.h>
 #include <Enemy.h>
-#include <Scene\SceneMng.h>
+#include "SceneMng.h"
 
 
 GameScene::GameScene()
@@ -31,7 +31,7 @@ GameScene::GameScene()
 		{		
 			MoveState tmpMoveState;			// èàóù					ç≈èIínì_
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{ 700,600 * (5.0 / 7.0) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{200 + (double)(400 *(((y * 10) + x)%2)) ,600 * (5.0 / 7.0) });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (40.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
