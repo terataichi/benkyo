@@ -7,7 +7,6 @@ EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;						// 0だといきなりｱｸｾｽする
-	_moveGain = -5;						// 上から始めるために-5を入れた
 }
 
 EnemyMove::~EnemyMove()
@@ -68,14 +67,17 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
-		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 180.0);
+		_radius = 50;											// 半径
+		_moveGain = -10;										// ｼｸﾞﾓｲﾄﾞを上から始めるために-10を入れた
+		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 180.0);	// 3秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
+		_oneMoveVec = ((_endPos - _startPos) / 120.0);
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);
+		_oneMoveVec = ((_endPos - _startPos) / 120.0);			// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -90,30 +92,55 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-	_moveGain += 0.1;
-
-	// X移動
-	_pos.x += _oneMoveVec.x;
-
-	// ｼｸﾞﾓｲﾄﾞ関数
-	_pos.y = (1.0 / (1.0 + exp(-_moveGain))) * (_endPos.y - _startPos.y);
-
-	if (abs(_endPos.x - _pos.x) <= abs(_oneMoveVec.x))
+	// 最終地点の場所かﾁｪｯｸ
+	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
 	{
+		// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
+		_oldPos = _pos;
+
+		// ｼｸﾞﾓｲﾄﾞ関数
+		_pos.y = ((1.0 / (1.0 + exp(-_moveGain))) * (_endPos.y - _startPos.y)) + _startPos.y;
+
+		// X移動
+		_pos.x += _oneMoveVec.x;
+
+		// 今の座標と前の座標で角度を計算する
+		_lenght = _pos - _oldPos;
+		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
+
+		// 幅を変える
+		_moveGain += 0.1;
+	}
+	else
+	{
+		_pos = _endPos;																// 一応ずれを修正する
 		SetMovePrg();
 	}
 }
 
 void EnemyMove::MoveSpiral(void)
 {
+	if (abs(_endPos - _pos) >= abs(_oneMoveVec))
+	{
+		// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
+		_oldPos = _pos;
 
+		// 移動
+		_pos.x += ;
+
+		// 今の座標と前の座標で角度を計算する
+		_lenght = _pos - _oldPos;
+		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
+	}
+	else
+	{
+		_pos = _endPos;																// 一応ずれを修正する
+		SetMovePrg();
+	}
 }
 
 void EnemyMove::PitIn(void)
 {
-	
-	// 角度を変えるよ
-	Vector2dbl _lenght;
 	
 	if (abs(_endPos - _pos) >= abs(_oneMoveVec))								// XかYだけをﾁｪｯｸすることによって計算量が減る
 	{

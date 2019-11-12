@@ -42,9 +42,12 @@ private:
 	Vector2dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
 
 	Vector2dbl& _pos;										// 座標を参照で受け取る
+	Vector2dbl _oldPos;										// 前のﾌﾚｰﾑにいた座標格納
 	double& _rad;											// 角度を参照で受け取って書き換えるための
+	Vector2dbl _lenght;										// 角度を変えるよ
+	double _radius;											// 半径
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
-	double _moveGain;										// シグモイド関数の幅
-
+	double _moveGain;										// シグモイド関数の幅											
+	
 };
 

@@ -31,7 +31,8 @@ GameScene::GameScene()
 		{		
 			MoveState tmpMoveState;			// èàóù					ç≈èIínì_
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{200 + (double)(400 *(((y * 10) + x)%2)) ,600 * (5.0 / 7.0) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{ 100.0 + (double)(600.0 * !((x % 2))) ,600.0 * (5.0 / 7.0) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ 100.0 + (double)(600.0 * !((x % 2))),(600.0 * (5.0 / 7.0)) - 100.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (40.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
@@ -50,9 +51,9 @@ GameScene::GameScene()
 				break;
 			}
 
-			//type		pos		size
+			//type		pos		size																						15ÇÕµÃæØƒ
 			EnemyState data = { ENEMY_TYPE::A,
-								{static_cast<double>(800 * (x % 2)) + ofSet,  static_cast<double>((540/2)*((x / 2) % 3))},
+								{static_cast<double>(800 * (x % 2)) + ofSet,  static_cast<double>((540/2)*((x / 2) % 3)) + 15},
 								{0, 0},
 								tmpMoveState };
 			
