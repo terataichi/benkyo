@@ -67,17 +67,17 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
-		_radius = 50;											// 敿宎
-		_moveGain = -10;										// 几抻材迋饛銈﹤鐜n傔傞偨傔偵-10傪擖傟偨
-		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 180.0);	// 3昩宱偮傑偱偵堏摦偝偣傞侾腾把偺堏摦検
+		_moveGain = -10;																				// 几抻材迋饛銈﹤鐜n傔傞偨傔偵-10傪擖傟偨
+		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 180.0);											// 3昩宱偮傑偱偵堏摦偝偣傞侾腾把偺堏摦検
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);
+		_angle = std::atan(90);																			// 弶婜偺妏搙傪偒傔傞
+		_radius = abs(_endPos.y - _startPos.y);															// 敿宎偺愝掕
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);			// 2昩宱偮傑偱偵堏摦偝偣傞侾腾把偺堏摦検
+		_oneMoveVec = ((_endPos - _startPos) / 120.0);													// 2昩宱偮傑偱偵堏摦偝偣傞侾腾把偺堏摦検
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -120,23 +120,37 @@ void EnemyMove::MoveSigmoid(void)
 
 void EnemyMove::MoveSpiral(void)
 {
-	if (abs(_endPos - _pos) >= abs(_oneMoveVec))
-	{
 		// 堦斣嵟弶偵慜腾把偵偄偨嵗昗傪奿擺偡傞
 		_oldPos = _pos;
 
+
 		// 堏摦
-		_pos.x += ;
+		_pos.x = (_radius * std::cos(_angle)) + _endPos.x;
+		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
+
+		// 妏搙惂屼
+		if(_pos.x < 400.0)
+		{
+			_angle += std::atan(0.03);
+		}
+		else
+		{
+			_angle -= std::atan(0.03);
+		}
+
+		// 敿宎彫偝偔偡傞
+		_radius -= 0.5;
 
 		// 崱偺嵗昗偲慜偺嵗昗偱妏搙傪寁嶼偡傞
 		_lenght = _pos - _oldPos;
 		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
-	}
-	else
-	{
-		_pos = _endPos;																// 堦墳偢傟傪廋惓偡傞
-		SetMovePrg();
-	}
+
+		// 廔椆忦審
+		if ()
+		{
+			SetMovePrg();
+		}
+
 }
 
 void EnemyMove::PitIn(void)
