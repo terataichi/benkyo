@@ -10,6 +10,8 @@ SceneMng *SceneMng::sInstance = nullptr;
 void SceneMng::Draw(void)
 {
 	SetDrawScreen(DX_SCREEN_BACK);
+	_dbgAddDraw();								// ﾃﾞﾊﾞｯｸ用の描画
+
 	ClsDrawScreen();
 
 	// ｽﾀｯｸにたまっているQueを描画する
@@ -68,10 +70,13 @@ void SceneMng::Run(void)
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		_dbgStartDraw();
+
 		_drawList.clear();	// 要素をすべて消してくれる
 		
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)をつけることによってｽﾏｰﾄﾎﾟｲﾝﾀの管理している中身	->で直接見てもいいがどうでき確保したやつを見分けるがむずくなる
 		Draw();
+
 	}
 	// delete _activeScene;
 }
@@ -105,6 +110,8 @@ bool SceneMng::SysInit(void)
 		return false;								//DXﾗｲﾌﾞﾗﾘ初期化処理
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					//ひとまずﾊﾞｯｸﾊﾞｯﾌｧに描画
-	
+	_dbgSetup(255);
+
+
 	return false;
 }

@@ -2,6 +2,7 @@
 #include <math.h>
 #include <Vector2.h>
 #include "_Debug/_DebugConOut.h"
+#include "_Debug/_DebugDispOut.h"
 
 EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
@@ -27,7 +28,8 @@ void EnemyMove::Update(void)
 	//_pos.x -= (rand() % a);
 	//_pos.y += (rand() % a);
 	//_pos.y -= (rand() % a);
-
+	_dbgDrawPixel(_pos.x, _pos.y, 0xfffff);
+	_dbgDrawBox(_pos.x - 15, _pos.y - 15, _pos.x + 15, _pos.y + 15, 0xffffff, false);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -129,7 +131,7 @@ void EnemyMove::MoveSpiral(void)
 		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
 
 		// äpìxêßå‰
-		if(_pos.x < 400.0)
+		if(_endPos.x < 400.0)
 		{
 			_angle += std::atan(0.03);
 		}
@@ -139,14 +141,14 @@ void EnemyMove::MoveSpiral(void)
 		}
 
 		// îºåaè¨Ç≥Ç≠Ç∑ÇÈ
-		_radius -= 0.5;
+		_radius -= 0.4;
 
 		// ç°ÇÃç¿ïWÇ∆ëOÇÃç¿ïWÇ≈äpìxÇåvéZÇ∑ÇÈ
 		_lenght = _pos - _oldPos;
 		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
 
 		// èIóπèåè
-		if ()
+		if (_radius <= 0)
 		{
 			SetMovePrg();
 		}
