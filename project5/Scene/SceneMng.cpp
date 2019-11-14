@@ -14,11 +14,10 @@ void SceneMng::Draw(void)
 
 	_dbgAddDraw();											// ÃŞÊŞ¯¸—p‚Ì•`‰æ
 
-	// •À‚Ñ‘Ö‚¦
+	// •`‰æ‚Ì‡”Ô‚Ì•À‚Ñ‘Ö‚¦
 	std::sort(_drawList.begin(), _drawList.end(),
-		[](DrawQueT &a, DrawQueT &b)
-	{return (std::get<static_cast<int>(DRAW_QUE::ZODER)>(a)) > (std::get<static_cast<int>(DRAW_QUE::ZODER)>(b)); });
-
+		[](DrawQueT &left, DrawQueT &right)
+	{return (std::get<static_cast<int>(DRAW_QUE::IMAGE)>(left)) > (std::get<static_cast<int>(DRAW_QUE::IMAGE)>(right)); });
 
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
@@ -84,7 +83,7 @@ void SceneMng::Run(void)
 
 		_drawList.clear();	// —v‘f‚ğ‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
 		
-		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,1000,LAYER::UI });		// ˜g‚Ì•`‰æ
+		//AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,1000,LAYER::UI });		// ˜g‚Ì•`‰æ
 
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 		Draw();

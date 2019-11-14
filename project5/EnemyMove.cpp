@@ -24,7 +24,7 @@ void EnemyMove::Update(void)
 	}
 
 	// ÃŞÊŞ¯¸Ş—p
-	_dbgDrawPixel(_pos.x, _pos.y, 0xfffff);
+	_dbgDrawPixel(_pos.x, _pos.y, 0xffffff);
 	//_dbgDrawBox(_pos.x - 15, _pos.y - 15, _pos.x + 15, _pos.y + 15, 0xffffff, false);
 }
 
@@ -50,11 +50,6 @@ void EnemyMove::SetMovePrg(void)
 	_aimCnt++;
 	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
-		int a = 30;
-		_pos.x += (rand() % a);
-		_pos.x -= (rand() % a);
-		_pos.y += (rand() % a);
-		_pos.y -= (rand() % a);
 		return;
 	}
 
@@ -75,7 +70,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
-		_angle = std::atan(90);																			// ‰Šú‚ÌŠp“x‚ğ‚«‚ß‚é
+		_angle = std::atan( _startPos.y - _endPos.y );													// ‰Šú‚ÌŠp“x‚ğ‚«‚ß‚é
 		_radius = abs(_endPos.y - _startPos.y);															// ”¼Œa‚Ìİ’è
 		break;
 	case MOVE_TYPE::PITIN:
@@ -136,14 +131,7 @@ void EnemyMove::MoveSpiral(void)
 		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
 
 		// Šp“x§Œä
-		if (_endPos.x < 400.0)
-		{
-			_angle += std::atan(0.03);
-		}
-		else
-		{
-			_angle -= std::atan(0.03);
-		}
+		_angle += std::atan(0.03) ;
 
 		// ”¼Œa¬‚³‚­‚·‚é
 		_radius -= 0.4;
