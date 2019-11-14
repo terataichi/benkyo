@@ -23,13 +23,9 @@ void EnemyMove::Update(void)
 											// つけないとthis->(*_move())なってしまう。
 	}
 
-	//int a = 30;
-	//_pos.x += (rand() % a);
-	//_pos.x -= (rand() % a);
-	//_pos.y += (rand() % a);
-	//_pos.y -= (rand() % a);
+	// ﾃﾞﾊﾞｯｸﾞ用
 	_dbgDrawPixel(_pos.x, _pos.y, 0xfffff);
-	_dbgDrawBox(_pos.x - 15, _pos.y - 15, _pos.x + 15, _pos.y + 15, 0xffffff, false);
+	//_dbgDrawBox(_pos.x - 15, _pos.y - 15, _pos.x + 15, _pos.y + 15, 0xffffff, false);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -54,6 +50,11 @@ void EnemyMove::SetMovePrg(void)
 	_aimCnt++;
 	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
+		int a = 30;
+		_pos.x += (rand() % a);
+		_pos.x -= (rand() % a);
+		_pos.y += (rand() % a);
+		_pos.y -= (rand() % a);
 		return;
 	}
 
@@ -122,6 +123,10 @@ void EnemyMove::MoveSigmoid(void)
 
 void EnemyMove::MoveSpiral(void)
 {
+
+	// 終了条件
+	if (_radius >= 0)
+	{
 		// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
 		_oldPos = _pos;
 
@@ -131,7 +136,7 @@ void EnemyMove::MoveSpiral(void)
 		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
 
 		// 角度制御
-		if(_endPos.x < 400.0)
+		if (_endPos.x < 400.0)
 		{
 			_angle += std::atan(0.03);
 		}
@@ -147,11 +152,11 @@ void EnemyMove::MoveSpiral(void)
 		_lenght = _pos - _oldPos;
 		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
 
-		// 終了条件
-		if (_radius <= 0)
-		{
-			SetMovePrg();
-		}
+	}
+	else
+	{
+		SetMovePrg();
+	}
 
 }
 

@@ -48,5 +48,6 @@ protected:
 	Vector2dbl _pos;											// À•W
 	Vector2dbl _size;											// ‰æ‘œ»²½Ş
 	double _rad;												// Šp“x
+	int _zOder;													// •`‰æ‚Ì—Dæ
 };
 

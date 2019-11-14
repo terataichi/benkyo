@@ -1,6 +1,8 @@
 #include <Dxlib.h>
 #include <iostream>
+#include <algorithm>
 #include <_Debug\_DebugDispOut.h>
+#include <ImageMng.h>
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
@@ -9,18 +11,26 @@ SceneMng *SceneMng::sInstance = nullptr;
 
 void SceneMng::Draw(void)
 {
-	SetDrawScreen(DX_SCREEN_BACK);
-	_dbgAddDraw();								// ÃŞÊŞ¯¸—p‚Ì•`‰æ
 
+	_dbgAddDraw();											// ÃŞÊŞ¯¸—p‚Ì•`‰æ
+
+	// •À‚Ñ‘Ö‚¦
+	std::sort(_drawList.begin(), _drawList.end(),
+		[](DrawQueT &a, DrawQueT &b)
+	{return (std::get<static_cast<int>(DRAW_QUE::ZODER)>(a)) > (std::get<static_cast<int>(DRAW_QUE::ZODER)>(b)); });
+
+
+	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	for (auto dataQue : _drawList)
 	{
+
 		// ’†S•`‰æ‚È‚Ì‚Å”š”­‚Ì“s‡‚ª‚¢‚¢
 		DrawRotaGraph(
-			std::get<static_cast<int>(DRAW_QUE::X)>(dataQue),
-			std::get<static_cast<int>(DRAW_QUE::Y)>(dataQue),
+			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::X)>(dataQue)),
+			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::Y)>(dataQue)),
 			1.0,
 			std::get<static_cast<int>(DRAW_QUE::RAD)>(dataQue),
 			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dataQue),
@@ -74,6 +84,8 @@ void SceneMng::Run(void)
 
 		_drawList.clear();	// —v‘f‚ğ‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
 		
+		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,1000,LAYER::UI });		// ˜g‚Ì•`‰æ
+
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 		Draw();
 
@@ -110,7 +122,9 @@ bool SceneMng::SysInit(void)
 		return false;								//DX×²ÌŞ×Ø‰Šú‰»ˆ—
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					//‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
-	_dbgSetup(255);
+	_dbgSetup(255);									// ÃŞÊŞ¯¸Ş—p
+
+	lpImageMng.GetID("˜g", "image/frame.png");
 
 
 	return false;

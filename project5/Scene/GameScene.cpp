@@ -21,14 +21,13 @@ GameScene::GameScene()
 		new Player({ 100,100 }, { 0,0 })
 	);
 
-	//_objList.emplace_back(
-	//	new Player({ 200,100 }, { 0,0 })
-	//);
-	
+	double ofSet = 0;			// ｵﾌｾｯﾄをいじる
+
 	for (int y = 0; y < 5; y++)
 	{
 		for (int x = 0; x < 10; x++)
 		{		
+
 			MoveState tmpMoveState;			// 処理					最終地点
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{ 200.0 + (double)(400.0 * !((x % 2))) ,600.0 * (5.0 / 7.0) });
@@ -36,7 +35,7 @@ GameScene::GameScene()
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (40.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
-			double ofSet = 0;			// ｵﾌｾｯﾄをいじる
+			// ｵﾌｾｯﾄの計算
 			switch ((x % 2))
 			{
 			case 0:
@@ -57,7 +56,6 @@ GameScene::GameScene()
 								{0, 0},
 								tmpMoveState };
 			
-
 			_objList.emplace_back(new Enemy(data));
 
 		}
