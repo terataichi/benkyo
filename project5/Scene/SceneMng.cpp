@@ -9,6 +9,26 @@
 
 SceneMng *SceneMng::sInstance = nullptr;
 
+LAYER begin(LAYER)
+{
+	return LAYER::BG;
+}
+LAYER end(LAYER)
+{
+	return LAYER::MAX;
+}
+LAYER operator*(LAYER key)
+{
+	return key;
+}
+LAYER operator++(LAYER & key)
+{
+	// ‹K’è‚ÌŒ^‚ğ•Ô‚µ‚Ä‚­‚ê‚é
+	// std::underlying_type<>::type()
+
+	return key = static_cast<LAYER>(std::underlying_type<LAYER>::type(key) + 1);
+}
+
 void SceneMng::Draw(void)
 {
 
@@ -24,21 +44,27 @@ void SceneMng::Draw(void)
 				std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(right), std::get<static_cast<int>(DRAW_QUE::ZODER)>(right));
 	});
 
-
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
+	
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
-	for (auto dataQue : _drawList)
+	for (auto dQue : _drawList)
 	{
-		
+
 		// tie‚Éî•ñ‚ğ‚Î‚ç‚µ‚Ä‚à‚ç‚¤‚½‚ß‚Ì•Ï”‚ğì‚é
 		double x, y, rad;
 		int id;
 		LAYER layer;
 		// tie î•ñ‚ğ‚Ü‚Æ‚ß‚Äæ‚èo‚µ‚Ä‚Î‚ç‚Î‚ç‚É‚µ‚Ä‚­‚ê‚é		 ignore “Ç‚İ”ò‚Î‚µ‚Ä‚­‚ê‚é
-		std::tie(id, x, y, rad, std::ignore, layer) = dataQue;	// î•ñ‚ğ“ü‚ê‚é tie ‚ª‚Î‚ç‚µ‚Ä‚­‚ê‚é
+		std::tie(id, x, y, rad, std::ignore, layer) = dQue;	// î•ñ‚ğ“ü‚ê‚é tie ‚ª‚Î‚ç‚µ‚Ä‚­‚ê‚é
 		
+		if (GetDrawScreen() != _screenID[layer])
+		{
+			SetDrawScreen(_screenID[layer]);
+			ClsDrawScreen();
+		}
+
 		// ’†S•`‰æ‚È‚Ì‚Å”š”­‚Ì“s‡‚ª‚¢‚¢
 		DrawRotaGraph(
 			static_cast<int>(x),
@@ -48,29 +74,15 @@ void SceneMng::Draw(void)
 			id,
 			true
 		);
-
 	}
-	// ²ÃÚ°À°‚Å‚â‚éê‡
-	// std::vector<_dra>
-	//for (auto dataQue = _drawList.begin(); dataQue != _drawList.end(); dataQue++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(*dataQue),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(*dataQue),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(*dataQue),
-	//		true);
-	//}
 
-	// for (int no = 0; no < _drawList.size(); no++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(_drawList[no]),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(_drawList[no]),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(_drawList[no]),
-	//		true
-	//	);
-	//}
+	SetDrawScreen(DX_SCREEN_BACK);
+	ClsDrawScreen();
 
+	for (auto id : LAYER())
+	{
+		DrawGraph(0, 0, _screenID[id], true);
+	}
 
 	ScreenFlip();
 }
@@ -135,15 +147,17 @@ bool SceneMng::SysInit(void)
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					//‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
 
-	for (auto layer : LAYER);
-	{ }
-
-	_screenID[LAYER::BG];
+	for (auto id : LAYER())
+	{
+		if (_screenID.find(id) == _screenID.end())
+		{
+			_screenID[id] = MakeScreen(ScreenSize.x, ScreenSize.y, true);
+		}
+	}
 
 	_dbgSetup(200);									// ÃŞÊŞ¯¸Ş—p
 
-
-	lpImageMng.GetID("˜g", "image/frame.png");
+	lpImageMng.GetID("˜g", "image/frame.png");		// ˜g
 
 
 	return false;

@@ -10,7 +10,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 
 	SceneMng::Create();
 	SceneMng::GetInstance().Run();
-	SceneMng::Destroy;
+	SceneMng::Destroy();
 	
 	return 0;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <map>
 #include <tuple>
 #include <vector>
 #include <Vector2.h>
@@ -21,7 +22,13 @@ enum class LAYER
 	BG,
 	CHAR,
 	UI,
+	MAX
 };
+
+LAYER begin(LAYER);
+LAYER end(LAYER);
+LAYER operator*(LAYER key);
+LAYER operator++(LAYER& key);
 
 //							id	 x		 y		äpìx	âúçs screen
 using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;		// DRAW_QUEÇÃì‡óe
