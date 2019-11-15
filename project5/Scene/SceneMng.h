@@ -69,7 +69,8 @@ private:
 
 	void Draw(void);
 
-	std::vector<DrawQueT>_drawList;
+	std::map<LAYER, int>_screenID;		// screen—p‚Ì
+	std::vector<DrawQueT>_drawList;		// •`‰æƒŠƒXƒg
 
 	SceneMng();		// ºÝ½Ä×¸À
 	~SceneMng();	// ÃÞ½Ä×¸À
