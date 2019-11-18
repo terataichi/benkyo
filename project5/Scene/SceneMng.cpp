@@ -9,29 +9,9 @@
 
 SceneMng *SceneMng::sInstance = nullptr;
 
-LAYER begin(LAYER)
-{
-	return LAYER::BG;
-}
-LAYER end(LAYER)
-{
-	return LAYER::MAX;
-}
-LAYER operator*(LAYER key)
-{
-	return key;
-}
-LAYER operator++(LAYER & key)
-{
-	// ‹K’è‚ÌŒ^‚ğ•Ô‚µ‚Ä‚­‚ê‚é
-	// std::underlying_type<>::type()
-
-	return key = static_cast<LAYER>(std::underlying_type<LAYER>::type(key) + 1);
-}
 
 void SceneMng::Draw(void)
 {
-
 	_dbgAddDraw();											// ÃŞÊŞ¯¸—p‚Ì•`‰æ
 
 	// •`‰æ‚Ì‡”Ô‚Ì•À‚Ñ‘Ö‚¦
@@ -44,10 +24,12 @@ void SceneMng::Draw(void)
 				std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(right), std::get<static_cast<int>(DRAW_QUE::ZODER)>(right));
 	});
 
-	SetDrawScreen(DX_SCREEN_BACK);
-	ClsDrawScreen();
+	for (auto layer : LAYER())
+	{
+		SetDrawScreen(_screenID[layer]);
+		ClsDrawScreen();
 
-	
+	}
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	for (auto dQue : _drawList)
 	{
@@ -59,6 +41,7 @@ void SceneMng::Draw(void)
 		// tie î•ñ‚ğ‚Ü‚Æ‚ß‚Äæ‚èo‚µ‚Ä‚Î‚ç‚Î‚ç‚É‚µ‚Ä‚­‚ê‚é		 ignore “Ç‚İ”ò‚Î‚µ‚Ä‚­‚ê‚é
 		std::tie(id, x, y, rad, std::ignore, layer) = dQue;	// î•ñ‚ğ“ü‚ê‚é tie ‚ª‚Î‚ç‚µ‚Ä‚­‚ê‚é
 		
+		// ¡‚Ì½¸Ø°İ‚ÆID‚ªˆá‚Á‚½‚ç‚»‚ÌÚ²Ô°‚É‘‚«‚±‚ß‚é
 		if (GetDrawScreen() != _screenID[layer])
 		{
 			SetDrawScreen(_screenID[layer]);
@@ -79,15 +62,16 @@ void SceneMng::Draw(void)
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
-	for (auto id : LAYER())
+	// ŠeÚ²Ô°‚Ì½¸Ø°İ‚ğ•`‰æ‚·‚é
+	for (auto layer : LAYER())
 	{
-		DrawGraph(0, 0, _screenID[id], true);
+		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
 	}
 
-	ScreenFlip();
+	ScreenFlip();	// — ‰æ–Ê‚©‚ç•\‰æ–Ê‚É
 }
 
-SceneMng::SceneMng():ScreenSize{800,600}
+SceneMng::SceneMng() :ScreenSize{ 800,600 }, GameScreenSize{ 500 , 390 }, ScreenCenter{ ScreenSize / 2 }, GameScreenOffset{ (ScreenSize - GameScreenSize) / 2 }
 {
 	
 }
@@ -147,15 +131,13 @@ bool SceneMng::SysInit(void)
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					//‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
 
+	// ŠeÚ²Ô°—p‚Ì½¸Ø°İ‚ğ¾¯Ä
 	for (auto id : LAYER())
 	{
-		if (_screenID.find(id) == _screenID.end())
-		{
-			_screenID[id] = MakeScreen(ScreenSize.x, ScreenSize.y, true);
-		}
+		_screenID.try_emplace(id, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	}
 
-	_dbgSetup(200);									// ÃŞÊŞ¯¸Ş—p
+	_dbgSetup(255);									// ÃŞÊŞ¯¸Ş—p
 
 	lpImageMng.GetID("˜g", "image/frame.png");		// ˜g
 

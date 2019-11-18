@@ -30,9 +30,9 @@ GameScene::GameScene()
 
 			MoveState tmpMoveState;			// 処理					最終地点
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{ 200.0 + ((lpSceneMng.ScreenSize.x / 2) * !((x % 2))) ,(lpSceneMng.ScreenSize.y * (5.0 / 7.0)) - (200 * ((((y * 10) + x) % 6) / 4)) });
-			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ 200.0 + ((lpSceneMng.ScreenSize.x / 2) * !((x % 2))),(lpSceneMng.ScreenSize.y * (5.0 / 7.0)) - 100 });
-			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (35.0 * 7.0) + (35.0 * x),50 + (40.0 * y) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))) ,(lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))),(lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x),50 + (40.0 * y) });
 			tmpMoveState.emplace_back( MOVE_TYPE::LR, Vector2dbl{ 180.0,0.0 });
 
 			// ｵﾌｾｯﾄの計算
@@ -52,7 +52,7 @@ GameScene::GameScene()
 
 			//type		pos		size																						15はｵﾌｾｯﾄ
 			EnemyState data = { ENEMY_TYPE::A,
-								{static_cast<double>(800 * (((y * 10) + x) % 2)) + ofSet,  static_cast<double>(540 / 2)*((((y * 10) + x) / 2) % 3) + 15},
+								{static_cast<double>(lpSceneMng.GameScreenSize.x * (((y * 10) + x) % 2)) + ofSet,  static_cast<double>(330 / 2)*((((y * 10) + x) / 2) % 3) + 15},
 								{0, 0},
 								tmpMoveState };
 			

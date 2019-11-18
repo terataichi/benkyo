@@ -45,6 +45,7 @@ private:
 	Vector2dbl _oldPos;										// ‘O‚ÌÌÚ°Ñ‚É‚¢‚½À•WŠi”[
 	double& _rad;											// Šp“x‚ğQÆ‚Åó‚¯æ‚Á‚Ä‘‚«Š·‚¦‚é‚½‚ß‚Ì
 	double _angle;											// ‰~•`‰æ—p‚ÌŠp“x
+	double _angleCon;											// Šp“x§Œä1‚©-1‚ğ‚©‚¯‚Ä‚ ‚°‚é
 	Vector2dbl _lenght;										// Šp“x‚ğ•Ï‚¦‚é‚æ
 	double _radius;											// ”¼Œa
 	Vector2dbl _oneMoveVec;									// ‚PÌÚ°Ñ“–‚½‚è‚ÌˆÚ“®—Ê

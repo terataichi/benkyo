@@ -3,6 +3,7 @@
 #include <Vector2.h>
 #include "_Debug/_DebugConOut.h"
 #include "_Debug/_DebugDispOut.h"
+#include <Scene\SceneMng.h>
 
 EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
@@ -24,7 +25,8 @@ void EnemyMove::Update(void)
 	}
 
 	// ﾃﾞﾊﾞｯｸﾞ用
-	_dbgDrawPixel(_pos.x, _pos.y, 0xffffff);
+	_dbgDrawPixel(lpSceneMng.GameScreenOffset.x +  _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y, 0xffffff);
+	_dbgDrawLine(lpSceneMng.ScreenCenter.x, 0 ,lpSceneMng.ScreenCenter.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	//_dbgDrawBox(_pos.x - 15, _pos.y - 15, _pos.x + 15, _pos.y + 15, 0xffffff, false);
 }
 
@@ -72,6 +74,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		_angle = std::atan( _startPos.y - _endPos.y );													// 初期の角度をきめる
 		_radius = abs(_endPos.y - _startPos.y);															// 半径の設定
+		_angleCon = (((_endPos.y - _startPos.y) / abs(_endPos.y - _startPos.y)) *(((lpSceneMng.ScreenCenter.x / 2 - _startPos.x) / abs(lpSceneMng.ScreenCenter.x / 2 - _startPos.x))) * -1);
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
@@ -130,11 +133,11 @@ void EnemyMove::MoveSpiral(void)
 		_pos.x = (_radius * std::cos(_angle)) + _endPos.x;
 		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
 
-		// 角度制御
-		_angle += std::atan(0.03) ;
+		// 角度制御							
+		_angle += std::atan(0.03) * _angleCon;
 
 		// 半径小さくする
-		_radius -= 0.4;
+		_radius -= 0.2;
 
 		// 今の座標と前の座標で角度を計算する
 		_lenght = _pos - _oldPos;
@@ -183,5 +186,13 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
+	// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
+	_oldPos = _pos;
 
+	_pos.x -= 5;
+	// 今の座標と前の座標で角度を計算する
+	_lenght = _pos - _oldPos;
+	_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
+
+	
 }

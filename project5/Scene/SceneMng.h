@@ -4,6 +4,7 @@
 #include <tuple>
 #include <vector>
 #include <Vector2.h>
+#include <LAYER.h>
 #include "BaseScene.h"
 
 enum class DRAW_QUE
@@ -15,20 +16,6 @@ enum class DRAW_QUE
 	ZODER,				// レイヤー内の描画順番(数値の低いほうが奥)
 	LAYER,				// IDの小さいほうが奥に描画
 };
-
-// IDの小さいほうが奥に描画
-enum class LAYER
-{
-	BG,
-	CHAR,
-	UI,
-	MAX
-};
-
-LAYER begin(LAYER);
-LAYER end(LAYER);
-LAYER operator*(LAYER key);
-LAYER operator++(LAYER& key);
 
 //							id	 x		 y		角度	奥行 screen
 using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;		// DRAW_QUEの内容
@@ -68,6 +55,9 @@ public:
 	bool AddDrawQue(DrawQueT dQue);
 
 	const Vector2 ScreenSize;
+	const Vector2 ScreenCenter;
+	const Vector2 GameScreenSize;
+	const Vector2 GameScreenOffset;
 
 private:
 
