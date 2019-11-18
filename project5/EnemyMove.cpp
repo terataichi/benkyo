@@ -78,7 +78,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -189,10 +189,12 @@ void EnemyMove::MoveLR(void)
 	// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
 	_oldPos = _pos;
 
-	_pos.x -= 5;
+
+	_pos.x = _startPos.x + ((lpSceneMng.gameCount % 60) * (((lpSceneMng.gameCount / 120) % 2) ));
 	// 今の座標と前の座標で角度を計算する
 	_lenght = _pos - _oldPos;
 	_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
 
 	
+
 }

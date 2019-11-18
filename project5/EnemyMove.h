@@ -50,6 +50,6 @@ private:
 	double _radius;											// 半径
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
 	double _moveGain;										// シグモイド関数の幅											
-	
+	int a;
 };
 

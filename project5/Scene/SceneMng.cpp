@@ -73,7 +73,7 @@ void SceneMng::Draw(void)
 
 SceneMng::SceneMng() :ScreenSize{ 800,600 }, GameScreenSize{ 500 , 390 }, ScreenCenter{ ScreenSize / 2 }, GameScreenOffset{ (ScreenSize - GameScreenSize) / 2 }
 {
-	
+	gameCount = 0;
 }
 
 SceneMng::~SceneMng()
@@ -88,6 +88,8 @@ void SceneMng::Run(void)
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		gameCount++;													// ¹Ş°Ñ¶³İÄ
+
 		_dbgStartDraw();
 
 		_drawList.clear();	// —v‘f‚ğ‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
