@@ -45,11 +45,11 @@ private:
 	Vector2dbl _oldPos;										// 前のﾌﾚｰﾑにいた座標格納
 	double& _rad;											// 角度を参照で受け取って書き換えるための
 	double _angle;											// 円描画用の角度
-	double _angleCon;											// 角度制御1か-1をかけてあげる
-	Vector2dbl _lenght;										// 角度を変えるよ
+	double _angleTotal;										// 角度の合計値
+	double _angleCon;										// 角度制御1か-1をかけてあげる
+	Vector2dbl _lenght;										// 自機の角度を変えるよ
 	double _radius;											// 半径
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
 	double _moveGain;										// シグモイド関数の幅											
-	int a;
 };
 

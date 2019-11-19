@@ -9,6 +9,7 @@ EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;						// 0‚¾‚Æ‚¢‚«‚È‚è±¸¾½‚·‚é
+	_angleTotal = std::atan(0.0);		// 0“x‚ðŠi”[
 }
 
 EnemyMove::~EnemyMove()
@@ -121,13 +122,12 @@ void EnemyMove::MoveSigmoid(void)
 
 void EnemyMove::MoveSpiral(void)
 {
-
+	TRACE("%d\n",_angleTotal);
 	// I—¹ðŒ
-	if (_radius >= 0)
+	if (abs(_angleTotal) < abs(std::atan(180)))
 	{
 		// ˆê”ÔÅ‰‚É‘OÌÚ°Ñ‚É‚¢‚½À•W‚ðŠi”[‚·‚é
 		_oldPos = _pos;
-
 
 		// ˆÚ“®
 		_pos.x = (_radius * std::cos(_angle)) + _endPos.x;
@@ -135,9 +135,9 @@ void EnemyMove::MoveSpiral(void)
 
 		// Šp“x§Œä							
 		_angle += std::atan(0.03) * _angleCon;
-
+		_angleTotal += std::atan(0.03);			// ‡Œv‰ÁŽZ
 		// ”¼Œa¬‚³‚­‚·‚é
-		_radius -= 0.2;
+		_radius -= 0.1;
 
 		// ¡‚ÌÀ•W‚Æ‘O‚ÌÀ•W‚ÅŠp“x‚ðŒvŽZ‚·‚é
 		_lenght = _pos - _oldPos;
@@ -189,12 +189,11 @@ void EnemyMove::MoveLR(void)
 	// ˆê”ÔÅ‰‚É‘OÌÚ°Ñ‚É‚¢‚½À•W‚ðŠi”[‚·‚é
 	_oldPos = _pos;
 
+	// ¶‰EˆÚ“®
+	_pos.x = ((_startPos.x - 60) + ((lpSceneMng.gameCount / 120) % 2 * 120)) + ((lpSceneMng.gameCount % 120) * (((lpSceneMng.gameCount / 120) % 2) * -2 + 1));
 
-	_pos.x = _startPos.x + ((lpSceneMng.gameCount % 60) * (((lpSceneMng.gameCount / 120) % 2) ));
 	// ¡‚ÌÀ•W‚Æ‘O‚ÌÀ•W‚ÅŠp“x‚ðŒvŽZ‚·‚é
 	_lenght = _pos - _oldPos;
 	_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
-
-	
 
 }
