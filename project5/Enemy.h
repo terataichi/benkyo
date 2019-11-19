@@ -2,8 +2,8 @@
 #include "Obj.h"
 #include "EnemyMove.h"
 
-#define ENEMY_Y 5
-#define ENEMY_X 10
+#define ENEMY_Y 1
+#define ENEMY_X 1
 #define ENEMY_MAX ENEMY_Y * ENEMY_X
 
 enum class ENEMY_TYPE

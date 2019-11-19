@@ -13,7 +13,7 @@ EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
 	_move = nullptr;
 	_aimCnt = -1;						// 0‚¾‚Æ‚¢‚«‚È‚è±¸¾½‚·‚é
 	_angleTotal = std::atan(0.0);		// 0“x‚ðŠi”[
-	EnemyMove::_pitInCnt = 0;
+	_pitInCnt = 0;
 }
 
 EnemyMove::~EnemyMove()
@@ -89,7 +89,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveLR;
 		break;
 	case MOVE_TYPE::SCALE:
-		_scaleGain = (_endPos - _startPos) / 2.0;
+		_scaleGain = (_endPos - _startPos);
 		_move = &EnemyMove::MoveScale;
 		break;
 	default:
@@ -201,9 +201,6 @@ void EnemyMove::MoveLR(void)
 
 	// ¶‰EˆÚ“®
 	_pos.x = ((_endPos.x - 60) + ((lpSceneMng._gameCount / LR_GAIN) % 2 * LR_GAIN)) + ((lpSceneMng._gameCount % LR_GAIN) * (((lpSceneMng._gameCount / LR_GAIN) % 2) * -2 + 1));
-	_p = (_endPos.x);
-	_dbgDrawLine(lpSceneMng.GameScreenOffset.x + (_endPos.x - 60), 0, lpSceneMng.GameScreenOffset.x + (_endPos.x - 60), lpSceneMng.ScreenSize.y, 0xfffff);
-	_dbgDrawLine(lpSceneMng.GameScreenOffset.x + (_endPos.x + 60), 0, lpSceneMng.GameScreenOffset.x + (_endPos.x + 60), lpSceneMng.ScreenSize.y, 0xffffff);
 
 	// ÅŒã”ö‚Ì“z‚Ü‚Å‚»‚ë‚Á‚Ä@‚©‚Â@´ÝÄÞÎß½‚É‚¢‚½‚ç
 	if (_pitInCnt >= ENEMY_MAX && (_endPos.x / 100.0) == (_pos.x / 100.0))
@@ -214,9 +211,16 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::MoveScale(void)
 {
-	_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _p, 0, lpSceneMng.GameScreenOffset.x + _p, lpSceneMng.ScreenSize.y, 0xfffff);
+	_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	
-	_pos.x = _startPos.x + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2 * (_scaleGain.x)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.x)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2) * -2 + 1));
-	_pos.y = _startPos.y + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2 * (_scaleGain.y)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.y)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2) * -2 + 1));
+	//_pos.x = _startPos.x + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2 * (_scaleGain.x)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.x)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2) * -2 + 1));
+	//_pos.y = _startPos.y + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2 * (_scaleGain.y)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.y)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2) * -2 + 1));
+
+	//(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_startPos));
+	_pos =
+		(_startPos)+
+		(_scaleGain + (static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_scaleGain))) *
+		(static_cast<double>(((lpSceneMng._gameCount + 100) / 2) % 30) / 100.0) *
+		(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * -2.0 + 1.0);
 
 }
