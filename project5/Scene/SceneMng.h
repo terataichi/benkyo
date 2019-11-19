@@ -58,7 +58,7 @@ public:
 	const Vector2 ScreenCenter;			// ｽｸﾘｰﾝ中央
 	const Vector2 GameScreenSize;		// ｹﾞｰﾑ画面ｻｲｽﾞ
 	const Vector2 GameScreenOffset;		// ｹﾞｰﾑ画面用のオフセット
-	int gameCount;					// ﾌﾚｰﾑ管理用ｹﾞｰﾑｶｳﾝﾄ
+	int _gameCount;					// ﾌﾚｰﾑ管理用ｹﾞｰﾑｶｳﾝﾄ
 private:
 
 	static SceneMng* sInstance;

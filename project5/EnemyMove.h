@@ -4,12 +4,16 @@
 
 enum class MOVE_TYPE
 {
-	WAIT,
-	SIGMOID,
-	SPIRAL,
-	PITIN,
-	LR,
+	WAIT,								// 待ち時間
+	SIGMOID,							// ｼｸﾞﾓｲﾄﾞ曲線
+	SPIRAL,								// 回転
+	PITIN,								// ﾋﾟｯﾄｲﾝ
+	LR,									// 左右移動
+	SCALE								// 拡大縮小すけーる
 };
+
+#define PI 3.141592						// 円周率
+#define LR_GAIN 120						// 左右移動の移動幅
 
 										// 動き	 ,	目的地	を格納する
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2dbl>>;
@@ -31,7 +35,8 @@ private:
 	void MoveSpiral(void);									// ｽﾊﾟｲﾗﾙ
 	void PitIn(void);										// 配置
 	void Wait(void);										// 待ち時間
-	void MoveLR(void);										// 右と左
+	void MoveLR(void);										// 左右移動
+	void MoveScale(void);									// 拡大縮小
 
 	int count;
 
@@ -50,6 +55,10 @@ private:
 	Vector2dbl _lenght;										// 自機の角度を変えるよ
 	double _radius;											// 半径
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
-	double _moveGain;										// シグモイド関数の幅											
+	double _moveGain;										// ｼｸﾞﾓｲﾄﾞ用の動きの幅
+	Vector2dbl _scaleGain;									// 拡大縮小用の幅
+	static int _pitInCnt;									// 全員揃ったか確認するための 
+	int _p;
+
 };
 
