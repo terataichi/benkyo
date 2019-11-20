@@ -58,6 +58,7 @@ private:
 	double _moveGain;										// ｼｸﾞﾓｲﾄﾞ用の動きの幅
 
 	Vector2dbl _scaleGain;									// 拡大縮小用の幅
+	int _scaleCnt;											// ｹﾞｰﾑｶｳﾝﾄだと最初ずれて始まるから新しく作った
 
 	static int _pitInCnt;									// 全員揃ったか確認するための 
 

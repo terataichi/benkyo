@@ -89,6 +89,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveLR;
 		break;
 	case MOVE_TYPE::SCALE:
+		_scaleCnt = 30;		// 拡大率0で始めたいから30をいれた
 		_scaleGain = (_endPos - _startPos);
 		_move = &EnemyMove::MoveScale;
 		break;
@@ -131,7 +132,7 @@ void EnemyMove::MoveSigmoid(void)
 void EnemyMove::MoveSpiral(void)
 {
 	// 終了条件
-	if (_angleTotal < ((PI * (45 * 1)) / 180.0))
+	if (_angleTotal < ((PI * (45 * 9)) / 180.0))
 	{
 		// 一番最初に前ﾌﾚｰﾑにいた座標を格納する
 		_oldPos = _pos;
@@ -143,7 +144,7 @@ void EnemyMove::MoveSpiral(void)
 		// 角度制御							
 		_angle += (PI * 3) / 180.0 * _angleCon;
 		_angleTotal += (PI * 3) / 180.0;			// 合計加算
-		TRACE("%lf\n", _angleTotal);
+
 		// 半径小さくする
 		_radius -= 0.2;
 
@@ -211,19 +212,17 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::MoveScale(void)
 {
-	_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
+	// デバック用
+	//_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	
-	//_pos.x = _startPos.x + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2 * (_scaleGain.x)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.x)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.x)) % 2) * -2 + 1));
-	//_pos.y = _startPos.y + ((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2 * (_scaleGain.y)) + ((lpSceneMng._gameCount % static_cast<int>(_scaleGain.y)) * (((lpSceneMng._gameCount / static_cast<int>(_scaleGain.y)) % 2) * -2 + 1));
+	_scaleCnt++;
 
-	//(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_startPos));
+	// 移動
 	_pos =
-		(_startPos +
+		_startPos +
 			_scaleGain *
-			(static_cast<double>(((lpSceneMng._gameCount + 100) / 2) % 30 ) / 100.0) *
-			(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * -2.0 + 1.0)) +
-			(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
-
-	
+			(static_cast<double>(((_scaleCnt + 100) / 2) % 30 ) / 100.0) *
+			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -
+			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
 }
