@@ -56,7 +56,9 @@ private:
 	double _radius;											// 半径
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
 	double _moveGain;										// ｼｸﾞﾓｲﾄﾞ用の動きの幅
+
 	Vector2dbl _scaleGain;									// 拡大縮小用の幅
+
 	static int _pitInCnt;									// 全員揃ったか確認するための 
 
 };

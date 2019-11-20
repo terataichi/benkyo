@@ -218,9 +218,12 @@ void EnemyMove::MoveScale(void)
 
 	//(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_startPos));
 	_pos =
-		(_startPos)+
-		(_scaleGain + (static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_scaleGain))) *
-		(static_cast<double>(((lpSceneMng._gameCount + 100) / 2) % 30) / 100.0) *
-		(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * -2.0 + 1.0);
+		(_startPos +
+			_scaleGain *
+			(static_cast<double>(((lpSceneMng._gameCount + 100) / 2) % 30 ) / 100.0) *
+			(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * -2.0 + 1.0)) +
+			(static_cast<double>((((lpSceneMng._gameCount + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
+
+	
 
 }
