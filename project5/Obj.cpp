@@ -13,7 +13,7 @@ Obj::Obj()
 	_animFrame = 0;
 	_animCount = 0;
 	_rad = 0;
-	_zOder = 0;
+	_zOder = 10;
 }
 
 void Obj::Draw(void)
@@ -83,6 +83,16 @@ bool Obj::state(const STATE state)
 const STATE Obj::state(void) const
 {
 	return _state;
+}
+
+const Vector2dbl & Obj::pos(void) const
+{
+	return _pos;
+}
+
+const Vector2dbl & Obj::size(void) const
+{
+	return _size;
 }
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)

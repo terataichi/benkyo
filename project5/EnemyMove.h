@@ -12,7 +12,6 @@ enum class MOVE_TYPE
 	SCALE								// 拡大縮小すけーる
 };
 
-#define PI 3.141592						// 円周率
 #define LR_GAIN 120						// 左右移動の移動幅
 
 										// 動き	 ,	目的地	を格納する

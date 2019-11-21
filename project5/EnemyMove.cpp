@@ -219,7 +219,7 @@ void EnemyMove::MoveScale(void)
 
 	// ˆÚ“®
 	_pos =
-		_startPos +
+			_startPos +
 			_scaleGain *
 			(static_cast<double>(((_scaleCnt + 100) / 2) % 30 ) / 100.0) *
 			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -

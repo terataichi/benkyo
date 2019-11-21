@@ -5,6 +5,7 @@
 #include <ImageMng.h>
 #include <Player.h>
 #include <Enemy.h>
+#include <Bullet.h>
 #include "SceneMng.h"
 
 
@@ -18,7 +19,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("∑¨◊îöî≠", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ 100,100 }, { 0,0 })
+		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 0,0 })
 	);
 
 	double ofSet = 0;			// µÃæØƒÇÇ¢Ç∂ÇÈ
@@ -29,7 +30,7 @@ GameScene::GameScene()
 		{		
 
 			MoveState tmpMoveState;			// èàóù					ç≈èIínì_
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (60.0 * ((y * 10) + x)),0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
 			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
@@ -101,5 +102,19 @@ unique_Base GameScene::Update(unique_Base own)
 						_objList.end());
 
 	return std::move(own);
+}
+
+void GameScene::RunActQue(std::vector<ActQueT> actList)
+{
+	for (auto actQue : actList)
+	{
+		switch (actQue.first)
+		{
+		case ACT_QUE::SHOT:
+			_objList.emplace_back(new Bullet(actQue.second.pos()));
+			break;
+		}
+	}
+
 }
 

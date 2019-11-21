@@ -12,5 +12,7 @@ public:
 	unique_Base Update(unique_Base own) override;
 private:
 	std::vector<sharedObj>_objList;
+	void RunActQue(std::vector<ActQueT> actList) override;	// 
+
 };
 

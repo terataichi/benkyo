@@ -53,6 +53,7 @@ public:
 	
 
 	bool AddDrawQue(DrawQueT dQue);
+	bool AddActQue(ActQueT aQue);
 
 	const Vector2 ScreenSize;			// ｽｸﾘｰﾝｻｲｽﾞ
 	const Vector2 ScreenCenter;			// ｽｸﾘｰﾝ中央
@@ -68,6 +69,7 @@ private:
 
 	std::map<LAYER, int>_screenID;		// screen用の
 	std::vector<DrawQueT>_drawList;		// 描画リスト
+	std::vector<ActQueT>_actList;		// アクションリスト
 
 	SceneMng();		// ｺﾝｽﾄﾗｸﾀ
 	~SceneMng();	// ﾃﾞｽﾄﾗｸﾀ

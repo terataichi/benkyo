@@ -15,5 +15,6 @@ public:
 private:
 	void init(void);
 	std::shared_ptr<InputState> _input;				// key‚ÌŠÇ—
+
 };
 

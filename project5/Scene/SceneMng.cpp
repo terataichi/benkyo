@@ -88,7 +88,6 @@ void SceneMng::Run(void)
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		_gameCount++;													// ¹Ş°Ñ¶³İÄ
 
 		_dbgStartDraw();
 
@@ -99,6 +98,9 @@ void SceneMng::Run(void)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 		Draw();
 
+		(*_activeScene).RunActQue(std::move(_actList));
+
+		_gameCount++;													// ¹Ş°Ñ¶³İÄ
 	}
 	// delete _activeScene;
 }
@@ -116,6 +118,12 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 	//_drawList.push_back‚ÍŒÃ‚¢ŠÂ‹«
 	_drawList.emplace_back(dQue);
 
+	return true;
+}
+
+bool SceneMng::AddActQue(ActQueT aQue)
+{
+	_actList.emplace_back(aQue);
 	return true;
 }
 
