@@ -13,6 +13,7 @@ Obj::Obj()
 	_animFrame = 0;
 	_animCount = 0;
 	_rad = 0;
+	_unitID = UNIT_ID::NON;
 	_zOder = 10;
 }
 
@@ -93,6 +94,11 @@ const Vector2dbl & Obj::pos(void) const
 const Vector2dbl & Obj::size(void) const
 {
 	return _size;
+}
+
+const UNIT_ID & Obj::unitID(void) const
+{
+	return _unitID;
 }
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)

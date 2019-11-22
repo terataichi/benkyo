@@ -7,6 +7,7 @@
 #include <Enemy.h>
 #include <Bullet.h>
 #include "SceneMng.h"
+#include <Scene\func\FuncBullet.h>
 
 
 GameScene::GameScene()
@@ -111,10 +112,9 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 		switch (actQue.first)
 		{
 		case ACT_QUE::SHOT:
-			_objList.emplace_back(new Bullet(actQue.second.pos()));
+			FuncBullet()(actQue, _objList);
 			break;
 		}
 	}
-
 }
 

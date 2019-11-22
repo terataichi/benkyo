@@ -96,9 +96,10 @@ void SceneMng::Run(void)
 		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,0,LAYER::UI });		// ˜g‚Ì•`‰æ
 
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
+
 		Draw();
 
-		(*_activeScene).RunActQue(std::move(_actList));
+		(*_activeScene).RunActQue(std::move(_actList));					// î•ñ‚ğmove‚µ‚Ä“n‚µ‚Ä‚ ‚°‚é
 
 		_gameCount++;													// ¹Ş°Ñ¶³İÄ
 	}

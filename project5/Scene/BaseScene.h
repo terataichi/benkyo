@@ -19,6 +19,6 @@ public:
 	BaseScene();
 	virtual ~BaseScene();
 	virtual unique_Base Update(unique_Base own) = 0;	// own 自身
-	virtual void RunActQue(std::vector<ActQueT> actList);
+	virtual void RunActQue(std::vector<ActQueT> actList);	// 全てのｼｰﾝで必要じゃないから純粋仮想関数にはしていない
 };
 

@@ -15,6 +15,16 @@ enum class STATE
 	MAX
 };
 
+// 
+enum class UNIT_ID
+{
+	NON,
+	PLAYER,
+	ENEMY,
+	PL_BULLET,
+	EM_BULLET
+};
+
 class Obj;			// ÌßÛÄÀ²Ìß¾İ¹Şİ‚Ä‚«‚È
 using AnimVector = std::vector<std::pair<int, unsigned int>>;
 using sharedObj = std::shared_ptr<Obj>;
@@ -32,7 +42,7 @@ public:
 	const STATE state(void) const;								// •Ô‚·‚æ
 	const Vector2dbl &pos(void) const;
 	const Vector2dbl &size(void) const;
-
+	const UNIT_ID &unitID(void) const;
 
 	bool SetAnim(const STATE state, AnimVector& data);			// ±ÆÒ°¼®İdata‚Ì“o˜^
 
@@ -54,5 +64,6 @@ protected:
 	Vector2dbl _size;											// ‰æ‘œ»²½Ş
 	double _rad;												// Šp“x
 	int _zOder;													// •`‰æ‚Ì—Dæ
+	UNIT_ID _unitID;
 };
 

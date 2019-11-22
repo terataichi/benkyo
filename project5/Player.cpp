@@ -14,6 +14,7 @@ Player::Player()
 
 Player::Player(Vector2dbl pos, Vector2dbl size)
 {
+	_unitID = UNIT_ID::PLAYER;
 	_pos = pos;
 	_size = size;
 	init();
@@ -21,6 +22,7 @@ Player::Player(Vector2dbl pos, Vector2dbl size)
 
 void Player::Update(void)
 {
+	// €‚ñ‚Å‚½‚çˆ—‚ğ‚µ‚È‚¢
 	if (DestroyPrpc())
 	{
 		return;
@@ -45,11 +47,11 @@ void Player::Update(void)
 	move(_input, INPUT_ID::LEFT, _pos.x, -2);
 	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
 
-	if ((*_input).State(INPUT_ID::BTN_1).first == true)
+	// ÄØ¶Ş°ˆ—‚Æ‰Ÿ‚µ‚½‚ç’e‚ğo‚·
+	if ((*_input).State(INPUT_ID::BTN_1).first && !(*_input).State(INPUT_ID::BTN_1).second)
 	{
 		lpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 	}
-
 }
 
 
