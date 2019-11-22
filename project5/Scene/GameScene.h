@@ -15,9 +15,10 @@ public:
 	~GameScene();
 	unique_Base Update(unique_Base own) override;
 private:
-	std::map<ACT_QUE, funcAct>funcQue;
 	std::vector<sharedObj>_objList;
 	void RunActQue(std::vector<ActQueT> actList) override;	// 
+
+	std::map<ACT_QUE, funcAct>funcQue;
 
 };
 

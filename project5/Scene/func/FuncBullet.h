@@ -4,6 +4,6 @@
 // 関数オブジェクト作るよ
 struct FuncBullet
 {
-	bool operator()(ActQueT actQue, std::vector<sharedObj> objList);
+	bool operator()(ActQueT& actQue, std::vector<sharedObj>& objList);
 };
 
