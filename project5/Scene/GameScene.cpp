@@ -8,10 +8,13 @@
 #include <Bullet.h>
 #include "SceneMng.h"
 #include <Scene\func\FuncBullet.h>
+#include <Scene\func\FuncCheckHit.h>
 
 
 GameScene::GameScene()
 {
+	InitFunc();
+
 	TRACE("πﬁ∞—º∞›ÇÃê∂ê¨\n");
 
 	lpImageMng.GetID("∑¨◊", "image/char.png", { 30,32 }, { 10, 10 });
@@ -20,7 +23,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("∑¨◊îöî≠", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 0,0 })
+		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32 })
 	);
 
 	double ofSet = 0;			// µÃæØƒÇÇ¢Ç∂ÇÈ
@@ -56,7 +59,7 @@ GameScene::GameScene()
 			//type		pos		size																						15ÇÕµÃæØƒ
 			EnemyState data = { ENEMY_TYPE::A,
 								{static_cast<double>(lpSceneMng.GameScreenSize.x * (((y * 10) + x) % 2)) + ofSet,  static_cast<double>(330 / 2)*((((y * 10) + x) / 2) % 3) + 15},
-								{0, 0},
+								{30, 32},
 								tmpMoveState };
 			
 			_objList.emplace_back(new Enemy(data));
@@ -109,12 +112,20 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 {
 	for (auto actQue : actList)
 	{
-		switch (actQue.first)
+		try
 		{
-		case ACT_QUE::SHOT:
-			FuncBullet()(actQue, _objList);
-			break;
+			funcQue.at(actQue.first)(actQue, _objList);
+		}
+		catch(...)
+		{
+			AST();
 		}
 	}
+}
+
+void GameScene::InitFunc(void)
+{
+	funcQue[ACT_QUE::SHOT] = FuncBullet();
+	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
 }
 

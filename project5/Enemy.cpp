@@ -11,6 +11,7 @@ Enemy::Enemy()
 
 Enemy::Enemy(EnemyState & state)
 {
+	_unitID = UNIT_ID::ENEMY;
 	_type = std::move(std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state));
 	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state);
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
