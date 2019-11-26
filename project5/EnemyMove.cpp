@@ -1,4 +1,5 @@
 #include "EnemyMove.h"
+#include <algorithm>
 #include <math.h>
 #include <Vector2.h>
 #include <Enemy.h>
@@ -20,9 +21,9 @@ EnemyMove::~EnemyMove()
 {
 }
 
-void EnemyMove::Update(void)
+void EnemyMove::Update(sharedObj obj)
 {
-
+	_plPos = (*obj).pos();
 	if (_move != nullptr)					// 中身があるかないかチェックする
 	{
 		(this->*_move)();					// 優先度をつけるためにかっこをつけないといけない
@@ -30,8 +31,8 @@ void EnemyMove::Update(void)
 	}
 
 	// ﾃﾞﾊﾞｯｸﾞ用
-	_dbgDrawPixel(lpSceneMng.GameScreenOffset.x +  _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y, 0xffffff);
-	_dbgDrawBox(lpSceneMng.GameScreenOffset.x + _pos.x - 15, lpSceneMng.GameScreenOffset.y + _pos.y - 15, lpSceneMng.GameScreenOffset.x + _pos.x + 15, lpSceneMng.GameScreenOffset.y +_pos.y + 15, 0xffffff, false);
+	//_dbgDrawPixel(lpSceneMng.GameScreenOffset.x +  _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y, 0xffffff);
+	//_dbgDrawBox(lpSceneMng.GameScreenOffset.x + _pos.x - 15, lpSceneMng.GameScreenOffset.y + _pos.y - 15, lpSceneMng.GameScreenOffset.x + _pos.x + 15, lpSceneMng.GameScreenOffset.y +_pos.y + 15, 0xffffff, false);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -51,12 +52,40 @@ bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 	return true;
 }
 
+void EnemyMove::PitInCnt(void)
+{
+	_pitInCnt++;
+}
+
 void EnemyMove::SetMovePrg(void)
 {
+	
 	_aimCnt++;
+
+
 	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
-		return;
+		auto checkAim = [&]() {
+			for (_aimCnt = 0; _aimCnt < _aim.size(); _aimCnt++)
+			{
+				if (_aim[_aimCnt].first == MOVE_TYPE::SCALE)
+				{
+					return true;
+				}
+			}
+			return false;
+		};
+
+		if (!checkAim())
+		{
+			return;
+		}
+	}
+
+	// アタックし終わったら上に戻ってねー
+	if (_pos.y >= lpSceneMng.GameScreenSize.y)
+	{
+		_pos.y = -100;
 	}
 
 	_startPos = _pos;					// 今の位置がｽﾀｰﾄ地点
@@ -70,8 +99,8 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::Wait;
 		break;
 	case MOVE_TYPE::SIGMOID:
-		_moveGain = -10;																				// ｼｸﾞﾓｲﾄﾞを上から始めるために-10を入れた
-		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 180.0);											// 3秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+		_moveGain = -5;																				// ｼｸﾞﾓｲﾄﾞを上から始めるために-10を入れた
+		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 90.0);											// 3秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		_move = &EnemyMove::MoveSigmoid;
 		break;
 	case MOVE_TYPE::SPIRAL:
@@ -81,7 +110,12 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
-		_endPos.x = ((_endPos.x - 60) + (((lpSceneMng._gameCount + 60) / LR_GAIN) % 2 * LR_GAIN)) + (((lpSceneMng._gameCount + 60) % LR_GAIN) * ((((lpSceneMng._gameCount + 60) / LR_GAIN) % 2) * -2 + 1));
+		count = 0;
+		// ｱｯﾀｸが終わったら通常の処理にも
+		if (_startPos.y > 0)
+		{
+			_endPos.x = ((_endPos.x - 60) + (((lpSceneMng._gameCount + 60) / LR_GAIN) % 2 * LR_GAIN)) + (((lpSceneMng._gameCount + 60) % LR_GAIN) * ((((lpSceneMng._gameCount + 60) / LR_GAIN) % 2) * -2 + 1));
+		}
 		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		_move = &EnemyMove::PitIn;
 		break;
@@ -91,7 +125,11 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::SCALE:
 		_scaleCnt = 30;		// 拡大率0で始めたいから30をいれた
 		_scaleGain = (_endPos - _startPos);
+		count = 0;
 		_move = &EnemyMove::MoveScale;
+		break;
+	case MOVE_TYPE::ATTACK:
+		_move = &EnemyMove::MoveAttack;
 		break;
 	default:
 		AST();
@@ -120,7 +158,7 @@ void EnemyMove::MoveSigmoid(void)
 		_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90);
 
 		// 幅を変える
-		_moveGain += 0.1;
+		_moveGain += 0.12;
 	}
 	else
 	{
@@ -142,8 +180,8 @@ void EnemyMove::MoveSpiral(void)
 		_pos.y = (_radius * std::sin(_angle)) + _endPos.y;
 
 		// 角度制御							
-		_angle += (PI * 3) / 180.0 * _angleCon;
-		_angleTotal += (PI * 3) / 180.0;			// 合計加算
+		_angle += (PI * 3) / 120.0 * _angleCon;
+		_angleTotal += (PI * 3) / 120.0;			// 合計加算
 
 		// 半径小さくする
 		_radius -= 0.2;
@@ -163,8 +201,8 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
-
-	if (abs(_endPos - _pos) >= abs(_oneMoveVec))								// XかYだけをﾁｪｯｸすることによって計算量が減る
+	
+	if (count < 60)								// XかYだけをﾁｪｯｸすることによって計算量が減る
 	{
 		// 移動量が残っている場合
 		_pos += _oneMoveVec;
@@ -183,6 +221,7 @@ void EnemyMove::PitIn(void)
 		_pitInCnt++;
 		SetMovePrg();
 	}
+	count++;
 }
 
 void EnemyMove::Wait(void)
@@ -216,7 +255,7 @@ void EnemyMove::MoveScale(void)
 	//_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	
 	_scaleCnt++;
-
+	count++;
 	// 移動
 	_pos =
 			_startPos +
@@ -225,4 +264,17 @@ void EnemyMove::MoveScale(void)
 			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -
 			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
+	if (count >= 180)
+	{
+		SetMovePrg();
+	}
+}
+
+void EnemyMove::MoveAttack(void)
+{
+
+	_endPos = { _plPos.x , _plPos.y + 100.0 };														// ﾌﾟﾚｲﾔｰより少し下を目標地点にする
+	_move = &EnemyMove::PitIn;
+	count = 0;
+	_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 }

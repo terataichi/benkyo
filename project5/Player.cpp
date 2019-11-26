@@ -20,7 +20,7 @@ Player::Player(Vector2dbl pos, Vector2dbl size)
 	init();
 }
 
-void Player::Update(void)
+void Player::Update(sharedObj obj)
 {
 	// €‚ñ‚Å‚½‚çˆ—‚ğ‚µ‚È‚¢
 	if (DestroyPrpc())

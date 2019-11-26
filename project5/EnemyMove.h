@@ -1,6 +1,7 @@
 #pragma once
 #include <Vector2.h>
 #include <vector>
+#include "Obj.h"
 
 enum class MOVE_TYPE
 {
@@ -9,7 +10,8 @@ enum class MOVE_TYPE
 	SPIRAL,								// 回転
 	PITIN,								// ﾋﾟｯﾄｲﾝ
 	LR,									// 左右移動
-	SCALE								// 拡大縮小すけーる
+	SCALE,								// 拡大縮小すけーる
+	ATTACK								// 突撃
 };
 
 #define LR_GAIN 120						// 左右移動の移動幅
@@ -22,9 +24,9 @@ class EnemyMove
 public:
 	EnemyMove(Vector2dbl& pos , double& rad);
 	~EnemyMove();
-	void Update(void);										// 更新
+	void Update(sharedObj obj);								// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 新しい情報が欲しくなった時用フラグ
-
+	void PitInCnt(void);									// 敵の処理
 private:
 	void SetMovePrg(void);									// _aimの中の情報をｾｯﾄする
 
@@ -36,6 +38,7 @@ private:
 	void Wait(void);										// 待ち時間
 	void MoveLR(void);										// 左右移動
 	void MoveScale(void);									// 拡大縮小
+	void MoveAttack(void);									// 突撃
 
 	int count;
 
@@ -47,19 +50,27 @@ private:
 
 	Vector2dbl& _pos;										// 座標を参照で受け取る
 	Vector2dbl _oldPos;										// 前のﾌﾚｰﾑにいた座標格納
+
 	double& _rad;											// 角度を参照で受け取って書き換えるための
+
 	double _angle;											// 円描画用の角度
 	double _angleTotal;										// 角度の合計値
 	double _angleCon;										// 角度制御1か-1をかけてあげる
+
 	Vector2dbl _lenght;										// 自機の角度を変えるよ
+
 	double _radius;											// 半径
+
 	Vector2dbl _oneMoveVec;									// １ﾌﾚｰﾑ当たりの移動量
+
 	double _moveGain;										// ｼｸﾞﾓｲﾄﾞ用の動きの幅
 
 	Vector2dbl _scaleGain;									// 拡大縮小用の幅
 	int _scaleCnt;											// ｹﾞｰﾑｶｳﾝﾄだと最初ずれて始まるから新しく作った
 
 	static int _pitInCnt;									// 全員揃ったか確認するための 
+
+	Vector2dbl _plPos;										// ﾌﾟﾚｲﾔｰの座標格納用
 
 };
 

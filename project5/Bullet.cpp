@@ -17,7 +17,7 @@ Bullet::Bullet(UNIT_ID unitID ,Vector2dbl pos)
 	Init();
 }
 
-void Bullet::Update(void)
+void Bullet::Update(sharedObj obj)
 {
 	// ’e‚ª€‚ñ‚Å‚½‚çˆ—‚µ‚È‚¢
 	if (DestroyPrpc())

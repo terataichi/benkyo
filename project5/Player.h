@@ -9,7 +9,7 @@ class Player :
 public:
 	Player();
 	Player(Vector2dbl pos, Vector2dbl size);
-	void Update(void) override;
+	void Update(sharedObj obj) override;
 	~Player();
 
 private:

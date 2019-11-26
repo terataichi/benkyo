@@ -7,7 +7,7 @@ class Bullet :
 public:
 	Bullet();
 	Bullet(UNIT_ID unitID ,Vector2dbl pos);
-	void Update(void) override;
+	void Update(sharedObj obj) override;
 	~Bullet();
 private:
 	void Init(void);

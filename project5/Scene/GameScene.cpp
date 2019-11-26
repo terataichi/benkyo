@@ -23,7 +23,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("ｷｬﾗ爆発", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32 })
+		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32   })
 	);
 
 	double ofSet = 0;			// ｵﾌｾｯﾄをいじる
@@ -34,12 +34,14 @@ GameScene::GameScene()
 		{		
 
 			MoveState tmpMoveState;			// 処理					最終地点
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (30.0 * ((y * 10) + x)),0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (10.0 * ((y * 10) + x)),0.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
 			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::SCALE, Vector2dbl{ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y / 3) });
+			tmpMoveState.emplace_back(MOVE_TYPE::ATTACK, Vector2dbl{ 0.0,0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 
 			// ｵﾌｾｯﾄの計算
 			switch ((x % 2))
@@ -79,11 +81,15 @@ GameScene::~GameScene()
 // 更新
 unique_Base GameScene::Update(unique_Base own)
 {
+
+	auto plObj = std::find_if(_objList.begin(), _objList.end(), [&](sharedObj &obj) {
+		return (*obj).unitID() == UNIT_ID::PLAYER;
+	});
 	
 	for (auto data : _objList)
 	{
 		// 更新
-		(*data).Update();
+		(*data).Update(*plObj);
 	}
 
 	for (auto data : _objList)

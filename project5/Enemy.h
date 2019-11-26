@@ -32,7 +32,7 @@ class Enemy :
 public:
 	Enemy();
 	Enemy(EnemyState& state);
-	void Update(void) override;
+	void Update(sharedObj obj) override;
 	~Enemy();
 private:
 	EnemyMove moveCtl{ _pos , _rad};

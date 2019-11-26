@@ -20,14 +20,14 @@ Enemy::Enemy(EnemyState & state)
 	init();
 }
 
-void Enemy::Update(void)
+void Enemy::Update(sharedObj obj)
 {
 	if (DestroyPrpc())
 	{
 		return;
 	}
 
-	moveCtl.Update();
+	moveCtl.Update(obj);		// ´ÈÐ°‚Ì±¯ÌßÃÞ°Ä
 
 	//if (rand() % 300 == 1)
 	//{
@@ -38,7 +38,7 @@ void Enemy::Update(void)
 
 Enemy::~Enemy()
 {
-
+	moveCtl.PitInCnt();
 }
 
 void Enemy::init()
