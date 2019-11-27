@@ -1,14 +1,18 @@
 #include "Bullet.h"
 #include "ImageMng.h"
 #include "Scene\SceneMng.h"
+#include <SoundMng.h>
 
 Bullet::Bullet()
 {
+	lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],true });
+
 	Init();
 }
 
 Bullet::Bullet(UNIT_ID unitID ,Vector2dbl pos)
 {
+	lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],true });
 	_unitID = unitID;
 	_zOder = 0;
 	_pos = pos;

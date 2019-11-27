@@ -94,7 +94,7 @@ void EnemyMove::SetMovePrg(void)
 	switch (_aim[_aimCnt].first)
 	{
 	case MOVE_TYPE::WAIT:
-		count = 0;
+		_count = 0;
 		_move = &EnemyMove::Wait;
 		break;
 	case MOVE_TYPE::SIGMOID:
@@ -109,7 +109,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
-		count = 0;
+		_count = 0;
 		// ｱｯﾀｸが終わったら通常の処理にも
 		if (_startPos.y > 0)
 		{
@@ -124,10 +124,12 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::SCALE:
 		_scaleCnt = 30;		// 拡大率0で始めたいから30をいれた
 		_scaleGain = (_endPos - _startPos);
-		count = 0;
+		_count = 0;
 		_move = &EnemyMove::MoveScale;
 		break;
 	case MOVE_TYPE::ATTACK:
+		_count = 0;
+		_angleTotal = 0;
 		_move = &EnemyMove::MoveAttack;
 		break;
 	default:
@@ -201,7 +203,7 @@ void EnemyMove::MoveSpiral(void)
 void EnemyMove::PitIn(void)
 {
 	
-	if (count < 60)								// XかYだけをﾁｪｯｸすることによって計算量が減る
+	if (_count < 60)								// XかYだけをﾁｪｯｸすることによって計算量が減る
 	{
 		// 移動量が残っている場合
 		_pos += _oneMoveVec;
@@ -220,14 +222,14 @@ void EnemyMove::PitIn(void)
 		_pitInCnt++;
 		SetMovePrg();
 	}
-	count++;
+	_count++;
 }
 
 void EnemyMove::Wait(void)
 {
-	count++;
+	_count++;
 	// 終端地点に来たら切り替える
-	if (count > _aim[_aimCnt].second.x)
+	if (_count > _aim[_aimCnt].second.x)
 	{
 		
 		SetMovePrg();
@@ -254,7 +256,7 @@ void EnemyMove::MoveScale(void)
 	//_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	
 	_scaleCnt++;
-	count++;
+	_count++;
 	// 移動
 	_pos =
 			_startPos +
@@ -263,7 +265,7 @@ void EnemyMove::MoveScale(void)
 			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -
 			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
-	if (count >= 180)
+	if (_count >= 180)
 	{
 		SetMovePrg();
 	}
@@ -271,9 +273,16 @@ void EnemyMove::MoveScale(void)
 
 void EnemyMove::MoveAttack(void)
 {
-
-	_endPos = { _plPos.x , _plPos.y + 100.0 };														// ﾌﾟﾚｲﾔｰより少し下を目標地点にする
-	_move = &EnemyMove::PitIn;
-	count = 0;
-	_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+	if (_count < 60)
+	{
+		_rad += (PI * 3) / 10.0 * _angleCon;
+	}
+	else
+	{
+		_endPos = { _plPos.x , _plPos.y + 100.0 };														// ﾌﾟﾚｲﾔｰより少し下を目標地点にする
+		_move = &EnemyMove::PitIn;
+		_count = 0;
+		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+	}
+	_count++;
 }

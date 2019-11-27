@@ -52,7 +52,6 @@ void Player::Update(sharedObj obj)
 	if ((*_input).State(INPUT_ID::BTN_1).first && !(*_input).State(INPUT_ID::BTN_1).second)
 	{
 		lpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
-		lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],false });
 	}
 }
 

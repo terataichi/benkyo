@@ -109,9 +109,11 @@ void SceneMng::Run(void)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 
 		Draw();
-		Sound();
+		
 
 		(*_activeScene).RunActQue(std::move(_actList));					// î•ñ‚ğmove‚µ‚Ä“n‚µ‚Ä‚ ‚°‚é
+
+		Sound();
 
 		_gameCount++;													// ¹Ş°Ñ¶³İÄ
 	}

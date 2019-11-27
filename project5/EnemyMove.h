@@ -40,7 +40,7 @@ private:
 	void MoveScale(void);									// Šg‘åk¬
 	void MoveAttack(void);									// “ËŒ‚
 
-	int count;
+	int _count;
 
 	MoveState _aim;											// –Ú•W‚ÉŠÖ‚·‚éî•ñŠi”[
 	int _aimCnt;											// “G‚ÌŠÇ——p
