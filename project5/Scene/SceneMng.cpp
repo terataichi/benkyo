@@ -68,7 +68,17 @@ void SceneMng::Draw(void)
 		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
 	}
 
+	
+
 	ScreenFlip();	// — ‰æ–Ê‚©‚ç•\‰æ–Ê‚É
+}
+
+void SceneMng::Sound(void)
+{
+	for (auto sQue : _soundList)
+	{
+		PlaySoundMem(std::get<static_cast<int>(SOUND_QUE::SOUND)>(sQue), DX_PLAYTYPE_BACK, std::get<static_cast<int>(SOUND_QUE::LOOP)>(sQue));
+	}
 }
 
 SceneMng::SceneMng() :ScreenSize{ 800,600 }, GameScreenSize{ 500 , 390 }, ScreenCenter{ ScreenSize / 2 }, GameScreenOffset{ (ScreenSize - GameScreenSize) / 2 }
@@ -92,18 +102,26 @@ void SceneMng::Run(void)
 		_dbgStartDraw();
 
 		_drawList.clear();	// —v‘f‚ğ‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
-		
+		_soundList.clear();
+
 		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,0,LAYER::UI });		// ˜g‚Ì•`‰æ
 
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 
 		Draw();
+		Sound();
 
 		(*_activeScene).RunActQue(std::move(_actList));					// î•ñ‚ğmove‚µ‚Ä“n‚µ‚Ä‚ ‚°‚é
 
 		_gameCount++;													// ¹Ş°Ñ¶³İÄ
 	}
 	// delete _activeScene;
+}
+
+bool SceneMng::AddSoundQue(SoundQueT sQue)
+{
+	_soundList.emplace_back(sQue);
+	return true;
 }
 
 bool SceneMng::AddDrawQue(DrawQueT dQue)

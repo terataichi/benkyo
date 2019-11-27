@@ -62,11 +62,10 @@ void EnemyMove::SetMovePrg(void)
 	
 	_aimCnt++;
 
-
 	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
 		auto checkAim = [&]() {
-			for (_aimCnt = 0; _aimCnt < _aim.size(); _aimCnt++)
+			for (_aimCnt = 0; _aimCnt < static_cast<int>(_aim.size()); _aimCnt++)
 			{
 				if (_aim[_aimCnt].first == MOVE_TYPE::SCALE)
 				{

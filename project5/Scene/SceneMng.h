@@ -20,6 +20,14 @@ enum class DRAW_QUE
 //							id	 x		 y		角度	奥行 screen
 using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;		// DRAW_QUEの内容
 
+enum class SOUND_QUE
+{
+	SOUND,
+	LOOP
+};
+//							id	ループさせるかさせないか
+using SoundQueT = std::pair<int, bool>;
+
 #define lpSceneMng SceneMng::GetInstance()
 
 class SceneMng
@@ -51,7 +59,7 @@ public:
 	void Run(void);
 
 	
-
+	bool AddSoundQue(SoundQueT sQue);
 	bool AddDrawQue(DrawQueT dQue);
 	bool AddActQue(ActQueT aQue);
 
@@ -65,11 +73,13 @@ private:
 	static SceneMng* sInstance;
 	unique_Base _activeScene;
 
-	void Draw(void);
+	void Draw(void);					// 描画
+	void Sound(void);					// ｻｳﾝﾄﾞ
 
 	std::map<LAYER, int>_screenID;		// screen用の
+	std::vector<SoundQueT>_soundList;	// ｻｳﾝﾄﾞﾘｽﾄ
 	std::vector<DrawQueT>_drawList;		// 描画リスト
-	std::vector<ActQueT>_actList;		// アクションリスト
+	std::vector<ActQueT>_actList;		// ｱｸｼｮﾝﾘｽﾄ
 
 	SceneMng();		// ｺﾝｽﾄﾗｸﾀ
 	~SceneMng();	// ﾃﾞｽﾄﾗｸﾀ

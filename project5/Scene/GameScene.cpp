@@ -3,6 +3,7 @@
 #include <_DebugConOut.h>
 #include "GameScene.h"
 #include <ImageMng.h>
+#include <SoundMng.h>
 #include <Player.h>
 #include <Enemy.h>
 #include <Bullet.h>
@@ -17,6 +18,7 @@ GameScene::GameScene()
 
 	TRACE("¹Ş°Ñ¼°İ‚Ì¶¬\n");
 
+	// ²Ò°¼Ş‚Ì‰Šú‰»
 	lpImageMng.GetID("·¬×", "image/char.png", { 30,32 }, { 10, 10 });
 	lpImageMng.GetID("’e", "image/shot.png", { 8,3 }, { 1,2 });
 	lpImageMng.GetID("“G”š”­", "image/en_blast.png", { 64,64 }, { 5,1 });
@@ -72,6 +74,8 @@ GameScene::GameScene()
 	/*obj[0] = new Obj("image/char.png", { 0, 0 }, 10, 10, 30, 32);
 	obj[1] = new Obj("image/char.png", { 100, 100 }, 10, 10, 30, 32);*/
 
+	// »³İÄŞ‚Ì‰Šú‰»
+	lpSoundMng.GetID("’e", "sound/shot1.mp3");
 }
 
 GameScene::~GameScene()
@@ -81,7 +85,7 @@ GameScene::~GameScene()
 // XV
 unique_Base GameScene::Update(unique_Base own)
 {
-
+	// ÌßÚ²Ô°‚ÌµÌŞ¼Şª‚Ìî•ñ‚ğæ“¾
 	auto plObj = std::find_if(_objList.begin(), _objList.end(), [&](sharedObj &obj) {
 		return (*obj).unitID() == UNIT_ID::PLAYER;
 	});
