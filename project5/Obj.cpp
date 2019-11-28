@@ -3,8 +3,6 @@
 #include <ImageMng.h>
 #include "Obj.h"
 
-
-
 Obj::Obj()
 {
 	// ‰Šú‰»
@@ -102,9 +100,9 @@ const UNIT_ID & Obj::unitID(void) const
 	return _unitID;
 }
 
-const bool Obj::exFlag(void) const
+const bool &Obj::exFlag(void) const
 {
-	return false;
+	return _exFlag;
 }
 
 bool Obj::SetAttack(bool exflag)
@@ -115,14 +113,6 @@ bool Obj::SetAttack(bool exflag)
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
-	//// ó‚¯æ‚Á‚½ÃŞ°À‚ğŠi”[
-	//if (_animMap.find(key) == _animMap.end())
-	//{
-	//	_animMap[key] = data;
-	//	return true;
-	//}
-	//return false;
-
 	// C++ 17ˆÈ~‚¾‚Á‚½‚çˆês‚Å‚©‚¯‚é
 	return (_animMap.try_emplace(state, std::move(data))).second;
 }

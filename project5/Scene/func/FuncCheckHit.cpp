@@ -11,7 +11,6 @@ bool FuncCheckHit::operator()(ActQueT & actQue, std::vector<sharedObj>& objList)
 		// ID‚Æˆê’v‚µ‚½‚ç“–‚½‚è”»’è‚µ‚Ä‚¢‚¢‚æ
 		if ((*obj).unitID() == unitID && (*obj).isAlive())
 		{
-			//std::sqrt(((*obj).pos().x - actQue.second.pos().x) + ((*obj).pos().y) - actQue.second.pos().y);
 			_posLength = (actQue.second.pos().x - (*obj).pos().x) * (actQue.second.pos().x - (*obj).pos().x) + (actQue.second.pos().y - (*obj).pos().y) * (actQue.second.pos().y - (*obj).pos().y);
 			_sizeLength = (((*obj).size().x - 15) * ((*obj).size().x - 15)) + (((*obj).size().y - 15) * ((*obj).size().y -15));
 

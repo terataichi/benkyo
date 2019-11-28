@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <DxLib.h>
+#include <time.h>
 #include <_DebugConOut.h>
 #include "GameScene.h"
 #include <ImageMng.h>
@@ -15,6 +16,9 @@
 GameScene::GameScene()
 {
 	InitFunc();
+
+	// ｼｰﾄﾞ値の変更
+	srand((unsigned int)time(NULL));
 
 	TRACE("ｹﾞｰﾑｼｰﾝの生成\n");
 
@@ -82,32 +86,21 @@ GameScene::~GameScene()
 // 更新
 unique_Base GameScene::Update(unique_Base own)
 {
-	
-	
+
 	// 敵のｱﾀｯｸﾌﾗｸﾞ管理用関数
-	auto atCheck = [](sharedObj& obj)
+	auto CheckAt = [](sharedObj& obj)
 	{
 		// ｴﾈﾐｰが攻撃してほしい
 		if ((*obj).unitID() == UNIT_ID::ENEMY)
 		{
 			// ﾗﾝﾀﾞﾑで攻撃してほしい
-			if (rand() % 3000)
+			if (rand() % 3000 == 0)
 			{
 				return true;
 			}
 		}
 		return false;
 	};
-
-	
-	for (auto data : _objList)
-	{
-		// 結果を返す
-		if (atCheck(data))
-		{
-			(*data).SetAttack(true);
-		}
-	}
 
 	// ﾌﾟﾚｲﾔｰのｵﾌﾞｼﾞｪの情報を取得
 	auto plObj = std::find_if(_objList.begin(), _objList.end(), [&](sharedObj &obj) {
@@ -116,6 +109,17 @@ unique_Base GameScene::Update(unique_Base own)
 
 	for (auto data : _objList)
 	{
+		// 結果を返す
+		if (CheckAt(data))
+		{
+			(*data).SetAttack(true);
+		}
+		else
+		{
+			(*data).SetAttack(false);
+
+		}
+
 		// 更新
 		(*data).Update(*plObj);
 	}

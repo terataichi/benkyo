@@ -22,12 +22,14 @@ using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2dbl>>;
 class EnemyMove
 {
 public:
-	EnemyMove(Vector2dbl& pos , double& rad);
+	EnemyMove(Vector2dbl& pos, double& rad, bool& atFlag);
 	~EnemyMove();
+	const MOVE_TYPE MoveType(void)const;
 	void Update(sharedObj obj);								// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 新しい情報が欲しくなった時用フラグ
 	void PitInCnt(void);									// 敵の処理
-	
+	MoveState _aim;											// 目標に関する情報格納
+
 private:
 	void SetMovePrg(void);									// _aimの中の情報をｾｯﾄする
 
@@ -43,7 +45,6 @@ private:
 
 	int _count;
 
-	MoveState _aim;											// 目標に関する情報格納
 	int _aimCnt;											// 敵の管理用
 	
 	Vector2dbl _startPos;									// 各移動関数のｽﾀｰﾄ地点
@@ -73,6 +74,6 @@ private:
 
 	Vector2dbl _plPos;										// ﾌﾟﾚｲﾔｰの座標格納用
 
-	bool _atFlag;											// ｱﾀｯｸﾌﾗｸﾞ
+	bool& _exFlag;											// ｱﾀｯｸﾌﾗｸﾞ
 };
 

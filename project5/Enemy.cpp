@@ -15,7 +15,6 @@ Enemy::Enemy(EnemyState & state)
 	_type = std::move(std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state));
 	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state);
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
-
 	moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state), true);
 	init();
 }
@@ -26,7 +25,6 @@ void Enemy::Update(sharedObj obj)
 	{
 		return;
 	}
-
 	moveCtl.Update(obj);		// ´ÈÐ°‚Ì±¯ÌßÃÞ°Ä
 }
 

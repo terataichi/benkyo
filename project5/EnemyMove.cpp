@@ -9,8 +9,9 @@
 
 int EnemyMove::_pitInCnt;
 
-EnemyMove::EnemyMove(Vector2dbl& pos, double& rad) :_pos(pos),_rad(rad)
+EnemyMove::EnemyMove(Vector2dbl& pos, double& rad,bool& atFlag) :_pos(pos),_rad(rad),_exFlag(atFlag)
 {
+	_scaleCnt = 30;		// ägëÂó¶0Ç≈énÇﬂÇΩÇ¢Ç©ÇÁ30ÇÇ¢ÇÍÇΩ
 	_move = nullptr;
 	_aimCnt = -1;						// 0ÇæÇ∆Ç¢Ç´Ç»ÇË±∏æΩÇ∑ÇÈ
 	_angleTotal = std::atan(0.0);		// 0ìxÇäiî[
@@ -21,6 +22,11 @@ EnemyMove::~EnemyMove()
 {
 }
 
+const MOVE_TYPE EnemyMove::MoveType(void) const
+{
+	return _aim[_aimCnt].first;
+}
+
 void EnemyMove::Update(sharedObj obj)
 {
 	_plPos = (*obj).pos();
@@ -29,10 +35,6 @@ void EnemyMove::Update(sharedObj obj)
 		(this->*_move)();					// óDêÊìxÇÇ¬ÇØÇÈÇΩÇﬂÇ…Ç©Ç¡Ç±ÇÇ¬ÇØÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢
 											// Ç¬ÇØÇ»Ç¢Ç∆this->(*_move())Ç»Ç¡ÇƒÇµÇ‹Ç§ÅB
 	}
-
-	// √ﬁ ﬁØ∏ﬁóp
-	//_dbgDrawPixel(lpSceneMng.GameScreenOffset.x +  _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y, 0xffffff);
-	//_dbgDrawBox(lpSceneMng.GameScreenOffset.x + _pos.x - 15, lpSceneMng.GameScreenOffset.y + _pos.y - 15, lpSceneMng.GameScreenOffset.x + _pos.x + 15, lpSceneMng.GameScreenOffset.y +_pos.y + 15, 0xffffff, false);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -115,6 +117,16 @@ void EnemyMove::SetMovePrg(void)
 		{
 			_endPos.x = ((_endPos.x - 60) + (((lpSceneMng._gameCount + 60) / LR_GAIN) % 2 * LR_GAIN)) + (((lpSceneMng._gameCount + 60) % LR_GAIN) * ((((lpSceneMng._gameCount + 60) / LR_GAIN) % 2) * -2 + 1));
 		}
+		else
+		{
+			_endPos =
+				_endPos +
+				_scaleGain *
+				(static_cast<double>(((_scaleCnt + 100) / 2) % 30) / 100.0) *
+				((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * 2.0 - 1.0)) -
+				(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
+
+		}
 		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2ïbåoÇ¬Ç‹Ç≈Ç…à⁄ìÆÇ≥ÇπÇÈÇPÃ⁄∞—ÇÃà⁄ìÆó 
 		_move = &EnemyMove::PitIn;
 		break;
@@ -122,7 +134,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveLR;
 		break;
 	case MOVE_TYPE::SCALE:
-		_scaleCnt = 30;		// ägëÂó¶0Ç≈énÇﬂÇΩÇ¢Ç©ÇÁ30ÇÇ¢ÇÍÇΩ
+		_exFlag;
 		_scaleGain = (_endPos - _startPos);
 		_count = 0;
 		_move = &EnemyMove::MoveScale;
@@ -194,7 +206,6 @@ void EnemyMove::MoveSpiral(void)
 	}
 	else
 	{
-		
 		SetMovePrg();
 	}
 
@@ -211,8 +222,6 @@ void EnemyMove::PitIn(void)
 		// äpìxÇÃèàóù
 		_lenght = _endPos - _pos;													// å¥ì_Ç…çáÇÌÇπÇÈ
 		_rad = std::atan2(_lenght.y, _lenght.x) + (PI * 90.0 )/ 180.0;				// äpìxÇë™ÇÈ
-		//_rad = std::atan2(_lenght.y, _lenght.x) + std::atan(90.0);
-		//_rad = std::atan2(-_pos.x + _endPos.x, -_endPos.y + _pos.y);
 	}
 	else
 	{
@@ -262,12 +271,16 @@ void EnemyMove::MoveScale(void)
 			_startPos +
 			_scaleGain *
 			(static_cast<double>(((_scaleCnt + 100) / 2) % 30 ) / 100.0) *
-			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -
+			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * 2.0 - 1.0)) -
 			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
-	if (_count >= 5000)
+	if (_count >= 120)
 	{
-		SetMovePrg();
+		if (_exFlag)
+		{
+			SetMovePrg();
+			_exFlag = false;
+		}
 	}
 }
 
