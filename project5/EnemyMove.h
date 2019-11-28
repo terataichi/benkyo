@@ -27,6 +27,7 @@ public:
 	void Update(sharedObj obj);								// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 新しい情報が欲しくなった時用フラグ
 	void PitInCnt(void);									// 敵の処理
+	
 private:
 	void SetMovePrg(void);									// _aimの中の情報をｾｯﾄする
 
@@ -72,5 +73,6 @@ private:
 
 	Vector2dbl _plPos;										// ﾌﾟﾚｲﾔｰの座標格納用
 
+	bool _atFlag;											// ｱﾀｯｸﾌﾗｸﾞ
 };
 

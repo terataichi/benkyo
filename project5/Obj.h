@@ -39,13 +39,17 @@ public:
 	virtual ~Obj();
 
 	bool state(const STATE state);								// ±ÆÒ·°‚Ìİ’è
-	const STATE state(void) const;								// •Ô‚·‚æ
+
+	// ‚Ù‚µ‚¢‚à‚Ì‚ğ•Ô‚·‚¾‚¯
+	const STATE state(void) const;								
 	const Vector2dbl &pos(void) const;
 	const Vector2dbl &size(void) const;
 	const UNIT_ID &unitID(void) const;
+	const bool exFlag(void) const;
 
+	// ¾¯Ä
+	bool SetAttack(bool exflag);								// UŒ‚Ì×¸Ş‚ÌƒZƒbƒg
 	bool SetAnim(const STATE state, AnimVector& data);			// ±ÆÒ°¼®İdata‚Ì“o˜^
-
 	bool SetAlive(bool alive);
 	bool isAlive(void) { return _alive; }						// ó‘Ô‚ğæ“¾‚·‚é‚½‚ß‚¾‚¯
 	bool isDead(void) { return _dead; }
@@ -64,6 +68,7 @@ protected:
 	Vector2dbl _size;											// ‰æ‘œ»²½Ş
 	double _rad;												// Šp“x
 	int _zOder;													// •`‰æ‚Ì—Dæ
-	UNIT_ID _unitID;
+	UNIT_ID _unitID;											// ¯•Ê—p
+	bool _exFlag;												// UŒ‚Ì×¸Ş
 };
 

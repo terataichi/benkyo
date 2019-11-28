@@ -28,12 +28,6 @@ void Enemy::Update(sharedObj obj)
 	}
 
 	moveCtl.Update(obj);		// ´ÈÐ°‚Ì±¯ÌßÃÞ°Ä
-
-	//if (rand() % 300 == 1)
-	//{
-	//	SetAlive(false);
-	//}
-
 }
 
 Enemy::~Enemy()

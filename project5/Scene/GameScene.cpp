@@ -25,7 +25,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("ｷｬﾗ爆発", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32   })
+		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32 })
 	);
 
 	double ofSet = 0;			// ｵﾌｾｯﾄをいじる
@@ -37,8 +37,8 @@ GameScene::GameScene()
 
 			MoveState tmpMoveState;			// 処理					最終地点
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (10.0 * ((y * 10) + x)),0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
-			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
+			//tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
+			//tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::SCALE, Vector2dbl{ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y / 3) });
@@ -71,9 +71,6 @@ GameScene::GameScene()
 		}
 	}
 	
-	/*obj[0] = new Obj("image/char.png", { 0, 0 }, 10, 10, 30, 32);
-	obj[1] = new Obj("image/char.png", { 100, 100 }, 10, 10, 30, 32);*/
-
 	// ｻｳﾝﾄﾞの初期化
 	lpSoundMng.GetID("弾", "sound/shot1.mp3");
 }
@@ -85,11 +82,38 @@ GameScene::~GameScene()
 // 更新
 unique_Base GameScene::Update(unique_Base own)
 {
+	
+	
+	// 敵のｱﾀｯｸﾌﾗｸﾞ管理用関数
+	auto atCheck = [](sharedObj& obj)
+	{
+		// ｴﾈﾐｰが攻撃してほしい
+		if ((*obj).unitID() == UNIT_ID::ENEMY)
+		{
+			// ﾗﾝﾀﾞﾑで攻撃してほしい
+			if (rand() % 3000)
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
+	
+	for (auto data : _objList)
+	{
+		// 結果を返す
+		if (atCheck(data))
+		{
+			(*data).SetAttack(true);
+		}
+	}
+
 	// ﾌﾟﾚｲﾔｰのｵﾌﾞｼﾞｪの情報を取得
 	auto plObj = std::find_if(_objList.begin(), _objList.end(), [&](sharedObj &obj) {
 		return (*obj).unitID() == UNIT_ID::PLAYER;
 	});
-	
+
 	for (auto data : _objList)
 	{
 		// 更新
@@ -106,6 +130,8 @@ unique_Base GameScene::Update(unique_Base own)
 		(*data).Draw();
 	}
 	
+
+
 	/*[](){} らむだしき*/
 	/* 空になった要素を消す	まとめて書いたやつ*/
 	_objList.erase(std::remove_if(															// 中身を消すやつ 要素は残るからerase

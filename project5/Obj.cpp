@@ -8,13 +8,14 @@
 Obj::Obj()
 {
 	// èâä˙âª
+	_exFlag = false;
 	_alive = true;
 	_dead = false;
 	_animFrame = 0;
 	_animCount = 0;
 	_rad = 0;
 	_unitID = UNIT_ID::NON;
-	_zOder = 10;
+	_zOder = 50000;
 }
 
 void Obj::Draw(void)
@@ -99,6 +100,17 @@ const Vector2dbl & Obj::size(void) const
 const UNIT_ID & Obj::unitID(void) const
 {
 	return _unitID;
+}
+
+const bool Obj::exFlag(void) const
+{
+	return false;
+}
+
+bool Obj::SetAttack(bool exflag)
+{
+	_exFlag = exflag;
+	return true;
 }
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)
