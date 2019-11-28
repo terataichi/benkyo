@@ -265,7 +265,7 @@ void EnemyMove::MoveScale(void)
 			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * -2.0 + 1.0) * -1) -
 			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
-	if (_count >= 180)
+	if (_count >= 5000)
 	{
 		SetMovePrg();
 	}

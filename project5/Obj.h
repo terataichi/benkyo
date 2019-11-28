@@ -45,7 +45,7 @@ public:
 	const Vector2dbl &pos(void) const;
 	const Vector2dbl &size(void) const;
 	const UNIT_ID &unitID(void) const;
-	const bool exFlag(void) const;
+	const bool &exFlag(void) const;
 
 	// ¾¯Ä
 	bool SetAttack(bool exflag);								// UŒ‚Ì×¸Ş‚ÌƒZƒbƒg
