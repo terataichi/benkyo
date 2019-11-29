@@ -64,6 +64,7 @@ void EnemyMove::SetMovePrg(void)
 	
 	_aimCnt++;
 
+	// 攻撃の後のﾋﾟｯﾄｲﾝが終わったら拡大縮小に戻ってほしい
 	if (_aimCnt >= static_cast<int>(_aim.size()))
 	{
 		auto checkAim = [&]() {
@@ -89,43 +90,45 @@ void EnemyMove::SetMovePrg(void)
 		_pos.y = -100;
 	}
 
-	_startPos = _pos;					// 今の位置がｽﾀｰﾄ地点
-	_endPos = _aim[_aimCnt].second;		// 最終地点
+	_startPos = _pos;																					// 今の位置がｽﾀｰﾄ地点
+	_endPos = _aim[_aimCnt].second;																		// 最終地点
+	_count = 0;
 
 	// firstの中のTYPEによって動き方を変える
 	switch (_aim[_aimCnt].first)
 	{
 	case MOVE_TYPE::WAIT:
-		_count = 0;
 		_move = &EnemyMove::Wait;
 		break;
 	case MOVE_TYPE::SIGMOID:
-		_moveGain = -5;																				// ｼｸﾞﾓｲﾄﾞを上から始めるために-10を入れた
-		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 90.0);											// 3秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+		_moveGain = -5;																					// ｼｸﾞﾓｲﾄﾞを上から始めるために-10を入れた
+		_oneMoveVec.x = ((_endPos.x - _startPos.x) / 90.0);												// 3秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		_move = &EnemyMove::MoveSigmoid;
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_angle = std::atan( _startPos.y - _endPos.y );													// 初期の角度をきめる
 		_radius = abs(_endPos.y - _startPos.y);															// 半径の設定
-		_angleCon = (((_endPos.y - _startPos.y) / abs(_endPos.y - _startPos.y)) *(((lpSceneMng.ScreenCenter.x / 2 - _startPos.x) / abs(lpSceneMng.ScreenCenter.x / 2 - _startPos.x))) * -1);
+		_angleCon = ((_endPos.y - _startPos.y) / abs(_endPos.y - _startPos.y)) *((lpSceneMng.ScreenCenter.x / 2 - _startPos.x) / abs(lpSceneMng.ScreenCenter.x / 2 - _startPos.x)) * -1;
 		_move = &EnemyMove::MoveSpiral;
 		break;
 	case MOVE_TYPE::PITIN:
-		_count = 0;
-		// ｱｯﾀｸが終わったら通常の処理にも
 		if (_startPos.y > 0)
 		{
+			// １回目はLRに合わせたい
 			_endPos.x = ((_endPos.x - 60) + (((lpSceneMng._gameCount + 60) / LR_GAIN) % 2 * LR_GAIN)) + (((lpSceneMng._gameCount + 60) % LR_GAIN) * ((((lpSceneMng._gameCount + 60) / LR_GAIN) % 2) * -2 + 1));
+			_lenght = _endPos - _pos;													// 原点に合わせる
+			_rad = std::atan2(_lenght.y, _lenght.x) + (PI * 90.0) / 180.0;				// 角度を測る
+
 		}
 		else
 		{
-			_endPos =
-				_endPos +
+			// 二回目以降は拡大縮小の動きに合わせたい
+			_scaleCnt += 60;
+			_endPos = _scalePos +
 				_scaleGain *
 				(static_cast<double>(((_scaleCnt + 100) / 2) % 30) / 100.0) *
 				((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * 2.0 - 1.0)) -
 				(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
-
 		}
 		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
 		_move = &EnemyMove::PitIn;
@@ -134,13 +137,11 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveLR;
 		break;
 	case MOVE_TYPE::SCALE:
-		_exFlag;
-		_scaleGain = (_endPos - _startPos);
-		_count = 0;
+		_exFlag = false;
+		_scaleGain = (_endPos - _scalePos);
 		_move = &EnemyMove::MoveScale;
 		break;
 	case MOVE_TYPE::ATTACK:
-		_count = 0;
 		_angleTotal = 0;
 		_move = &EnemyMove::MoveAttack;
 		break;
@@ -219,9 +220,6 @@ void EnemyMove::PitIn(void)
 		// 移動量が残っている場合
 		_pos += _oneMoveVec;
 
-		// 角度の処理
-		_lenght = _endPos - _pos;													// 原点に合わせる
-		_rad = std::atan2(_lenght.y, _lenght.x) + (PI * 90.0 )/ 180.0;				// 角度を測る
 	}
 	else
 	{
@@ -255,6 +253,7 @@ void EnemyMove::MoveLR(void)
 	// 最後尾の奴までそろって　かつ　ｴﾝﾄﾞﾎﾟｽにいたら
 	if (_pitInCnt >= ENEMY_MAX && (_endPos.x / 100.0) == (_pos.x / 100.0))
 	{
+		_scalePos = _pos;
 		SetMovePrg();
 	}
 }
@@ -264,24 +263,26 @@ void EnemyMove::MoveScale(void)
 	// デバック用
 	//_dbgDrawLine(lpSceneMng.GameScreenOffset.x + _startPos.x, 0, lpSceneMng.GameScreenOffset.x + _startPos.x, lpSceneMng.ScreenSize.y, 0xfffff);
 	
-	_scaleCnt++;
-	_count++;
 	// 移動
 	_pos =
-			_startPos +
-			_scaleGain *
-			(static_cast<double>(((_scaleCnt + 100) / 2) % 30 ) / 100.0) *
-			((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * 2.0 - 1.0)) -
-			(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
+		_scalePos +
+		_scaleGain *
+		(static_cast<double>(((_scaleCnt + 100) / 2) % 30 ) / 100.0) *
+		((static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * 2.0 - 1.0)) -
+		(static_cast<double>((((_scaleCnt + 100) / 2) / 30) % 2) * (_scaleGain * 0.3));
 
 	if (_count >= 120)
 	{
+		// gameSceneからﾌﾗｸﾞを受け取ってくる
 		if (_exFlag)
 		{
 			SetMovePrg();
 			_exFlag = false;
 		}
 	}
+	_scaleCnt++;
+	_count++;
+
 }
 
 void EnemyMove::MoveAttack(void)
@@ -293,9 +294,11 @@ void EnemyMove::MoveAttack(void)
 	else
 	{
 		_endPos = { _plPos.x , _plPos.y + 100.0 };														// ﾌﾟﾚｲﾔｰより少し下を目標地点にする
-		_move = &EnemyMove::PitIn;
 		_count = 0;
 		_oneMoveVec = ((_endPos - _startPos) / 60.0);													// 2秒経つまでに移動させる１ﾌﾚｰﾑの移動量
+		_lenght = _endPos - _pos;													// 原点に合わせる
+		_rad = std::atan2(_lenght.y, _lenght.x) + (PI * 90.0) / 180.0;				// 角度を測る
+		_move = &EnemyMove::PitIn;																		// 処理はﾋﾟｯﾄｲﾝと同じだからendポスだけ変えてあげる
 	}
 	_count++;
 }

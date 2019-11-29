@@ -16,7 +16,7 @@ public:
 	unique_Base Update(unique_Base own) override;
 private:
 	std::vector<sharedObj>_objList;
-	void RunActQue(std::vector<ActQueT> actList) override;	// 
+	void RunActQue(std::vector<ActQueT> actList) override;	// ±À¯¸‚É•K—v‚Èˆ—‚ğ‚±‚±‚Å‚â‚ç‚¹‚é
 
 	void InitFunc(void);
 	std::map<ACT_QUE, funcAct>funcQue;

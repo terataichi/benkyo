@@ -28,17 +28,6 @@ const VecInt& ImageMng::GetID(const std::string& key, const std::string& fileNam
 	// ファインドをするとBeginからendまで探してくれる
 	if (imgMap.find(key) == imgMap.end())
 	{
-		//VecInt tmpData;
-		//tmpData.resize(divCnt.x * divCnt.y);
-		//if (LoadDivGraph(fileName.c_str(), divCnt.x * divCnt.y, divCnt.x, divCnt.y, divSize.x, divSize.y, &tmpData[0]) == 0)
-		//{
-		//	imgMap[key] = std::move(tmpData);
-		//}
-		//else
-		//{
-		//	return std::move(tmpData);
-		//}
-
 		imgMap[key].resize(divCnt.x * divCnt.y);
 		LoadDivGraph(fileName.c_str(), divCnt.x * divCnt.y, divCnt.x, divCnt.y, divSize.x, divSize.y, &imgMap[key][0]);
 	}

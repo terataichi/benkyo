@@ -15,6 +15,7 @@
 
 GameScene::GameScene()
 {
+	// ﾒﾝﾊﾞｰ関数の初期化
 	InitFunc();
 
 	// ｼｰﾄﾞ値の変更
@@ -28,6 +29,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("敵爆発", "image/en_blast.png", { 64,64 }, { 5,1 });
 	lpImageMng.GetID("ｷｬﾗ爆発", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
+	// ﾌﾟﾚｲﾔｰの追加
 	_objList.emplace_back(
 		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y - 16.0}, { 30,32 })
 	);
@@ -41,8 +43,8 @@ GameScene::GameScene()
 
 			MoveState tmpMoveState;			// 処理					最終地点
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, Vector2dbl{ (10.0 * ((y * 10) + x)),0.0 });
-			//tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
-			//tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
+			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, Vector2dbl{static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - (100 * ((((y * 10) + x) % 6) / 4)) });
+			tmpMoveState.emplace_back(MOVE_TYPE::SPIRAL, Vector2dbl{ static_cast<double>((lpSceneMng.GameScreenSize.x / 4) + ((lpSceneMng.GameScreenSize.x / 2) * !((x % 2)))), (lpSceneMng.GameScreenSize.y * (5.0 / 6.0)) - 50 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, Vector2dbl{ (30.0 * 3.0) + (35.0 * x), 50 + (40.0 * y) });
 			tmpMoveState.emplace_back(MOVE_TYPE::SCALE, Vector2dbl{ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y / 3) });
@@ -65,7 +67,7 @@ GameScene::GameScene()
 			}
 
 			//type		pos		size																						15はｵﾌｾｯﾄ
-			EnemyState data = { ENEMY_TYPE::A,
+			EnemyState data = { static_cast<ENEMY_TYPE>(((y * 10) + x) / 20 % 3),
 								{static_cast<double>(lpSceneMng.GameScreenSize.x * (((y * 10) + x) % 2)) + ofSet,  static_cast<double>(330 / 2)*((((y * 10) + x) / 2) % 3) + 15},
 								{30, 32},
 								tmpMoveState };
@@ -124,20 +126,16 @@ unique_Base GameScene::Update(unique_Base own)
 		(*data).Update(*plObj);
 	}
 
+	// 描あ
 	for (auto data : _objList)
 	{
-		if (CheckHitKey(KEY_INPUT_SPACE))
-		{
-			// 死亡ﾌﾗｸﾞ
-			(*data).SetAlive(false);
-		}
 		(*data).Draw();
 	}
 	
 
 
 	/*[](){} らむだしき*/
-	/* 空になった要素を消す	まとめて書いたやつ*/
+	//空になった要素を消す
 	_objList.erase(std::remove_if(															// 中身を消すやつ 要素は残るからerase
 								_objList.begin(),											// ﾁｪｯｸ範囲の開始
 								_objList.end(),												// ﾁｪｯｸ範囲の終了地点
@@ -158,6 +156,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 		}
 		catch(...)
 		{
+			// なんかｴﾗｰが出たら
 			AST();
 		}
 	}
@@ -165,6 +164,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 
 void GameScene::InitFunc(void)
 {
+	// 処理の登録
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
 }

@@ -5,8 +5,6 @@
 
 Bullet::Bullet()
 {
-	lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],true });
-
 	Init();
 }
 

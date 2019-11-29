@@ -43,7 +43,7 @@ private:
 	void MoveScale(void);									// Šg‘åk¬
 	void MoveAttack(void);									// “ËŒ‚
 
-	int _count;
+	int _count;												// ‘Ò‚¿ŠÔ‚È‚Ç‚ÌÌÚ°ÑŠÇ——p
 
 	int _aimCnt;											// “G‚ÌŠÇ——p
 	
@@ -75,5 +75,7 @@ private:
 	Vector2dbl _plPos;										// ÌßÚ²Ô°‚ÌÀ•WŠi”[—p
 
 	bool& _exFlag;											// ±À¯¸Ì×¸Ş
+	
+	Vector2dbl _scalePos;									// UŒ‚I—¹ŒãÅ‰‚Ì½À°ÄÎß½‚ğŠî€‚ğ“™”{‚Æ‚µ‚Ä‚İ‚Ä‚Ù‚µ‚¢‚©‚ç						
 };
 
