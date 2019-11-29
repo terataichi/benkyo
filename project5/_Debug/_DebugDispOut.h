@@ -5,7 +5,6 @@
 #include <tuple>
 #include <chrono>		// ¸“x‚Í1msec’ö“x
 
-// ÃŞÌ§²İ‚ÅŒÄ‚Ñ‚â‚·‚­‚·‚é
 #define _dbgSetup(A)	_DebugDispOut::GetInstance().Setup(A)
 #define _dbgSetAlpha(A)	_DebugDispOut::GetInstance().SetAlpha(A)
 #define _dbgStartDraw()	_DebugDispOut::GetInstance().StartDrawDebug()
@@ -65,6 +64,8 @@ private:
 	double _waitTime;
 	bool dispFlag;
 	int ghBefor;
+	bool clsFlag;
+	int endKey[2];
 };
 #else
 

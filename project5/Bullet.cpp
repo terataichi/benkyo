@@ -14,7 +14,7 @@ Bullet::Bullet(UNIT_ID unitID ,Vector2dbl pos)
 	_unitID = unitID;
 	_zOder = 0;
 	_pos = pos;
-	_size = { 8,3 };
+	_size = { 3,8 };
 	_rad = (PI * 270) / 180.0;
 	Init();
 }

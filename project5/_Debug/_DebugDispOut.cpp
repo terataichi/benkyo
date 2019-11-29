@@ -9,6 +9,7 @@ _DebugDispOut::_DebugDispOut()
 {
 	_DbgScreen = -1;
 	_waitTime  = 0;
+	clsFlag = true;
 }
 
 _DebugDispOut::~_DebugDispOut()
@@ -70,6 +71,12 @@ void _DebugDispOut::WaitMode(void)
 			}
 			_endTime = std::chrono::system_clock::now();
 		} while (std::chrono::duration_cast<std::chrono::milliseconds>(_endTime - _startTime).count() < _waitTime);
+	}
+	endKey[1] = endKey[0];
+	endKey[0] = CheckHitKey(KEY_INPUT_END);
+	if (endKey[0] && !endKey[1])
+	{
+		clsFlag ^= 1;
 	}
 }
 
@@ -137,7 +144,10 @@ bool _DebugDispOut::StartDrawDebug(void)
 	int ghBefor;
 	ghBefor = GetDrawScreen();
 	SetDrawScreen(_DbgScreen);
-	ClsDrawScreen();
+	if (clsFlag)
+	{
+		ClsDrawScreen();
+	}
 	SetDrawScreen(ghBefor);
 	return true;
 }
@@ -154,7 +164,7 @@ bool _DebugDispOut::AddDrawDebug(void)
 	}
 	if (dispFlag)
 	{
-		lpSceneMng.AddDrawQue({ _DbgScreen, lpSceneMng.ScreenSize.x / 2, lpSceneMng.ScreenSize.y / 2,0 ,INT_MAX,LAYER::UI });
+		lpSceneMng.AddDrawQue({ _DbgScreen,lpSceneMng.ScreenSize.x/2,lpSceneMng.ScreenSize.y / 2,0,INT_MAX,LAYER::UI });
 	}
 	WaitMode();
 	return true;
