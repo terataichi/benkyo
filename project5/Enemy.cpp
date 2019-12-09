@@ -1,7 +1,7 @@
 #include "ImageMng.h"
 #include "Enemy.h"
 #include <Obj.h>
-
+#include <Scene\SceneMng.h>
 
 Enemy::Enemy()
 {
@@ -31,6 +31,17 @@ void Enemy::Update(sharedObj obj)
 Enemy::~Enemy()
 {
 	moveCtl.PitInCnt();
+}
+
+bool Enemy::SetAlive(bool alive)
+{
+	if (!alive)
+	{
+		// ‚ä‚ç‚·que‚ð“Š‚°‚é
+		lpSceneMng.AddActQue({ ACT_QUE::SHAKE,*this });
+	}
+	
+	return Obj::SetAlive(alive);
 }
 
 void Enemy::init()

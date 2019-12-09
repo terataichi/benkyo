@@ -50,7 +50,7 @@ public:
 	// ¾¯Ä
 	bool SetAttack(bool exflag);								// UŒ‚Ì×¸Ş‚ÌƒZƒbƒg
 	bool SetAnim(const STATE state, AnimVector& data);			// ±ÆÒ°¼®İdata‚Ì“o˜^
-	bool SetAlive(bool alive);
+	virtual bool SetAlive(bool alive);
 	bool isAlive(void) { return _alive; }						// ó‘Ô‚ğæ“¾‚·‚é‚½‚ß‚¾‚¯
 	bool isDead(void) { return _dead; }
 	bool isAnimEnd(void);										// ±ÆÒ°¼®İC—¹Šm”F

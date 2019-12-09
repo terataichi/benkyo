@@ -128,6 +128,7 @@
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="Scene\func\FuncShake.cpp" />
     <ClCompile Include="Scene\func\FuncCheckHit.cpp" />
     <ClCompile Include="Scene\func\FuncBullet.cpp" />
     <ClCompile Include="Input\InputState.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="Scene\func\FuncShake.h" />
     <ClInclude Include="Scene\func\FuncCheckHit.h" />
     <ClInclude Include="Scene\func\FuncBullet.h" />
     <ClInclude Include="Input\InputState.h" />

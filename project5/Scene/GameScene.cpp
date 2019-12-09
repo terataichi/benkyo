@@ -11,6 +11,7 @@
 #include "SceneMng.h"
 #include <Scene\func\FuncBullet.h>
 #include <Scene\func\FuncCheckHit.h>
+#include <Scene\func\FuncShake.h>
 
 
 GameScene::GameScene()
@@ -77,6 +78,8 @@ GameScene::GameScene()
 		}
 	}
 	
+	_shakeCount = 0;
+
 	// ª≥›ƒﬁÇÃèâä˙âª
 	lpSoundMng.GetID("íe", "sound/shot1.mp3");
 }
@@ -143,6 +146,18 @@ unique_Base GameScene::Update(unique_Base own)
 								),
 						_objList.end());
 
+	// âÊñ ÇóhÇÁÇ∑
+	if (_shakeCount)
+	{
+		_shakeCount--;
+		_screenPos = { (rand() % 20 - 10) ,(rand() % 20 - 10) };
+
+		if (!_shakeCount)
+		{
+			_screenPos = { 0,0 };
+		}
+	}
+
 	return std::move(own);
 }
 
@@ -152,7 +167,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 	{
 		try
 		{
-			funcQue.at(actQue.first)(actQue, _objList);
+			funcQue.at(actQue.first)(actQue, this);
 		}
 		catch(...)
 		{
@@ -167,5 +182,6 @@ void GameScene::InitFunc(void)
 	// èàóùÇÃìoò^
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
+	funcQue[ACT_QUE::SHAKE] = FuncShake();
 }
 

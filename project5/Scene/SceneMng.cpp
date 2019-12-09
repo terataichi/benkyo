@@ -6,6 +6,7 @@
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "BaseScene.h"
 
 SceneMng *SceneMng::sInstance = nullptr;
 
@@ -62,10 +63,13 @@ void SceneMng::Draw(void)
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
+	// ‰æ–Ê—h‚ç‚·‚æ‚¤
+	auto layPos = ScreenCenter + (*_activeScene)._screenPos;
+
 	// ŠeÚ²Ô°‚Ì½¸Ø°Ý‚ð•`‰æ‚·‚é
 	for (auto layer : LAYER())
 	{
-		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
+		DrawRotaGraph(layPos.x, layPos.y, 1.0, 0, _screenID[layer], true);
 	}
 
 	
@@ -94,7 +98,7 @@ SceneMng::~SceneMng()
 void SceneMng::Run(void)
 {
 	SysInit();
-	_activeScene = std::make_unique<GameScene>();
+	_activeScene = std::make_unique<TitleScene>();
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
@@ -117,7 +121,6 @@ void SceneMng::Run(void)
 
 		_gameCount++;													// ¹Þ°Ñ¶³ÝÄ
 	}
-	// delete _activeScene;
 }
 
 bool SceneMng::AddSoundQue(SoundQueT sQue)

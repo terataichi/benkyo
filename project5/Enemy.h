@@ -35,6 +35,7 @@ public:
 	void Update(sharedObj obj) override;
 	~Enemy();
 private:
+	bool SetAlive(bool alive) override;
 	EnemyMove moveCtl{ _pos , _rad, _exFlag};		// ‚±‚ÌƒNƒ‰ƒX‚É‚Ù‚µ‚¢î•ñ‚ğQÆ‚Å“n‚µ‚Ä‚ ‚°‚é
 	void init();
 	ENEMY_TYPE _type;
