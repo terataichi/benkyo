@@ -15,10 +15,12 @@ enum class DRAW_QUE
 	RAD,				// 回転角
 	ZODER,				// レイヤー内の描画順番(数値の低いほうが奥)
 	LAYER,				// IDの小さいほうが奥に描画
+	DRAW_MODE,			// 描画ﾓｰﾄﾞ
+	DRAW_NUM,			// ﾓｰﾄﾞﾆ渡す値
 };
 
-//							id	 x		 y		角度	奥行 screen
-using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;		// DRAW_QUEの内容
+//							id	x, y,角度,奥行 screen	描画ﾓｰﾄﾞ 描画ﾓｰﾄﾞに渡す値
+using DrawQueT = std::tuple<int, double, double, double, int, LAYER, int, int>;		// DRAW_QUEの内容
 
 enum class SOUND_QUE
 {
@@ -76,13 +78,14 @@ private:
 	void Draw(void);					// 描画
 	void Sound(void);					// ｻｳﾝﾄﾞ
 
-	std::map<LAYER, int>_screenID;		// screen用の
+	int _layerGID;
+	//std::map<LAYER, int>_screenID;	// screen用の
 	std::vector<SoundQueT>_soundList;	// ｻｳﾝﾄﾞﾘｽﾄ
 	std::vector<DrawQueT>_drawList;		// 描画リスト
 	std::vector<ActQueT>_actList;		// ｱｸｼｮﾝﾘｽﾄ
 
-	SceneMng();		// ｺﾝｽﾄﾗｸﾀ
-	~SceneMng();	// ﾃﾞｽﾄﾗｸﾀ
+	SceneMng();							// ｺﾝｽﾄﾗｸﾀ
+	~SceneMng();						// ﾃﾞｽﾄﾗｸﾀ
 	bool SysInit(void);
 };
 

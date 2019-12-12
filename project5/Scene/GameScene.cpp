@@ -112,23 +112,25 @@ unique_Base GameScene::Update(unique_Base own)
 		return (*obj).unitID() == UNIT_ID::PLAYER;
 	});
 
-	for (auto data : _objList)
+	if (!FadeUpdate())
 	{
-		// 結果を返す
-		if (CheckAt(data))
+		for (auto data : _objList)
 		{
-			(*data).SetAttack(true);
-		}
-		else
-		{
-			(*data).SetAttack(false);
+			// 結果を返す
+			if (CheckAt(data))
+			{
+				(*data).SetAttack(true);
+			}
+			else
+			{
+				(*data).SetAttack(false);
 
-		}
+			}
 
-		// 更新
-		(*data).Update(*plObj);
+			// 更新
+			(*data).Update(*plObj);
+		}
 	}
-
 	// 描あ
 	for (auto data : _objList)
 	{

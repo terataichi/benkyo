@@ -7,7 +7,8 @@ enum class LAYER
 	BG,
 	CHAR,
 	UI,
-	MAX,
+	EX,
+	MAX
 };
 
 LAYER begin(LAYER);

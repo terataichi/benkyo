@@ -10,6 +10,7 @@
 
 Player::Player()
 {
+	_zOder = 0;
 	init();
 }
 
@@ -18,6 +19,7 @@ Player::Player(Vector2dbl pos, Vector2dbl size)
 	_unitID = UNIT_ID::PLAYER;
 	_pos = pos;
 	_size = size;
+	_zOder = 0;
 	init();
 }
 
@@ -43,8 +45,7 @@ void Player::Update(sharedObj obj)
 		}
 	};
 
-	//move(_input, INPUT_ID::DOWN, _pos.y, +2);
-	//move(_input, INPUT_ID::UP, _pos.y, -2);
+	// ˆÚ“®
 	move(_input, INPUT_ID::LEFT, _pos.x, -2);
 	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
 

@@ -26,5 +26,12 @@ public:
 	virtual unique_Base Update(unique_Base own) = 0;		// own 自身
 	virtual void RunActQue(std::vector<ActQueT> actList);	// 全てのｼｰﾝで必要じゃないから純粋仮想関数にはしていない
 	Vector2 _screenPos;
+protected:
+	void FadeInit(std::string fadeType);
+	bool FadeUpdate(void);
+private:
+	int _fadeScrID;
+	int _fadeCount;
+	std::string _fadeType;
 };
 

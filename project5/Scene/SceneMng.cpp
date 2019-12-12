@@ -25,12 +25,19 @@ void SceneMng::Draw(void)
 				std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(right), std::get<static_cast<int>(DRAW_QUE::ZODER)>(right));
 	});
 
-	for (auto layer : LAYER())
-	{
-		SetDrawScreen(_screenID[layer]);
-		ClsDrawScreen();
+	SetDrawScreen(DX_SCREEN_BACK);
+	ClsDrawScreen();
 
-	}
+	// •`‰æÚ²Ô°‚â•`‰æÓ°ÄŞ‚Ì‰Šú’l‚ğİ’è‚·‚é
+	LAYER drawLayer = begin(LAYER());
+	int blendMode = DX_BLENDMODE_NOBLEND;
+	int blendModeNum = 0;
+
+	// Que‚Ì•`‰ææ‚ğİ’è
+	SetDrawScreen(_layerGID);
+	ClsDrawScreen();
+	SetDrawBlendMode(blendMode, blendModeNum);
+
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	for (auto dQue : _drawList)
 	{
@@ -39,13 +46,25 @@ void SceneMng::Draw(void)
 		double x, y, rad;
 		int id;
 		LAYER layer;
+
+		// ‘O‚Ì·­³‚Ì“à—e‚ğŠm•Û
+		int blendModeOld = blendMode;
+		int blendModeNumOld = blendModeNum;
+
 		// tie î•ñ‚ğ‚Ü‚Æ‚ß‚Äæ‚èo‚µ‚Ä‚Î‚ç‚Î‚ç‚É‚µ‚Ä‚­‚ê‚é		 ignore “Ç‚İ”ò‚Î‚µ‚Ä‚­‚ê‚é
-		std::tie(id, x, y, rad, std::ignore, layer) = dQue;	// î•ñ‚ğ“ü‚ê‚é tie ‚ª‚Î‚ç‚µ‚Ä‚­‚ê‚é
+		std::tie(id, x, y, rad, std::ignore, layer, blendMode, blendModeNum) = dQue;	// î•ñ‚ğ“ü‚ê‚é tie ‚ª‚Î‚ç‚µ‚Ä‚­‚ê‚é
 		
-		// ¡‚Ì½¸Ø°İ‚ÆID‚ªˆá‚Á‚½‚ç‚»‚ÌÚ²Ô°‚É‘‚«‚±‚ß‚é
-		if (GetDrawScreen() != _screenID[layer])
+		if ((layer != drawLayer) || (blendModeOld != blendMode) || (blendModeNumOld != blendModeNum))
 		{
-			SetDrawScreen(_screenID[layer]);
+			// _layerGID‚É‘‚¢‚½“à—e‚ğƒoƒbƒNƒoƒbƒtƒ@‚É•`‰æ‚·‚é
+			SetDrawScreen(DX_SCREEN_BACK);
+			SetDrawBlendMode(blendModeOld, blendModeNumOld);
+			auto layPos = ScreenCenter + (*_activeScene)._screenPos;
+			DrawRotaGraph(layPos.x, layPos.y, 1.0, 0, _layerGID, true);
+
+			// Ÿ‚ÌQue‚Ì‚½‚ß‚Ì‰Šú‰»‚µ‚ÄA•`‰ææ‚ğˆê•`‰ææ‚Éİ’è‚·‚é
+			SetDrawScreen(_layerGID);
+			SetDrawBlendMode(blendMode, blendModeNum);
 			ClsDrawScreen();
 		}
 
@@ -61,18 +80,9 @@ void SceneMng::Draw(void)
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);
-	ClsDrawScreen();
 
-	// ‰æ–Ê—h‚ç‚·‚æ‚¤
-	auto layPos = ScreenCenter + (*_activeScene)._screenPos;
-
-	// ŠeÚ²Ô°‚Ì½¸Ø°İ‚ğ•`‰æ‚·‚é
-	for (auto layer : LAYER())
-	{
-		DrawRotaGraph(layPos.x, layPos.y, 1.0, 0, _screenID[layer], true);
-	}
-
-	
+	SetDrawBlendMode(blendMode, blendModeNum);
+	DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _layerGID, true);
 
 	ScreenFlip();	// — ‰æ–Ê‚©‚ç•\‰æ–Ê‚É
 }
@@ -108,18 +118,18 @@ void SceneMng::Run(void)
 		_drawList.clear();	// —v‘f‚ğ‚·‚×‚ÄÁ‚µ‚Ä‚­‚ê‚é
 		_soundList.clear();
 
-		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,0,LAYER::UI });		// ˜g‚Ì•`‰æ
+		AddDrawQue({ IMAGE_ID("˜g")[0],400,300,0,0,LAYER::UI,DX_BLENDMODE_NOBLEND, 255 });		// ˜g‚Ì•`‰æ
 
-		_activeScene = (*_activeScene).Update(std::move(_activeScene));	// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
+		_activeScene = (*_activeScene).Update(std::move(_activeScene));							// (*)‚ğ‚Â‚¯‚é‚±‚Æ‚É‚æ‚Á‚Ä½Ï°ÄÎß²İÀ‚ÌŠÇ—‚µ‚Ä‚¢‚é’†g	->‚Å’¼ÚŒ©‚Ä‚à‚¢‚¢‚ª‚Ç‚¤‚Å‚«Šm•Û‚µ‚½‚â‚Â‚ğŒ©•ª‚¯‚é‚ª‚Ş‚¸‚­‚È‚é
 
 		Draw();
 		
 
-		(*_activeScene).RunActQue(std::move(_actList));					// î•ñ‚ğmove‚µ‚Ä“n‚µ‚Ä‚ ‚°‚é
+		(*_activeScene).RunActQue(std::move(_actList));											// î•ñ‚ğmove‚µ‚Ä“n‚µ‚Ä‚ ‚°‚é
 
 		Sound();
 
-		_gameCount++;													// ¹Ş°Ñ¶³İÄ
+		_gameCount++;																			// ¹Ş°Ñ¶³İÄ
 	}
 }
 
@@ -166,14 +176,14 @@ bool SceneMng::SysInit(void)
 	SetDrawScreen(DX_SCREEN_BACK);					//‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
 
 	// ŠeÚ²Ô°—p‚Ì½¸Ø°İ‚ğ¾¯Ä
-	for (auto id : LAYER())
-	{
-		_screenID.try_emplace(id, MakeScreen(ScreenSize.x, ScreenSize.y, true));
-	}
+	_layerGID = MakeScreen(ScreenSize.x, ScreenSize.y, true);
 
 	_dbgSetup(255);									// ÃŞÊŞ¯¸Ş—p
 
-	lpImageMng.GetID("˜g", "image/frame.png");		// ˜g
+	lpImageMng.GetID("˜g"	, "image/frame.png");		// ˜g
+	lpImageMng.GetID("black", "image/black.png");		// •”Â
+	lpImageMng.GetID("white", "image/white.png");		// ”’”Â
+
 
 
 	return false;
