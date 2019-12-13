@@ -34,7 +34,7 @@ class Obj
 public:
 	Obj();
 	virtual void Update(sharedObj obj) = 0;
-	void Draw(void);
+	virtual void Draw(void);
 	void Draw(int id);
 	virtual ~Obj();
 
@@ -55,10 +55,7 @@ public:
 	bool isDead(void) { return _dead; }
 	bool isAnimEnd(void);										// ±ÆÒ°¼®İC—¹Šm”F
 private:
-	std::map<STATE, AnimVector> _animMap;						// ±ÆÒ°¼®İŠi”[
-	STATE _state;												// ó‘Ô
-	unsigned int _animFrame;									// ±ÆÒ°¼®İ—pÌÚ°Ñ
-	unsigned int _animCount;									// ±ÆÒ°¼®İ—p¶³İÄ
+
 
 protected:
 	bool DestroyPrpc(void);
@@ -70,5 +67,10 @@ protected:
 	int _zOder;													// •`‰æ‚Ì—Dæ
 	UNIT_ID _unitID;											// ¯•Ê—p
 	bool _exFlag;												// UŒ‚Ì×¸Ş
+
+	std::map<STATE, AnimVector> _animMap;						// ±ÆÒ°¼®İŠi”[
+	STATE _state;												// ó‘Ô
+	unsigned int _animFrame;									// ±ÆÒ°¼®İ—pÌÚ°Ñ
+	unsigned int _animCount;									// ±ÆÒ°¼®İ—p¶³İÄ
 };
 

@@ -14,6 +14,8 @@ public:
 
 private:
 	void init(void);
+	void Draw(void);
+	int _glowID[2];
 	std::shared_ptr<InputState> _input;				// key‚ÌŠÇ—
 
 };

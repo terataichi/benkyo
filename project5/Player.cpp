@@ -46,6 +46,8 @@ void Player::Update(sharedObj obj)
 	};
 
 	// ˆÚ“®
+	move(_input, INPUT_ID::UP, _pos.y, -2);
+
 	move(_input, INPUT_ID::LEFT, _pos.x, -2);
 	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
 
@@ -83,8 +85,24 @@ void Player::init(void)
 
 
 	_input = std::make_shared<KeyState>();
+
+	_glowID[0] = MakeScreen(_size.x + 30, _size.y + 32);
+
 	// Ò¿¯Ä‚ðŽg‚¤‚â‚è•û
 	//_input.reset(new KeyState());
 
 	state(STATE::NORMAL);
+}
+
+void Player::Draw(void)
+{
+	Obj::Draw();
+
+	SetDrawScreen(_glowID[0]);
+	ClsDrawScreen();				// ˆê‰ñØ¾¯Ä
+	SetDrawBright(0, 200 + rand() % 55, 0);
+	DrawRotaGraph(static_cast<int>(_size.x), static_cast<int>(_size.y), 1.25, 0, _animMap[_state][_animFrame].first, true);
+	SetDrawBright(255, 255, 255);
+	GraphFilter(_glowID[0], DX_GRAPH_FILTER_GAUSS, 5, 500);
+	lpSceneMng.AddDrawQue({ _glowID[0],lpSceneMng.GameScreenOffset.x + _pos.x,lpSceneMng.GameScreenOffset.y + _pos.y,_rad,_zOder - 1,LAYER::CHAR,DX_BLENDMODE_ADD,255 });
 }
