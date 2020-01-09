@@ -37,7 +37,7 @@ bool BaseScene::FadeUpdate(void)
 		{
 			lpSceneMng.AddDrawQue({ _fadeScrID,lpSceneMng.ScreenCenter.x, lpSceneMng.ScreenCenter.y, 0,0,LAYER::EX,DX_BLENDMODE_NOBLEND,255 });
 		}
-		lpSceneMng.AddDrawQue({ lpImageMng.GetID(_fadeType)[0], lpSceneMng.ScreenCenter.x, lpSceneMng.ScreenCenter.y, 0, 10,LAYER::EX, DX_BLENDMODE_ALPHA, 255 - std::abs(_fadeCount - 255) });
+		lpSceneMng.AddDrawQue({ lpImageMng.GetID(_fadeType)[0], lpSceneMng.ScreenCenter.x, lpSceneMng.ScreenCenter.y, 0, 10,LAYER::EX, DX_BLENDMODE_PMA_ALPHA, 255 - std::abs(_fadeCount - 255) });
 		
 		_fadeCount--;
 	}
