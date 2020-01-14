@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EffekseerProject>
+  <Root>
+    <Name>Root</Name>
+    <Children>
+      <Node>
+        <CommonValues>
+          <MaxGeneration>
+            <Infinite>True</Infinite>
+          </MaxGeneration>
+          <Life>
+            <Center>60</Center>
+            <Max>60</Max>
+            <Min>60</Min>
+          </Life>
+        </CommonValues>
+        <LocationValues>
+          <Type>1</Type>
+          <Fixed>
+            <Location>
+              <X>2</X>
+            </Location>
+          </Fixed>
+          <PVA>
+            <Location>
+              <X>
+                <Max>0.03</Max>
+                <Min>-0.03</Min>
+              </X>
+            </Location>
+            <Velocity>
+              <X>
+                <Center>0.03</Center>
+                <Max>0.04</Max>
+                <Min>0.02</Min>
+              </X>
+              <Y>
+                <Center>0.01</Center>
+                <Max>0.01999999</Max>
+                <Min>9.313226E-09</Min>
+              </Y>
+            </Velocity>
+          </PVA>
+        </LocationValues>
+        <Name>Node</Name>
+        <Children />
+      </Node>
+    </Children>
+  </Root>
+  <ToolVersion>1.43f</ToolVersion>
+  <Version>3</Version>
+  <StartFrame>0</StartFrame>
+  <EndFrame>300</EndFrame>
+  <IsLoop>True</IsLoop>
+</EffekseerProject>
