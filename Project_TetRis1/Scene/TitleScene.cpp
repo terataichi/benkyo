@@ -3,13 +3,14 @@
 #include "Dxlib.h"
 #include <ImageMng.h>
 #include <SceneMng.h>
+#include <Input/KeyState.h>
 
 TitleScene::TitleScene()
 {
 	lpImageMng.GetID("€∫ﬁ", "image/titleLogo.png");
 	lpImageMng.GetID("BG", "image/titleBG.png");
 	lpImageMng.GetID("ZKEY", "image/start.png");
-
+	_input = std::make_shared<KeyState>();
 }
 
 TitleScene::~TitleScene()
@@ -18,8 +19,11 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Update(unique_Base own)
 {
+
+	(*_input).Update();												// ∑∞èÓïÒÇÃçXêV
+
 	// º∞›êÿÇËë÷Ç¶
-	if (CheckHitKey(KEY_INPUT_Z))
+	if ((*_input).State(INPUT_ID::BTN_1).first && !(*_input).State(INPUT_ID::BTN_1).second)
 	{
 		return std::make_unique<GameScene>();
 	}

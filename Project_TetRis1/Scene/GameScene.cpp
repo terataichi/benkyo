@@ -31,7 +31,7 @@ GameScene::GameScene()
 	// Ï¯Ìß‰Šú‰»
 	lpMapChip.InitMap();
 
-	_objList.emplace_back(new Block(BLOCK_TYPE::O));
+	_objList.emplace_back(new Block(rand(BLOCK_TYPE())));
 }
 
 GameScene::~GameScene()
