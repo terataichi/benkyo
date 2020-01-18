@@ -27,13 +27,6 @@ Block::Block(BLOCK_TYPE type)
 	Init(type);												// ‰Šú‰»
 	_endCount = 0;
 	_moveCount = 60;
-
-	 //²İ½Àİ½‚ÉÌŞÛ¯¸‚Æ”í‚Ä‚¢‚½‚ç¹Ş°ÑI—¹
-	//if (lpMapChip.CheckGameOver(_pos, _blockData, _dir))
-	//{
-	//	SetAlive(false);
-	//	std::make_unique<TitleScene>();
-	//}
 }
 
 
@@ -103,7 +96,11 @@ void Block::Update()
 	{
 		SetAlive(false);
 		lpMapChip.WriteMap(_pos, _blockData, _dir);						// Ï¯Ìß‚É‘‚«‚İ
-		lpSceneMng.AddBlockInsQue({ rand(BLOCK_TYPE()), true });		// ²İ½Àİ½Ø½Ä‚É’Ç‰Á
+
+		if (!lpMapChip.CheckGameOver())
+		{
+			lpSceneMng.AddBlockInsQue({ rand(BLOCK_TYPE()), true });		// ²İ½Àİ½Ø½Ä‚É’Ç‰Á
+		}
 	}
 
 	// Ÿè‚É‰º‚Éi‚Ş
