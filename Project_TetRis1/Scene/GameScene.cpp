@@ -9,6 +9,7 @@
 #include "SceneMng.h"
 #include <Block.h>
 #include <MapChip.h>
+#include <ScoreMng.h>
 
 GameScene::GameScene()
 {
@@ -19,6 +20,7 @@ GameScene::GameScene()
 
 	lpImageMng.GetID("”wŒi", "image/gameBG.png");
 	lpImageMng.GetID("Ï¯Ìß", "image/gameBG.png");
+	lpImageMng.GetID("½º±", "image/num.png");
 	// ÌŞÛ¯¸
 	lpImageMng.GetID("I", "image/gameBG.png");
 	lpImageMng.GetID("O", "image/gameBG.png");
@@ -30,6 +32,9 @@ GameScene::GameScene()
 
 	// Ï¯Ìß‰Šú‰»
 	lpMapChip.InitMap();
+
+	// ½º±‰Šú‰»
+	lpScoreMng.Init();
 
 	_objList.emplace_back(new Block(rand(BLOCK_TYPE())));
 }
@@ -51,17 +56,20 @@ unique_Base GameScene::Update(unique_Base own)
 			}
 		}
 
-
+	// ×²İÁª¯¸
 	if (lpMapChip.CheckLine())
 	{
 		lpMapChip.DeleteLine();
+		lpScoreMng.AddScore();
 	}
+
 	// •`‰æ
 	for (auto data : _objList)
 	{
 		(*data).Draw();
 	}
 	lpMapChip.GameDraw();		// Ï¯ÌßÁ¯Ìß‚Ì•`‰æ
+	lpScoreMng.Draw();			// ½º±•`‰æ
 
 	/*[](){} ‚ç‚Ş‚¾‚µ‚«*/
 	//‹ó‚É‚È‚Á‚½—v‘f‚ğÁ‚·

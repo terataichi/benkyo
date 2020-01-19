@@ -8,6 +8,7 @@
 #include "DIR.h"
 #include "MapChip.h"
 #include <TitleScene.h>
+#include <ScoreMng.h>
 
 std::shared_ptr<InputState> Block::_input;
 
@@ -88,6 +89,7 @@ void Block::Update()
 	// ê^Ç≈++
 	if (lpMapChip.CheckDown(_pos, _blockData, _dir))
 	{
+
 		_endCount++;
 	}
 
