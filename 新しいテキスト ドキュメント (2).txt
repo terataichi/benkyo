@@ -111,7 +111,8 @@ void SceneMng::Draw(void)
 
 enum class EFFECT_QUE
 {
-	EFFECT,
+	EFF
+sS
 	X,
 	Y,
 	ZORDER,
