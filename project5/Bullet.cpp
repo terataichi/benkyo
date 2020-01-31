@@ -10,7 +10,7 @@ Bullet::Bullet()
 
 Bullet::Bullet(UNIT_ID unitID ,Vector2dbl pos)
 {
-	lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],true });
+	lpSceneMng.AddSoundQue({ SOUND_ID("’e")[0],false });
 	_unitID = unitID;
 	_zOder = 0;
 	_pos = pos;
