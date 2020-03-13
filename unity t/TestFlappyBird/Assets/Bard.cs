@@ -7,7 +7,7 @@ public class Bard : MonoBehaviour
 {
     [SerializeField]
 
-    float JUMP_VELOCITY = 1000;                      // ｼﾞｬﾝﾌﾟ力
+    float JUMP_VELOCITY;                      // ｼﾞｬﾝﾌﾟ力
 
     Rigidbody2D _rigidbody;                          // 物理挙動ｺﾝﾎﾟｰﾈﾝﾄ保持用
 
@@ -20,7 +20,7 @@ public class Bard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _rigidbody.velocity = Vector2.zero;                     // 落下速度を一度リセットする
 
@@ -67,4 +67,11 @@ public class Bard : MonoBehaviour
 
         return min.y;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // トリガーがオンになったら衝突してるのでオブジェクトを消す
+        Destroy(gameObject);
+    }
+
 }
