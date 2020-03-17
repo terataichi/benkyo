@@ -7,20 +7,25 @@ public class Bard : MonoBehaviour
 {
     [SerializeField]
 
-    float JUMP_VELOCITY;                      // ｼﾞｬﾝﾌﾟ力
+    float JUMP_VELOCITY = 0;                      // ｼﾞｬﾝﾌﾟ力
 
-    Rigidbody2D _rigidbody;                          // 物理挙動ｺﾝﾎﾟｰﾈﾝﾄ保持用
+    public GameObject gameMng;                // ｹﾞｰﾑﾏﾈｰｼﾞｬｰ取得
+
+    Rigidbody2D _rigidbody;                   // 物理挙動ｺﾝﾎﾟｰﾈﾝﾄ保持用
+
+    GameMng _gameMng;                         // ｹﾞｰﾑﾏﾈｰｼﾞｬｰの情報取得用  
 
     // 処理開始
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();    // 物理挙動ｺﾝﾎﾟｰﾈﾝﾄ取得
+        _gameMng = gameMng.GetComponent<GameMng>();  // publicの情報取得
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             _rigidbody.velocity = Vector2.zero;                     // 落下速度を一度リセットする
 
@@ -39,13 +44,14 @@ public class Bard : MonoBehaviour
         if(y > GetTop())
         {
             _rigidbody.velocity = Vector2.zero;     // 速度リセット
+            _rigidbody.AddForce(new Vector2(0, -JUMP_VELOCITY - 200));         // 下に落ちたら自動ｼﾞｬﾝﾌﾟ
             position.y = GetTop();                  // 押し戻しする
         }
 
         if(y < GetBottom())
         {
             _rigidbody.velocity = Vector2.zero;                         // 速度リセット
-            _rigidbody.AddForce(new Vector2(0, JUMP_VELOCITY));         // 下に落ちたら自動ｼﾞｬﾝﾌﾟ
+            _rigidbody.AddForce(new Vector2(0, JUMP_VELOCITY + 200));         // 下に落ちたら自動ｼﾞｬﾝﾌﾟ
             position.y = GetBottom();                                   // 押し戻しする
         }
 
@@ -72,6 +78,14 @@ public class Bard : MonoBehaviour
     {
         // トリガーがオンになったら衝突してるのでオブジェクトを消す
         Destroy(gameObject);
+
+        // ｹﾞｰﾑｵｰﾊﾞｰに切り替える
+        _gameMng.SetGameOver();
     }
 
+    // 座標を返すだけ
+    public Vector2 Pos()
+    {
+        return transform.position;
+    }
 }
