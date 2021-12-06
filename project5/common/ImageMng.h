@@ -1,8 +1,9 @@
 #pragma once
-#include<memory>
+#include <memory>
 #include <map>
+#include <string>
 #include <vector>
-#include <common\Vector2.h>
+#include "Vector2.h"
 
 using VecInt = std::vector<int>;
 

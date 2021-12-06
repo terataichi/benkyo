@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include "BaseScene.h"
-#include <common\ImageMng.h>
-#include <Scene\SceneMng.h>
+#include "../common/ImageMng.h"
+#include "../Scene/SceneMng.h"
 
 
 BaseScene::BaseScene()

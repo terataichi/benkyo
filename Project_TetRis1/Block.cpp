@@ -1,14 +1,14 @@
 #include "Block.h"
 #include <DxLib.h>
-#include <_DebugConOut.h>
-#include <ImageMng.h>
-#include <SceneMng.h>
-#include <GameScene.h>
-#include <Input/KeyState.h>
+#include "_Debug/_DebugConOut.h"
+#include "common/ImageMng.h"
+#include "Scene/SceneMng.h"
+#include "Scene/GameScene.h"
+#include "Input/KeyState.h"
 #include "DIR.h"
 #include "MapChip.h"
-#include <TitleScene.h>
-#include <ScoreMng.h>
+#include "Scene/TitleScene.h"
+#include "ScoreMng.h"
 
 std::shared_ptr<InputState> Block::_input;
 

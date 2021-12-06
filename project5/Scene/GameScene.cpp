@@ -1,17 +1,17 @@
 #include <algorithm>
 #include <DxLib.h>
 #include <time.h>
-#include <_DebugConOut.h>
+#include "../_Debug/_DebugConOut.h"
 #include "GameScene.h"
-#include <ImageMng.h>
-#include <SoundMng.h>
-#include <Player.h>
-#include <Enemy.h>
-#include <Bullet.h>
+#include "../common/ImageMng.h"
+#include "../common/SoundMng.h"
+#include "../Player.h"
+#include "../Enemy.h"
+#include "../Bullet.h"
 #include "SceneMng.h"
-#include <Scene\func\FuncBullet.h>
-#include <Scene\func\FuncCheckHit.h>
-#include <Scene\func\FuncShake.h>
+#include "func/FuncBullet.h"
+#include "func/FuncCheckHit.h"
+#include "func/FuncShake.h"
 
 
 GameScene::GameScene()

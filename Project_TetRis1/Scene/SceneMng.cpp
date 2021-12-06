@@ -1,13 +1,13 @@
 #include <Dxlib.h>
 #include <iostream>
 #include <algorithm>
-#include <_DebugDispOut.h>
-#include <ImageMng.h>
+#include "../_Debug/_DebugDispOut.h"
+#include "../common/ImageMng.h"
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "BaseScene.h"
-#include <Block.h>
+#include "../Block.h"
 
 SceneMng *SceneMng::sInstance = nullptr;
 

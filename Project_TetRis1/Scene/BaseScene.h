@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <Obj.h>
-#include <Vector2.h>
-#include <BLOCK_TYPE.h>
+#include "../Obj.h"
+#include "../common/Vector2.h"
+#include "../BLOCK_TYPE.h"
 
 class BaseScene;	//	ÌßÛÄÀ²ÌßéŒ¾(’†g‚Í‚í‚©‚ç‚È‚¢‚Ì‚Å’ˆÓ)
 

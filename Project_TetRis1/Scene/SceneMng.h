@@ -3,10 +3,10 @@
 #include <map>
 #include <tuple>
 #include <vector>
-#include <Vector2.h>
+#include "../common/Vector2.h"
 #include "BaseScene.h"
-#include "LAYER.h"
-#include <BLOCK_TYPE.h>
+#include "../LAYER.h"
+#include "../BLOCK_TYPE.h"
 
 enum class DRAW_QUE
 {

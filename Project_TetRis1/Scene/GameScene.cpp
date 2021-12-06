@@ -1,15 +1,16 @@
 #include <algorithm>
 #include <DxLib.h>
 #include <time.h>
-#include <_DebugConOut.h>
+#include "../_Debug/_DebugConOut.h"
 #include "GameScene.h"
 #include "GameOverScene.h"
-#include <ImageMng.h>
-#include <SoundMng.h>
+#include "../common/ImageMng.h"
+#include "../common/SoundMng.h"
 #include "SceneMng.h"
-#include <Block.h>
-#include <MapChip.h>
-#include <ScoreMng.h>
+#include "../Block.h"
+#include "../MapChip.h"
+#include "../ScoreMng.h"
+#include "../LAYER.h"
 
 GameScene::GameScene()
 {

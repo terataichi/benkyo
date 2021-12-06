@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-#include <Input/InputState.h>
+#include "../Input/InputState.h"
 
 class TitleScene :
 	public BaseScene

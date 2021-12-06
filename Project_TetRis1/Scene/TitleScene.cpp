@@ -1,9 +1,9 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "Dxlib.h"
-#include <ImageMng.h>
-#include <SceneMng.h>
-#include <Input/KeyState.h>
+#include "../common/ImageMng.h"
+#include "SceneMng.h"
+#include "../Input/KeyState.h"
 
 TitleScene::TitleScene()
 {

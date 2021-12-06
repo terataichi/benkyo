@@ -1,9 +1,9 @@
 #include "GameOverScene.h"
 #include "TitleScene.h"
 #include "Dxlib.h"
-#include <ImageMng.h>
-#include <SceneMng.h>
-#include <MapChip.h>
+#include "../common/ImageMng.h"
+#include "SceneMng.h"
+#include "../MapChip.h"
 
 
 GameOverScene::GameOverScene()

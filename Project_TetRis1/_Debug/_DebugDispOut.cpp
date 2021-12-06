@@ -1,7 +1,7 @@
 #ifdef _DEBUG
 #include <windows.h>
 #include <DxLib.h>
-#include <scene/SceneMng.h>
+#include "../Scene/SceneMng.h"
 #include "_DebugDispOut.h"
 
 std::unique_ptr<_DebugDispOut, _DebugDispOut::_DebugDispOutDeleter> _DebugDispOut::s_Instance(new _DebugDispOut);

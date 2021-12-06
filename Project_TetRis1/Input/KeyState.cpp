@@ -1,5 +1,5 @@
 #include <DxLib.h>
-#include <_DebugConOut.h>
+#include "../_Debug/_DebugConOut.h"
 #include "KeyState.h"
 #include "InputState.h"
 

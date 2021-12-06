@@ -1,7 +1,7 @@
-#include "ImageMng.h"
+#include "common/ImageMng.h"
 #include "Enemy.h"
-#include <Obj.h>
-#include <Scene\SceneMng.h>
+#include "Obj.h"
+#include "Scene/SceneMng.h"
 
 Enemy::Enemy()
 {

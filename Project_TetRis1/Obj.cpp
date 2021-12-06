@@ -1,8 +1,8 @@
 #include <DxLib.h>
-#include <SceneMng.h>
-#include <ImageMng.h>
+#include "Scene/SceneMng.h"
+#include "common/ImageMng.h"
 #include "Obj.h"
-#include <_DebugConOut.h>
+#include "_Debug/_DebugConOut.h"
 
 Obj::Obj()
 {

@@ -2,7 +2,7 @@
 #include <functional>
 #include <vector>
 #include "BaseScene.h"
-#include "Obj.h"
+#include "../Obj.h"
 
 // —F’BéŒ¾
 struct FuncCheckHit;

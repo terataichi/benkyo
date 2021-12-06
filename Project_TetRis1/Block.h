@@ -1,9 +1,9 @@
 #pragma once
 #include "Obj.h"
 #include "BLOCK_TYPE.h"
-#include <Input/InputState.h>
-#include <Input/KeyState.h>
-#include <Input/INPUT_ID.h>
+#include "Input/InputState.h"
+#include "Input/KeyState.h"
+#include "Input/INPUT_ID.h"
 
 
 class Block :

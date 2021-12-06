@@ -1,6 +1,6 @@
 #include <DxLib.h>
-#include <Scene\SceneMng.h>
-#include <ImageMng.h>
+#include "Scene/SceneMng.h"
+#include "common/ImageMng.h"
 #include "Obj.h"
 
 Obj::Obj()

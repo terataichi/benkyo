@@ -1,5 +1,5 @@
 #include "FuncShake.h"
-#include <Scene\GameScene.h>
+#include "../GameScene.h"
 
 bool FuncShake::operator()(ActQueT & actQue, void* scene)
 {

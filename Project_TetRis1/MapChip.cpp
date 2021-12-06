@@ -1,9 +1,9 @@
 #include "MapChip.h"
 #include "_Debug/_DebugConOut.h"
 #include "_Debug/_DebugDispOut.h"
-#include <Obj.h>
-#include <SceneMng.h>
-#include <ImageMng.h>
+#include "Obj.h"
+#include "Scene/SceneMng.h"
+#include "common/ImageMng.h"
 
 std::unique_ptr <MapChip, MapChip::MapChipDeleter> MapChip::_sInstance(new MapChip());
 

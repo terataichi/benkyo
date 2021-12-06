@@ -1,8 +1,8 @@
 #include "FuncBullet.h"
 #include <algorithm>
-#include <bullet.h>
-#include <Scene/SceneMng.h>
-#include <Scene\GameScene.h>
+#include "../../Bullet.h"
+#include "../SceneMng.h"
+#include "../GameScene.h"
 
 std::map<UNIT_ID, int> FuncBullet::_MaxCount{ {UNIT_ID::PL_BULLET , 2} , {UNIT_ID::EM_BULLET , 2} };
 

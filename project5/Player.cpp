@@ -1,10 +1,10 @@
 #include <DxLib.h>
 #include "Player.h"
-#include <ImageMng.h>
-#include <SoundMng.h>
-#include <Input\KeyState.h>
-#include <Input\InputState.h>
-#include <Obj.h>
+#include "common/ImageMng.h"
+#include "common/SoundMng.h"
+#include "Input/KeyState.h"
+#include "Input/InputState.h"
+#include "Obj.h"
 #include "Scene\SceneMng.h"
 #include "Scene\BaseScene.h"
 

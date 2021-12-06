@@ -1,7 +1,7 @@
 #pragma once
-#include <Scene\BaseScene.h>
+#include "../BaseScene.h"
 #include <vector>
-#include <Vector2.h>
+#include "../../common/Vector2.h"
 
 // “–‚½‚è”»’è
 struct FuncCheckHit

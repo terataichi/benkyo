@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include <memory>
-#include <Input\InputState.h>
+#include "Input/InputState.h"
 
 class Player :
 	public Obj

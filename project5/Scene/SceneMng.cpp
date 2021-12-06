@@ -1,8 +1,8 @@
 #include <Dxlib.h>
 #include <iostream>
 #include <algorithm>
-#include <_Debug\_DebugDispOut.h>
-#include <ImageMng.h>
+#include "../_Debug/_DebugDispOut.h"
+#include "../common/ImageMng.h"
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"

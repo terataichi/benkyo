@@ -3,8 +3,8 @@
 #include <map>
 #include <tuple>
 #include <vector>
-#include <Vector2.h>
-#include <LAYER.h>
+#include "../common/Vector2.h"
+#include "../LAYER.h"
 #include "BaseScene.h"
 
 enum class DRAW_QUE

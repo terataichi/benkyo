@@ -1,7 +1,7 @@
 #include "Bullet.h"
-#include "ImageMng.h"
+#include "common/ImageMng.h"
 #include "Scene\SceneMng.h"
-#include <SoundMng.h>
+#include "common/SoundMng.h"
 
 Bullet::Bullet()
 {

@@ -1,11 +1,11 @@
 #include "EnemyMove.h"
 #include <algorithm>
 #include <math.h>
-#include <Vector2.h>
-#include <Enemy.h>
+#include "common/Vector2.h"
+#include "Enemy.h"
 #include "_Debug/_DebugConOut.h"
 #include "_Debug/_DebugDispOut.h"
-#include <Scene\SceneMng.h>
+#include "Scene/SceneMng.h"
 
 int EnemyMove::_pitInCnt;
 

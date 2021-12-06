@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include <Obj.h>
-#include <Input/INPUT_ID.h>
+#include "Obj.h"
+#include "Input/INPUT_ID.h"
 
 #define CHIP_MAX_X 14
 #define CHIP_MAX_Y 24

@@ -1,5 +1,5 @@
 #include "FuncCheckHit.h"
-#include <Scene\GameScene.h>
+#include "../../Scene/GameScene.h"
 
 bool FuncCheckHit::operator()(ActQueT & actQue, void* scene)
 {
